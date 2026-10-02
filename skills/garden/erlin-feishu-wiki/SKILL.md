@@ -40,25 +40,21 @@ lark-cli docs +update --doc <token> --command overwrite \
 lark-cli docs +fetch --doc <token> --doc-format markdown --as user
 
 # 批量脚本：默认只读回查；先 dry-run，再确认上传
-node ~/.agents/skills/erlin-feishu-wiki/assets/upload_verify.mjs verify
-node ~/.agents/skills/erlin-feishu-wiki/assets/upload_verify.mjs upload --dry-run
-node ~/.agents/skills/erlin-feishu-wiki/assets/upload_verify.mjs upload --confirm-overwrite
-node ~/.agents/skills/erlin-feishu-wiki/assets/upload_verify.mjs both --confirm-overwrite
+SKILL_DIR="<本技能目录>"  # 宿主注入的技能实际安装路径
+node "$SKILL_DIR/assets/upload_verify.mjs" verify
+node "$SKILL_DIR/assets/upload_verify.mjs" upload --dry-run
+node "$SKILL_DIR/assets/upload_verify.mjs" upload --confirm-overwrite
+node "$SKILL_DIR/assets/upload_verify.mjs" both --confirm-overwrite
 ```
 
-**脚本配置**：编辑 `assets/upload_verify.mjs` 顶部的两个对象：
+**脚本配置**：**不要编辑脚本本身**——技能目录经 symlink 就是 erlin-skills 的 git 工作树，真实 token 写进脚本顶部会被一次 commit 带进公开历史。配置写到项目内 JSON（加入 `.gitignore`），用环境变量指给脚本：
 
-```js
-const T = {
-  "00-home": "<doc-token>",
-};
+```sh
+# .erlin/feishu-config.json（gitignore，不进 git）
+{ "T": { "00-home": "<doc-token>" },
+  "KEYS": { "00-home": { "源码目录树": 1, "一次": 1 } } }
 
-const KEYS = {
-  "00-home": {
-    "源码目录树": 1,
-    "一次": 1,
-  },
-};
+FEISHU_WIKI_CONFIG=.erlin/feishu-config.json node "$SKILL_DIR/assets/upload_verify.mjs" verify
 ```
 
 `T` 是文件名到文档 token 的映射；`KEYS` 是每页必须出现的文本到期望出现次数的映射。脚本会拒绝空配置，不会把“没有断言”报告为“全部命中”。默认草稿目录是 `.erlin/course/`，启动前会检查本地文件存在。

@@ -60,7 +60,13 @@ export function buildSpec(outputSpec, brand, fontFile) {
     ink: resolveColor(brand, "ink"),
     accent: resolveColor(brand, "accent"),
     secondary: resolveColor(brand, "secondary"),
-    motif: brand.motif.map((hex) => hexToRgb(hex)),
+    motif: (() => {
+      // decor:dots 的角落点按索引取色，少于 3 色无法成组——早报错，别留给 swift 运行时
+      if (!Array.isArray(brand.motif) || brand.motif.length < 3) {
+        throw new Error(`brand.motif 至少需要 3 个颜色（实际 ${brand.motif?.length ?? 0}）`);
+      }
+      return brand.motif.map((hex) => hexToRgb(hex));
+    })(),
     logoText: outputSpec.logoText ?? null,
     title1: outputSpec.title1,
     title2: outputSpec.title2 ?? null,

@@ -11,20 +11,36 @@
  * 配置：填写 T（文件名 -> doc token）与 KEYS（关键词 -> 期望次数）。
  * 可用 DRAFT_DIR 环境变量覆盖默认的 .erlin/course/ 草稿目录。
  */
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 
 const DRAFT_DIR = process.env.DRAFT_DIR || ".erlin/course";
 
 // 文件名 -> doc token。不要把真实 token 提交到公共仓库。
-const T = {
+let T = {
   // "00-home": "<doc-token>",
 };
 
 // 文件名 -> 关键词 -> 期望出现次数。
-const KEYS = {
+let KEYS = {
   // "00-home": { "源码目录树": 1, "一次": 1 },
 };
+
+// 优先从外部 JSON 读配置（技能目录经 symlink 即 git 工作树，真实 token 写进
+// 脚本顶部会被一次 commit 带进公开历史）。用法：
+//   FEISHU_WIKI_CONFIG=.erlin/feishu-config.json node upload_verify.mjs ...
+// JSON 形态：{ "T": { "<文件名>": "<doc-token>" }, "KEYS": { "<文件名>": { "<关键词>": <次数> } } }
+// 该文件应加入项目 .gitignore。未设环境变量时回退到上方占位（会被空配置检查拒绝）。
+if (process.env.FEISHU_WIKI_CONFIG) {
+  const cfgPath = process.env.FEISHU_WIKI_CONFIG;
+  if (!existsSync(cfgPath)) {
+    console.error(`FEISHU_WIKI_CONFIG 指向的文件不存在: ${cfgPath}`);
+    process.exit(1);
+  }
+  const cfg = JSON.parse(readFileSync(cfgPath, "utf8"));
+  if (cfg.T) T = cfg.T;
+  if (cfg.KEYS) KEYS = cfg.KEYS;
+}
 
 let failed = false;
 

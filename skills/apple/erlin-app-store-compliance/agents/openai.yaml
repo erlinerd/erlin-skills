@@ -1,5 +1,5 @@
 interface:
   display_name: "App Store Compliance"
-  short_description: "iOS App 被 App Store 审核拒绝（尤其 IAP/付费：Guideline 4.10、3.1.1）后的整改"
+  short_description: "iOS App 被 App Store 审核拒绝（尤其 IAP/付费：Guideline 4.10）后的整改"
 policy:
   allow_implicit_invocation: true

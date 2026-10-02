@@ -14,10 +14,10 @@
 
 - **动效会拖慢首屏吗？**
 
-  不会：动效有叙事顺序且 reduced-motion 安全，低端机自动降级。
+  不会：动效有叙事顺序且 reduced-motion 安全。
 
 ## It's working if
 
 - 每步插画是"产品自己的迷你场景"，不是通用素材库风格。
 - 首屏有 display 级大字，动效按叙事顺序展开。
-- 开启 reduced-motion 后流程依然完整可用，低端机自动降级不卡顿。
+- 开启 reduced-motion 后流程依然完整可用。

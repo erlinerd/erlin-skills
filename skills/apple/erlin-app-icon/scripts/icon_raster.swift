@@ -188,6 +188,10 @@ func scanSubcommand(_ args: [String]) {
     guard let base = rep.bitmapData else {
         fail("无位图数据 \(args[0])")
     }
+    // 扫描按 8bit RGB/RGBA 逐像素读三通道；灰度/16bit 输入会错位读出假墨迹（假绿），直接拒绝
+    guard rep.samplesPerPixel >= 3, rep.bitsPerPixel == 32 else {
+        fail("scan 仅支持 8bit RGB/RGBA PNG，实际 \(args[0]): \(rep.bitsPerPixel)bit/\(rep.samplesPerPixel)通道")
+    }
     let width = rep.pixelsWide
     let height = rep.pixelsHigh
     let bytesPerRow = rep.bytesPerRow

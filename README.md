@@ -3,7 +3,7 @@
 > The AI coding workflow skill library for indie developers — one system covering idea → code → App Store release → marketing assets.
 > 独立开发者的 AI 编码工作流技能库：想法 → 代码 → 上架 → 获客，一条链。
 
-**Not a prompt collection.** Every skill is part of a machine-validated system: 27 skills in four buckets, kept in sync by contract tests across the routing table, flow map, plugin manifest, docs tree, and invocation policies. It is the only open-source library covering the full App Store shipping chain, and its course skills are designed on QM/OSCQR/Bloom academic standards.
+**Not a prompt collection.** Every skill is part of a machine-validated system: 24 skills in four buckets, kept in sync by contract tests across the routing table, flow map, plugin manifest, docs tree, and invocation policies. It is the only open-source library covering the full App Store shipping chain, and its course skills are designed on QM/OSCQR/Bloom academic standards.
 
 PRs welcome. 见 [CONTRIBUTING.md](./CONTRIBUTING.md)。
 
@@ -13,9 +13,9 @@ Three failure modes this library is built against:
 
 **1. Undisciplined vibe coding.** The agent ships something, but nothing proves it works, and the diff grows beyond what the task needed. The fix is a discipline layer that runs during the work, not after: [erlin-dev-standards](./skills/workflow/erlin-dev-standards/SKILL.md) (read before editing, minimal diff, evidence-backed completion), [erlin-bdd](./skills/workflow/erlin-bdd/SKILL.md) (behavior specs that cross the unit-test threshold), [erlin-arch-review](./skills/workflow/erlin-arch-review/SKILL.md) (seven-principle scored review with file:line evidence).
 
-**2. The App Store chain scattered across a dozen tools.** Icon design, dev builds, screenshots, rejection remediation, App Store Connect ops, social promos — each a separate app or manual ritual. The fix is one chain in the [apple](./skills/apple/README.md) bucket: [erlin-app-icon](./skills/apple/erlin-app-icon/SKILL.md) → [erlin-app-dev-build](./skills/apple/erlin-app-dev-build/SKILL.md) → [erlin-app-store-marketing](./skills/apple/erlin-app-store-marketing/SKILL.md) → [erlin-app-store-compliance](./skills/apple/erlin-app-store-compliance/SKILL.md) → [erlin-asc](./skills/apple/erlin-asc/SKILL.md), then [erlin-social-assets](./skills/web/erlin-social-assets/SKILL.md) for launch day.
+**2. The App Store chain scattered across a dozen tools.** Icon design, dev builds, screenshots, rejection remediation, App Store Connect ops, social promos — each a separate app or manual ritual. The fix is one chain in the [apple](./skills/apple/README.md) bucket: [erlin-app-icon](./skills/apple/erlin-app-icon/SKILL.md) (incl. dev-badge builds) → [erlin-app-store-marketing](./skills/apple/erlin-app-store-marketing/SKILL.md) → [erlin-app-store-compliance](./skills/apple/erlin-app-store-compliance/SKILL.md) → [erlin-asc](./skills/apple/erlin-asc/SKILL.md), then [erlin-social-assets](./skills/web/erlin-social-assets/SKILL.md) for launch day.
 
-**3. Courseware without instructional design.** "Write me a course" produces confident slides nobody learns from. The fix is backward design with teeth: [erlin-course-create](./skills/garden/erlin-course-create/SKILL.md) (objectives before content, Bloom verbs, Gagné skeleton) and [erlin-course-review](./skills/garden/erlin-course-review/SKILL.md) (QM/OSCQR-based pass/conditional/fail verdict).
+**3. Courseware without instructional design.** "Write me a course" produces confident slides nobody learns from. The fix is backward design with teeth: [erlin-course](./skills/garden/erlin-course/SKILL.md) — creation mode (objectives before content, Bloom verbs, Gagné skeleton) plus review mode (QM/OSCQR-based pass/conditional/fail verdict).
 
 How the skills connect into end-to-end flows: [FLOW-MAP](./skills/workflow/erlin-meta/FLOW-MAP.md).
 
@@ -37,7 +37,7 @@ cd erlin-skills && ./scripts/link-skills.sh
 
 ## Skills
 
-27 skills in four buckets (`skills/<bucket>/`); retired skills go to `_attic`. Per-bucket listings in each bucket README; human docs at `docs/<bucket>/<skill>.md`. This section is a tour — the authoritative trigger source is each SKILL.md frontmatter.
+24 skills in four buckets (`skills/<bucket>/`); retired skills go to `_attic`. Per-bucket listings in each bucket README; human docs at `docs/<bucket>/<skill>.md`. This section is a tour — the authoritative trigger source is each SKILL.md frontmatter.
 
 Every skill declares a **maturity level** in its frontmatter (`maturity: engineering | productivity | in-progress | deprecated`), mirroring [mattpocock/skills](https://github.com/mattpocock/skills)'s lifecycle folders: it tells you how battle-tested a skill is, while the bucket tells you what domain it serves. Contract tests enforce valid levels, and `deprecated` skills never ship in the plugin.
 
@@ -56,16 +56,15 @@ Every skill declares a **maturity level** in its frontmatter (`maturity: enginee
 | [erlin-app-store-marketing](./skills/apple/erlin-app-store-marketing/SKILL.md) | apple | Submission captures + ASO marketing compositions |
 | [erlin-app-store-compliance](./skills/apple/erlin-app-store-compliance/SKILL.md) | apple | Rejection remediation + listing localization |
 | [erlin-asc](./skills/apple/erlin-asc/SKILL.md) | apple | App Store Connect API operations (user-invoked) |
-| [erlin-app-dev-build](./skills/apple/erlin-app-dev-build/SKILL.md) | apple | Dev-badged debug builds for iOS/macOS |
 | [erlin-app-coding-standards](./skills/apple/erlin-app-coding-standards/SKILL.md) | apple | Swift 6 / SwiftUI coding & project standards |
 
 ### Productivity (8) — solid, single-purpose helpers
 
-Metric experiment loops ([erlin-auto-research](./skills/workflow/erlin-auto-research/SKILL.md)), onboarding screens ([erlin-app-onboarding](./skills/apple/erlin-app-onboarding/SKILL.md)), launch-day promo assets ([erlin-social-assets](./skills/web/erlin-social-assets/SKILL.md)), web motion ([erlin-web-motion](./skills/web/erlin-web-motion/SKILL.md)), terminal-style landing pages ([erlin-web-warm-terminal-design](./skills/web/erlin-web-warm-terminal-design/SKILL.md)), LAN preview ([erlin-web-lan-preview](./skills/web/erlin-web-lan-preview/SKILL.md)), WeChat download links ([erlin-web-wechat-download](./skills/apple/erlin-web-wechat-download/SKILL.md)), workflow distillation ([erlin-skill-distill](./skills/garden/erlin-skill-distill/SKILL.md)).
+Metric experiment loops ([erlin-auto-research](./skills/workflow/erlin-auto-research/SKILL.md)), onboarding screens ([erlin-app-onboarding](./skills/apple/erlin-app-onboarding/SKILL.md)), launch-day promo assets ([erlin-social-assets](./skills/web/erlin-social-assets/SKILL.md)), web motion ([erlin-web-motion](./skills/web/erlin-web-motion/SKILL.md)), terminal-style landing pages ([erlin-web-warm-terminal-design](./skills/web/erlin-web-warm-terminal-design/SKILL.md)), WeChat download links ([erlin-web-wechat-download](./skills/web/erlin-web-wechat-download/SKILL.md)), workflow distillation ([erlin-skill-distill](./skills/garden/erlin-skill-distill/SKILL.md)).
 
 ### In progress (6) — personal workflow, not polished for public use
 
-[erlin-course-create](./skills/garden/erlin-course-create/SKILL.md) · [erlin-course-review](./skills/garden/erlin-course-review/SKILL.md) · [erlin-learning-plan](./skills/garden/erlin-learning-plan/SKILL.md) · [erlin-obsidian-wiki](./skills/garden/erlin-obsidian-wiki/SKILL.md) · [erlin-feishu-wiki](./skills/garden/erlin-feishu-wiki/SKILL.md) · [erlin-profile](./skills/garden/erlin-profile/SKILL.md) — shipped because the contract tests keep them working, but they carry personal conventions.
+[erlin-course](./skills/garden/erlin-course/SKILL.md) · [erlin-learning-plan](./skills/garden/erlin-learning-plan/SKILL.md) · [erlin-obsidian-wiki](./skills/garden/erlin-obsidian-wiki/SKILL.md) · [erlin-feishu-wiki](./skills/garden/erlin-feishu-wiki/SKILL.md) · [erlin-profile](./skills/garden/erlin-profile/SKILL.md) — shipped because the contract tests keep them working, but they carry personal conventions.
 
 ### Deprecated (0)
 

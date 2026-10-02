@@ -2,7 +2,7 @@
 name: erlin-app-store-marketing
 maturity: engineering
 description: >-
-  End-to-end App Store screenshot production: Part A submission-accurate captures (simulator shots, status bar override, OCR verification) and Part B high-conversion ASO marketing compositions (feature extraction, device frames, precise crops). Use for "ASO screenshots", "store screenshots", "marketing images" — even if not named. 生成 App Store 截图物料全流程——提审规格截图（模拟器拍摄、状态栏 override、OCR 逐项核验）与高转化 ASO 营销构图图（卖点提炼、配对、AI 增强、精确裁剪）。用户提到"ASO 截图""商店营销图""提审截图""App Store 截图""store screenshots""黄金时刻 10:08"时使用——即使没提 skill 名。
+  End-to-end App Store screenshot production: Part A submission-accurate captures (simulator shots, status bar override, OCR verification) and Part B high-conversion ASO marketing compositions (feature extraction, device frames, precise crops). Use for "ASO screenshots", "store screenshots", "marketing images" — even if not named. Social-media promo assets belong to erlin-social-assets. 生成 App Store 截图物料全流程——提审规格截图（模拟器拍摄、状态栏 override、OCR 逐项核验）与高转化 ASO 营销构图图（卖点提炼、配对、AI 增强、精确裁剪）。用户提到"ASO 截图""商店营销图""提审截图""App Store 截图""store screenshots""黄金时刻 10:08"时使用——即使没提 skill 名。
 when_to_use: 用户提到"ASO 截图""商店营销图""营销版截图""应用商店截图设计""aso screenshots""提审截图""App Store 截图""截图审核物料""store screenshots""截图素材""黄金时刻 10:08"时使用；相关截图/物料任务即触发，无需点名本技能。
 keywords:
   - ASO 截图
@@ -71,7 +71,7 @@ A2. **准备模拟器与拍摄**：
 A3. **缩放（脚本 scripts/resize.mjs）**：
 
 ```sh
-SKILL_DIR="$HOME/.agents/skills/erlin-app-store-marketing"
+SKILL_DIR="<本技能目录>"  # 以宿主给出的技能实际路径为准（symlink 安装时即 ~/.agents/skills/erlin-app-store-marketing）
 node "$SKILL_DIR/scripts/resize.mjs" <raw.png> <宽> <高> [输出.png]
 ```
 
@@ -149,7 +149,7 @@ curl -s -m 3 http://127.0.0.1:10100/v1/models | head -c 100
   - **Step 1: compose.mjs 出脚手架**（脚本在本 skill `scripts/` 下，路径以会话中给出的 skill base directory 为准）：
 
 ```bash
-SKILL_DIR="<本 skill 目录>"
+SKILL_DIR="<本技能目录>"
 mkdir -p screenshots/01-[slug] screenshots/02-[slug] screenshots/03-[slug] && \
 node "$SKILL_DIR/scripts/compose.mjs" --bg "[HEX]" --verb "[VERB1]" --desc "[DESC1]" \
   --screenshot [shot1.png] --output screenshots/01-[slug]/scaffold.png && \
@@ -159,13 +159,13 @@ node "$SKILL_DIR/scripts/compose.mjs" --bg "[HEX]" --verb "[VERB3]" --desc "[DES
   --screenshot [shot3.png] --output screenshots/03-[slug]/scaffold.png
 ```
 
-    输出像素精确的成品底图。脚手架是内部中间产物，不展示不确认，直接进 Step 2。
+    输出像素精确的布局脚手架（内部中间产物，永不交付）。不展示不确认，直接进 Step 2。
 
 - **Step 2: gen_image.mjs AI 增强 ×3 并行**（脚本同在 `scripts/`；未传 `--model` 或 `--effort` 时使用脚本默认值）。保存每个后台任务的 PID 并聚合退出码；任一版本失败就停止，不进入裁剪：
 
 ```bash
 set -uo pipefail
-SKILL_DIR="<本 skill 目录>"
+SKILL_DIR="<本技能目录>"
 pids=()
 versions=(v1 v2 v3)
 for V in "${versions[@]}"; do
@@ -201,13 +201,15 @@ TARGET_W=1290
 TARGET_H=2796
 for INPUT in screenshots/01-[slug]/v1.png screenshots/01-[slug]/v2.png screenshots/01-[slug]/v3.png; do
   OUTPUT="${INPUT%.png}-resized.jpg"
-  cp "$INPUT" "$OUTPUT"
-  W=$(sips -g pixelWidth "$OUTPUT" | tail -1 | awk '{print $2}')
-  H=$(sips -g pixelHeight "$OUTPUT" | tail -1 | awk '{print $2}')
+  W=$(sips -g pixelWidth "$INPUT" | tail -1 | awk '{print $2}')
+  H=$(sips -g pixelHeight "$INPUT" | tail -1 | awk '{print $2}')
   CROP_W=$(node -p "Math.round($H * $TARGET_W / $TARGET_H)")
   OFFSET_X=$(node -p "Math.round(($W - $CROP_W) / 2)")
-  sips --cropOffset 0 "$OFFSET_X" --cropToHeightWidth "$H" "$CROP_W" "$OUTPUT"
-  sips -z "$TARGET_H" "$TARGET_W" "$OUTPUT"
+  cp "$INPUT" "${INPUT%.png}-crop.png"
+  sips --cropOffset 0 "$OFFSET_X" --cropToHeightWidth "$H" "$CROP_W" "${INPUT%.png}-crop.png"
+  # -s format jpeg 完成真实格式转换：cp 改名 .jpg 不转码，产物会是 PNG 数据
+  sips -s format jpeg -z "$TARGET_H" "$TARGET_W" "${INPUT%.png}-crop.png" --out "$OUTPUT"
+  rm "${INPUT%.png}-crop.png"
   ACTUAL_W=$(sips -g pixelWidth "$OUTPUT" | tail -1 | awk '{print $2}')
   ACTUAL_H=$(sips -g pixelHeight "$OUTPUT" | tail -1 | awk '{print $2}')
   if [ "$ACTUAL_W" -ne "$TARGET_W" ] || [ "$ACTUAL_H" -ne "$TARGET_H" ]; then
@@ -220,6 +222,7 @@ done
 
     裁剪保顶对齐（左右等量裁掉，标题位置不动），再缩放到精确尺寸。其他档位改 `TARGET_W/TARGET_H`（6.5": 1242/2688；6.9": 1320/2868）。**任何图没跑完本步不许给用户看**——原始 AI 输出永远不是合规尺寸。原生提审规格图的缩放改用 `scripts/resize.mjs`（Part A A3，带纵横比守卫）。
 
+- **Step 3.5: OCR 核验文案未被 AI 篡改**：对每张 `-resized` 跑 `swift "$SKILL_DIR/scripts/ocr_screens.swift" <图>`，断言 `--verb`/`--desc` 传入的文案逐字命中；未命中即回 Step 1 重生成。模型无视觉工具时以此断言结果 + ASCII 缩略目检代替看图，交用户裁决。
 - **Step 4: 用户三选一**：用 Read 展示三张 `-resized` 版本，标 Version 1/2/3，让用户挑或提修改。
 - **Step 5: 迭代**：用户要改 → `gen_image.mjs` 传三张输入图（scaffold 定布局 + 风格模板定视觉 + 用户选中的版本定创意方向），迭代提示词模板逐字全文见 `references/prompt-templates.md`。同样 3 版本并行 + 立即裁剪，循环到满意。
 - **Step 6: 收编进 final/**：
@@ -239,7 +242,7 @@ node "$SKILL_DIR/scripts/showcase.mjs" \
   --output screenshots/showcase.png
 ```
 
-- **交付：询问是否开启预览服务**：交付物料前**询问用户**："是否开启局域网预览服务看这批图？" 是 → 调用 `erlin-web-lan-preview` 的 `scripts/serve_lan.mjs <产物根目录> [--port]`，报 URL 给用户（手机同 Wi-Fi 可看）；否 → 只报本地路径。
+- **交付：询问是否开启预览服务**：交付物料前**询问用户**："是否开启局域网预览服务看这批图？" 是 → 调用 `erlin-social-assets` 的 `scripts/serve_lan.mjs <产物根目录> [--port]`，报 URL 给用户（手机同 Wi-Fi 可看）；否 → 只报本地路径。
 
 # 判断规则
 
@@ -247,7 +250,7 @@ node "$SKILL_DIR/scripts/showcase.mjs" \
 - **入口分叉**：只要提审图 → 只跑 Part A；只要营销图 → 直接进 Part B，但截图采集必须遵守 Part A 的拍摄与状态栏规范。
 - Benefit Discovery 只在无已确认卖点、或用户明确要求重做时执行；记忆全空 → 直接进 Benefit Discovery。
 - 用户选了泛泛的词要礼貌推回具体的版本；品牌色自动确定不问用户，用户可否决但不作为提问。
-- **A6 坑（来自真实项目）**：
+- **Part A 常见坑（来自真实项目）**：
   - **多台模拟器同开**：一律用 UDID，`booted` 会命中错误设备（截图内容错且难发现）。
   - **横屏截图**：`-landscape` 启动注入会持久化横屏锁（AppStorage 写入，卸载重装才清）；真横屏验证用 XCUITest 的 XCUIDevice 旋转 + 测试内 attachment。
   - **status_bar override 会跨启动残留**：拍摄完一轮后 `xcrun simctl status_bar <udid> clear` 恢复，避免影响后续调试。
@@ -317,7 +320,7 @@ v1/v2/v3 三后台任务 PID 全部退出码 0 → `screenshots/01-track/v1..v3.
 
 - `screenshots/raw/` 提审原生图 + 各规格档位规格图（每张过 A4 审核清单）。
 - `screenshots/final/` 每卖点一张批准成品 + `showcase.png` 三联预览图。
-- 告知用户每张对应 ASC 哪个档位槽位；询问是否开 `erlin-web-lan-preview` 局域网预览。
+- 告知用户每张对应 ASC 哪个档位槽位；询问是否开 `erlin-social-assets` 的局域网预览（serve_lan.mjs）。
 
 # 门禁
 
@@ -325,7 +328,7 @@ v1/v2/v3 三后台任务 PID 全部退出码 0 → `screenshots/01-track/v1..v3.
 - **任何图没跑完裁剪步骤不许给用户看**——原始 AI 输出永远不是合规尺寸；所有输出按实际像素核对，不达标即报错退出。
 - 每档位最多 10 张；AI 改了文字、动了布局、偏离风格模板 → 重生成。
 - 用户明确确认卖点前不进下一阶段；用户确认配对后才进 Generation；任一版本生成失败就停止，不进入裁剪。
-- 代理前置检查端点无响应不继续生成（请用户启动 opencodex 或确认其他 10100 端口的生图通道）。
+- 代理前置检查：端点无响应 ≠ 二进制不存在——先查本机是否有其他 10100 端口兼容生图通道；均无 → 与用户确认替代通道或请其启动 opencodex 后再继续，不静默跳过 Stage 2。
 - 空状态/加载页/设置页永远不进截图。
 - 拍摄完一轮后 `xcrun simctl status_bar <udid> clear` 恢复状态栏，避免影响后续调试。
 - 全套格式一致是硬要求（字体/字号/布局统一，纯色品牌底，禁止渐变/光晕/放射纹）。

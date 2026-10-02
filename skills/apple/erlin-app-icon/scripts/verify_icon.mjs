@@ -2,10 +2,11 @@
 // App 图标像素级验证（node + swift 扫描内核 icon_raster.swift，替代原 verify_icon.py）。
 //
 // 用法:
-//   node verify_icon.mjs <图片路径>... [--require-accent]
+//   node verify_icon.mjs <图片路径>... [--require-accent] [--accent-target x,y[,tol]]
 //
 // 扫描强调色(橙)/文字墨迹(暖白)像素 bbox,报告中心与理论中心(512)偏差。
-// 判定标准: 文字墨迹中心 = 512±2(AA 光晕);强调元素中心 = 宿主字形腹腔中心 ±1。
+// 判定标准: 文字墨迹中心 = 512±2(AA 光晕);强调元素中心 = 宿主字形腹腔中心 ±1
+// (对齐判定需传 --accent-target,坐标取 render_icon.mjs 输出的 `accent-target:` 行;不传则只打印偏差)。
 // 注意: bbox 为顶部原点(y 向下);Vision OCR 的 bbox 原点在左下(y 向上),别混。
 // 颜色判定阈值实现在 icon_raster.swift 的 scan 子命令（与 render_icon.mjs 共用,单一来源）。
 
@@ -89,12 +90,17 @@ function main() {
   let accentTarget = null;
   let accentTolerance = 1;
   if (targetIdx >= 0) {
-    const spec = (argv[targetIdx + 1] ?? "").split(",").map(Number);
+    const raw = argv[targetIdx + 1] ?? "";
+    const spec = raw.split(",").map(Number);
     if (spec.length >= 2 && spec.slice(0, 2).every((n) => Number.isFinite(n))) {
       // evaluate 里与 bbox 中心比较，这里把中心点展开成等价 bbox
       const [cx, cy] = spec;
       accentTarget = [cx, cy, cx, cy];
       if (spec.length === 3 && Number.isFinite(spec[2])) accentTolerance = spec[2];
+    } else {
+      // 传了 flag 就绝不允许被无声吞掉（否则对齐门禁整条不执行还 exit 0 = 假绿）
+      console.error(`--accent-target 需要 x,y[,tol] 数字参数，实际收到: "${raw}"`);
+      process.exit(2);
     }
   }
   const flagSet = new Set(["--require-accent", "--accent-target"]);

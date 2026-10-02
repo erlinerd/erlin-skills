@@ -64,7 +64,6 @@ ASC 常用 locale 码：`zh-Hans` 简体中文、`zh-Hant` 繁体中文、`en-US
 - ASC 网页连续快速加载可能触发限流空壳，等待或换会话可恢复
 - 启用 App Groups 能力的 App ID 可能无法删除（"appears to be in use"），需先从 App Group 移除
 - 上过架/TestFlight 的 Bundle ID 永久保留，删除 App ID 不释放
-- Hama、Perler 是注册商标，拼豆类 App 名与文案只用 fuse bead / 拼豆
 
 App Store 三技能互引：ASC 记录/Bundle 操作 → `erlin-asc`；截图物料/营销构图 → `erlin-app-store-marketing`；被拒整改/提审自查 → `erlin-app-store-compliance`。
 

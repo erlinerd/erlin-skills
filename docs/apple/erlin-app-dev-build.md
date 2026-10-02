@@ -1,5 +1,6 @@
 # erlin-app-dev-build
 
+> **Archived**：已并入 [erlin-app-icon](./erlin-app-icon.md)（references/dev-build.md）。本页保留历史记录。
 > What it does / When / Questions / It's working if —— 模板见 [.agents/writing-docs.md](../../.agents/writing-docs.md)。改技能行为必须同步本页。
 
 ## What it does

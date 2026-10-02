@@ -1,0 +1,5 @@
+interface:
+  display_name: "Course"
+  short_description: "课程制作与评审合一：逆向设计制作 + 三档判决评审"
+policy:
+  allow_implicit_invocation: true

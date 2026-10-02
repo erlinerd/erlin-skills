@@ -66,7 +66,7 @@ Erlin 的个人站动效方法论：给 Next.js/React 站点引入 motion 动效
 - **已有组件归属**：SkewReveal 入场、Parallax 视差、Magnetic 磁吸、MouseParallax 保留即可，新动效与它们同目录共存；若项目已有 `.zcode`/`.agents` 动效组件目录（如 `components/motion/`），新组件放同目录。
 - **server/client 边界**：服务器组件可直接渲染 `Reveal`（它是 client 组件，作为子组件使用无碍）。
 
-品味/方案决策 → `emil-design-eng`；RN/Expo 项目 → `animate`；动效完成前实际检查视觉、可及性与内容可见性；`review-animations` 仅用户显式调用；本技能管 Next.js/React 的 motion 实现技术。
+动效完成前实际检查视觉、可及性与内容可见性；本技能管 Next.js/React 的 motion 实现技术；RN/Expo 或其他栈的动画按同一原则直接实现，不依赖本技能脚本。
 
 
 # 输出格式

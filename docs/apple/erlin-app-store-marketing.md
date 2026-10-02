@@ -8,7 +8,7 @@
 
 ## When to reach for it
 
-用户提到"ASO 截图""商店营销图""营销版截图""应用商店截图设计""aso screenshots""提审截图""App Store 截图""截图审核物料""store screenshots""截图素材""黄金时刻 10:08"时使用；相关截图/物料任务即触发，无需点名本技能。
+用户提到"ASO 截图""商店营销图""营销版截图""应用商店截图设计""aso screenshots""提审截图""App Store 截图""截图审核物料""store screenshots""截图素材""黄金时刻 10:08"时使用；相关截图/物料任务即触发，无需点名本技能。社媒宣传物料（Instagram/X/小红书等）不归本技能，走 erlin-social-assets。
 
 ## Common questions
 

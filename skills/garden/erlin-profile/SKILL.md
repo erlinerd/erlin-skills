@@ -26,7 +26,7 @@ Erlin 的个人知识库技能:把用户的习惯、信息、偏好以编号条�
    - `~/.me/` 现有条目(去重基准,已录的不再提)
    - 全局记忆 `~/.zcode/cli/memories/projects/*/memory/`(MEMORY.md 索引 + 各文件正文,重点看 Why / How to apply 里的行为描述)
    - `~/.agents/AGENTS.md`(workspace 指令里的输出风格与行为约定,就是用户习惯的直接声明)
-   - `~/.agents/skills/` 技能名清单(技能 = 已沉淀的习惯,反映用户重复劳动的领域)
+   - 宿主可见的技能名清单(技能 = 已沉淀的习惯,反映用户重复劳动的领域)
    - `~/Code/Projects/*` 的 git 历史(commit message 风格、分支行为、提交颗粒度)
    - `~/Code/Projects/` 目录布局(技术栈与项目形态习惯)
 2. **提取候选**:重复出现的行为模式 → 一条习惯;每条标注来源(如"来源:git 历史")。过滤敏感信息。

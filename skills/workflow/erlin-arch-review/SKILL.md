@@ -2,8 +2,8 @@
 name: erlin-arch-review
 maturity: engineering
 description: >-
-  Architecture review across seven design principles (single responsibility, open-closed, low coupling, component reuse, ...): per-principle scored cards with file:line evidence, plus a remediation list ranked by impact x cost. Use for "architecture review", "code quality", "refactoring advice", "too much coupling" — even if not named; diff compliance review goes to code-review. 架构评审（diff 合规审查走 code-review）：从单一职责、开闭原则、低耦合、组件复用等七原则评估代码的架构质量，输出逐原则评估卡 + 按影响×成本排序的整改清单。当用户说"架构评估""代码质量怎么样""重构建议""单一职责""耦合太高""组件复用"时使用——即使没提 skill 名；也适用于 erlin-autopilot 跑完后想要架构视角的审查。
-when_to_use: 从单一职责、开闭、低耦合、组件复用等七原则评估仓库/模块/组件/diff 的架构质量，输出评估卡与整改清单时使用；用户说"架构评估/代码质量怎么样/重构建议"即触发。分支/PR 的 diff 合规评审使用 code-review。
+  Architecture review across seven design principles (single responsibility, open-closed, low coupling, component reuse, ...): per-principle scored cards with file:line evidence, plus a remediation list ranked by impact x cost. Use for "architecture review", "code quality", "refactoring advice", "too much coupling" — even if not named. 架构评审：从单一职责、开闭原则、低耦合、组件复用等七原则评估代码的架构质量，输出逐原则评估卡 + 按影响×成本排序的整改清单。当用户说"架构评估""代码质量怎么样""重构建议""单一职责""耦合太高""组件复用"时使用——即使没提 skill 名；也适用于 erlin-autopilot 跑完后想要架构视角的审查。
+when_to_use: 从单一职责、开闭、低耦合、组件复用等七原则评估仓库/模块/组件/diff 的架构质量，输出评估卡与整改清单时使用；用户说"架构评估/代码质量怎么样/重构建议"即触发。分支/PR 的 diff 合规评审（守约+实现规格两轴）由模型按 erlin-dev-standards 直接执行。
 keywords:
   - 代码架构
   - 代码结构
@@ -75,16 +75,16 @@ erlin-arch-review — 架构与设计原则审查
 - **信号**：跨页面/模块重复的组件与代码块、复制三次以上的函数、复用组件参数化程度不足（只能复制改）。
 - **证据**：点名重复组和它的出现次数（精确 grep 计数）。
 
-**与相邻技能的分工与配合**：与 Matt 的 `/code-review` 分工——那个是 diff 级、看"标准 + 规格"（对没遵守约定、没实现需求）；这个是架构级、看"设计得怎么样"（值不值得长期住在里面）。是否组合取决于用户要求与审查范围，不强制重复评审。
+**与 diff 合规评审的分工**：diff 级合规评审（standards + spec 两轴：对没遵守约定、没实现需求）由模型按 erlin-dev-standards 直接执行；本技能是架构级、看"设计得怎么样"（值不值得长期住在里面）。是否组合取决于用户要求与审查范围，不强制重复评审。
 
-| 技能 | 回答的问题 |
+| 评审 | 回答的问题 |
 | --- | --- |
-| `/code-review`(Matt) | 这次改动守约了吗？实现规格了吗？ |
+| diff 合规自查（按 erlin-dev-standards） | 这次改动守约了吗？实现规格了吗？ |
 | `erlin-arch-review` | 代码结构值得长住吗？ |
-| `/erlin-product-review` | 产品值得做吗？做得好吗？怎么更好？ |
-| `/erlin-autopilot` | 一堆任务怎么并行又快又稳地做完？ |
+| `erlin-product-review` | 产品值得做吗？做得好吗？怎么更好？ |
+| `erlin-autopilot` | 一堆任务怎么并行又快又稳地做完？ |
 
-erlin-autopilot 的门禁默认跑 Matt 的 code-review；想要架构视角就再跑一次 `erlin-arch-review` 技能——它不限于 diff，能评整个代码库，正好补 erlin-autopilot 只看合并结果的盲区。
+erlin-autopilot 的门禁默认做 diff 两轴自查；想要架构视角就再跑一次 `erlin-arch-review` 技能——它不限于 diff，能评整个代码库，正好补 erlin-autopilot 只看合并结果的盲区。
 
 # 输出格式
 

@@ -48,16 +48,22 @@ describe("skill catalog contract", () => {
   const names = skills.map((s) => s.name);
 
   it("keeps the catalog at the expected size", () => {
-    expect(skills).toHaveLength(27);
+    expect(skills).toHaveLength(24);
     expect(names.every((n) => n.startsWith("erlin-"))).toBe(true);
   });
 
   it("requires every skill to declare description and keywords", () => {
     for (const s of skills) {
+      // 兼容单行与 folded (`>-`) 两种形态；folded 时首行只有标点，必须捕获后续正文
+      const desc =
+        s.frontmatter
+          .match(/^description:\s*(?:[>|][-+]*)?\s*\n?([\s\S]*?)(?=\n[a-z_]+:|$)/m)?.[1]
+          ?.replace(/\n\s+/g, " ")
+          .trim() ?? "";
       expect(
-        s.frontmatter.match(/^description:\s*(.+)$/m)?.[1],
-        `${s.name} missing description`,
-      ).toBeTruthy();
+        desc.length,
+        `${s.name} description missing or too short`,
+      ).toBeGreaterThan(40);
       const kwBlock = s.frontmatter.match(
         /^keywords:[ \t]*\n((?:[ \t]*-[ \t]*.*(?:\n|$))*)/m,
       )?.[1];
@@ -65,6 +71,10 @@ describe("skill catalog contract", () => {
         ? kwBlock.split("\n").filter((l) => l.trim()).length
         : 0;
       expect(kwCount, `${s.name} missing keywords`).toBeGreaterThan(0);
+      expect(
+        s.frontmatter.match(/^when_to_use:\s*\S/m),
+        `${s.name} missing when_to_use`,
+      ).toBeTruthy();
     }
   });
 
@@ -77,11 +87,29 @@ describe("skill catalog contract", () => {
       missing.length === 0 && unknown.length === 0,
       `meta table out of sync (missing: ${missing.join(", ")}; unknown: ${unknown.join(", ")})`,
     ).toBe(true);
+    // 逐小节校验：表自称「分组与目录桶一一对应」，行必须落在自己桶的小节里
+    for (const bucket of BUCKETS) {
+      // 不带 m 标志：$ 只匹配串尾，否则惰性捕获在每个行尾提前满足
+      const section = meta.match(
+        new RegExp(`### ${bucket}[^\\n]*\\n([\\s\\S]*?)(?=\\n### |\\n## |$)`),
+      )?.[1];
+      expect(section, `meta table missing '### ${bucket}' section`).toBeTruthy();
+      const rows = [...(section ?? "").matchAll(/\| `([^`]+)` \|/g)].map((m) => m[1]);
+      const expected = skills.filter((s) => s.bucket === bucket).map((s) => s.name);
+      const misplaced = expected.filter((n) => !rows.includes(n));
+      const foreign = rows.filter((n) => !expected.includes(n));
+      expect(
+        misplaced.length === 0 && foreign.length === 0,
+        `meta '${bucket}' section out of sync (misplaced: ${misplaced.join(", ")}; foreign: ${foreign.join(", ")})`,
+      ).toBe(true);
+    }
   });
 
   it("keeps FLOW-MAP placements in sync with directories", () => {
     const map = fs.readFileSync(FLOW_MAP, "utf8");
-    const unplaced = names.filter((n) => !map.includes(n));
+    // 行级反引号捕获，避免短名（erlin-asc 等）被无关子串误满足
+    const placed = [...map.matchAll(/`([^`]+)`/g)].map((m) => m[1]);
+    const unplaced = names.filter((n) => !placed.includes(n));
     expect(
       unplaced.length === 0,
       `FLOW-MAP missing placements: ${unplaced.join(", ")}`,

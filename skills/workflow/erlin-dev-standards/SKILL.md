@@ -3,7 +3,7 @@ name: erlin-dev-standards
 maturity: engineering
 description: >-
   Generic engineering discipline for writing or changing code in any language: read before editing, minimal diff, evidence-backed completion, never fail silently. Use when implementing features, fixing bugs, refactoring, claiming work done, running tests or builds, triaging errors, or judging whether a change is acceptable — even if the skill is not named. 写代码时的通用工程规范（任何语言任何项目）——改动前先读、最小切口、证据闭环、失败不静默。动手写或改代码前、准备声称"完成/修好"前、跑测试或构建时、定位报错原因时、判断"这算不算通过"时、要开 worktree 隔离改动时、安排多任务/多票推进时使用——即使没提 skill 名。
-when_to_use: 写、改代码与推进任务的全程使用：被要求“实现/加个功能/修个 bug/重构”、写完准备声称完成、跑测试或构建、定位报错原因、判断“这算不算通过”、开 worktree 或并行隔离改动、安排多任务/多票推进或决定串行还是并行，以及拿捏“这样改行吗”“要不要抽象一下”这类实现决策时使用。与 erlin-arch-review（事后审架构）互补：本技能管写的时候，那个管写完之后。Swift/SwiftUI 项目额外叠加 erlin-app-coding-standards。
+when_to_use: 作为叠加纪律使用——任务命中专项技能（动效/截图/课程/图标等）时由专项技能任主技能，本技能同时加载。写、改代码与推进任务的全程使用：被要求“实现/加个功能/修个 bug/重构”、写完准备声称完成、跑测试或构建、定位报错原因、判断“这算不算通过”、开 worktree 或并行隔离改动、安排多任务/多票推进或决定串行还是并行，以及拿捏“这样改行吗”“要不要抽象一下”这类实现决策时使用。与 erlin-arch-review（事后审架构）互补：本技能管写的时候，那个管写完之后。Swift/SwiftUI 项目额外叠加 erlin-app-coding-standards。
 keywords:
   - 写代码
   - 改代码
@@ -61,14 +61,12 @@ requires: []
 2. **最小切口**：只改需求必要部分；不顺手重构、格式化或修复无关旧问题。抽象等到第三次重复；单函数超过 60 行、嵌套超过 3 层、新增参数超过 5 个等信号出现时停下重想。
 3. **按边界明确契约**：公共接口、跨模块协作和实现票据先明确出入参、错误、边界、并发隔离与验收，必要时写类型和签名。先检查项目内已有能力，遇到陌生 API 或选型问题再查官方资料。内部辅助函数不要求逐个签名清单、空实现或用户审批；既有需求与授权足够明确时直接实现，只把未决产品、兼容性或权限选择交给用户。测试围绕可观察行为与风险组织，不按函数数量凑测试；文案和低风险配置修改优先使用现有校验。详见[工程改动纪律](references/engineering-discipline.md)。
 4. **中大型任务在契约清单之上先写任务级 Spec**：凡跨模块、新公共 API、状态机、持久化、事件或外部集成，按 medium 起步必须 Spec；架构变化、migration、多个独立 vertical slice 属 large，另加任务依赖图。字段标准与验收线见[Spec 契约标准](references/spec-contract.md)。
-5. **按假设排障**：列出 1–3 个按概率×验证成本排序的原因；为每个原因构造最小复现；确认后做最小修复并补防回归测试。连续三次失败就停止并暴露最可疑假设。难定位的 bug 或性能回归，改走 `diagnosing-bugs` 的反馈回路。
+5. **按假设排障**：列出 1–3 个按概率×验证成本排序的原因；为每个原因构造最小复现；确认后做最小修复并补防回归测试。连续三次失败就停止并暴露最可疑假设。难定位的 bug 或性能回归，用「假设→最小复现→确认→修复+防回归」反馈回路，连续失败即换假设不加码。
 6. **Git 与隔离开发**：
    - **并行优先**：多个可独立推进的任务并存时，默认先评估并行，不默认顺着列表逐个做；选串行必须给出理由（文件重叠、阻塞边、成本）。判据与载体见 [Git 工作流与提交规范](references/git.md) §4。
    - **并行判据**：文件/缝不重叠 **且** 无阻塞边才并行；触碰同一文件、同一模块缝或互为输入的任务排串行。
    - **并行纪律**：一任务一 worktree（`../<repo>-worktree/<task-slug>/`）；同时活跃 ≤3；合并逐张收、逐张过验证门，不攒批；并行单元内部不降级——契约先行、测试、门禁照常。
-   - worktree 默认建在**仓库外** `../<repo>-worktree/<directory-slug>/`；创建前检查仓库根、工作区状态、已有分支（已存在则恢复，不重建）、base branch、已有 worktrees 和目标路径；不默认删除，清理前过清理门。细节见 [Git 工作流与提交规范](references/git.md) §1；已有编排器被有意启用时由编排器拥有 worktree 生命周期。
-   - 新 worktree 从已提交基准分支创建；主工作区未提交改动不会自动带入。
-   - XcodeGen、Tuist 等生成型工程在新 worktree 中先生成工程再构建。
+   - worktree 默认建在**仓库外** `../<repo>-worktree/<task-slug>/`；创建前检查、生成型工程与清理纪律见 [Git 工作流与提交规范](references/git.md) §1；已有编排器被有意启用时由编排器拥有 worktree 生命周期。
    - 分支与基准遵循当前仓库策略；没有策略时从当前任务的正确基准开描述性分支，不引入全局 Gitflow、不创建 develop、不改写历史。
    - commit / push 按用户现有授权执行，不作为每次改动的强制收尾；提交时保持单一意图，只包含本任务改动。
 
@@ -93,7 +91,7 @@ requires: []
 
 - 按需输出公共或跨模块契约（出入参、错误、边界、并发隔离）；内部签名无需逐项审批。
 - 任务级 Spec：字段标准与验收线见[Spec 契约标准](references/spec-contract.md)。
-- worktree 路径：仓库外 `../<repo>-worktree/<directory-slug>/`。
+- worktree 路径：仓库外 `../<repo>-worktree/<task-slug>/`。
 - 提交标题默认 `<type>: <中文描述>`；提交前检查 `git diff`、`git diff --cached` 和 `git status`，确保只提交当前任务。
 
 # 示例

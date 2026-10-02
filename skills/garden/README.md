@@ -4,8 +4,7 @@
 
 ## Model-invoked
 
-- [erlin-course-create](./erlin-course-create/SKILL.md) — 课程制作的引导流程——逆向设计 (UbD)：先定学习目标和评估、后写正文，叠加 Bloom 可观察动词、Gagné 九事
-- [erlin-course-review](./erlin-course-review/SKILL.md) — 严格评审课程/课件——按通用课程标准（QM 8 大类、OSCQR、Bloom 修订版、逆向设计对齐、Gagné 九事件、
+- [erlin-course](./erlin-course/SKILL.md) — 课程制作与评审合一——制作走逆向设计（画像→Bloom 目标→评估先于正文→Gagné 骨架→正文→必过评审），评审给三档判决与 P0/P1/P2 分级清单
 - [erlin-learning-plan](./erlin-learning-plan/SKILL.md) — 把一个项目、代码库或文档集安排成一份可执行的系统学习计划——在项目 `.erlin/course/` 生成首页源码/内容
 - [erlin-obsidian-wiki](./erlin-obsidian-wiki/SKILL.md) — 在 Obsidian vault 里按 Karpathy 的 LLM Wiki pattern、用官方 obsidian
 - [erlin-profile](./erlin-profile/SKILL.md) — 用户个人知识库——习惯、信息、偏好，以编号条目存于 ~/.me/（XDG 风格用户目录）。用户说"录入/记一下/保存 x

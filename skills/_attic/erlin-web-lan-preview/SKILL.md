@@ -24,9 +24,10 @@ keywords:
 2. **起服务 / 查列表 / 停服务**：
 
    ```sh
-   node ~/.agents/skills/erlin-web-lan-preview/scripts/serve_lan.mjs <目录> [--port 8765]
-   node ~/.agents/skills/erlin-web-lan-preview/scripts/serve_lan.mjs --list
-   node ~/.agents/skills/erlin-web-lan-preview/scripts/serve_lan.mjs --stop <port|all>
+   SKILL_DIR="<本技能目录>"  # 宿主注入的技能实际安装路径
+   node "$SKILL_DIR/scripts/serve_lan.mjs" <目录> [--port 8765]
+   node "$SKILL_DIR/scripts/serve_lan.mjs" --list
+   node "$SKILL_DIR/scripts/serve_lan.mjs" --stop <port|all>
    ```
 
 3. **报 URL**：输出即 URL：`已启动: http://<本机局域网IP>:<端口>`，直接给用户，手机同 Wi-Fi 打开即可。报 URL 用输出的完整地址，不猜 IP；`--list` 可随时查。
@@ -65,7 +66,7 @@ keywords:
 
 ### serve_lan.mjs
 
-`node ~/.agents/skills/erlin-web-lan-preview/scripts/serve_lan.mjs .scratch/social/out/` 输出 `已启动: http://<本机局域网IP>:8765`，进程常驻；画廊首页按子目录分组列出图片并标注尺寸。默认 10 分钟无请求自动退出；`--stop 8765` 即刻关闭并清理注册表记录。
+`node "$SKILL_DIR/scripts/serve_lan.mjs" .scratch/social/out/`（SKILL_DIR=本技能实际安装路径） 输出 `已启动: http://<本机局域网IP>:8765`，进程常驻；画廊首页按子目录分组列出图片并标注尺寸。默认 10 分钟无请求自动退出；`--stop 8765` 即刻关闭并清理注册表记录。
 
 ## 最终输出
 

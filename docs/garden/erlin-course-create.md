@@ -1,5 +1,6 @@
 # erlin-course-create
 
+> **Archived**：已并入 [erlin-course](./erlin-course.md)（制作模式）。本页保留历史记录。
 > What it does / When / Questions / It's working if —— 模板见 [.agents/writing-docs.md](../../.agents/writing-docs.md)。改技能行为必须同步本页。
 
 ## What it does
@@ -8,7 +9,7 @@
 
 ## When to reach for it
 
-从零设计课程、写单节课时、搭课时结构、把主题变成可教学的内容，或对已有课件做结构性修改/润色时使用。只评不写时用 erlin-course-review；只管课件承载代码的实现时用 erlin-dev-standards。
+从零设计课程、写单节课时、搭课时结构、把主题变成可教学的内容，或对已有课件做结构性修改/润色时使用。只评不写时用 erlin-course-review；只管课件承载代码的实现时用 erlin-dev-standards。把项目/代码库排成个人系统学习计划用 erlin-learning-plan。
 
 ## Common questions
 

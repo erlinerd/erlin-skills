@@ -23,8 +23,8 @@ Erlin 的技能蒸馏方法论:完成一段有价值的工作后,判断它是否
 
 1. **从对话历史提取,不凭空编**:工具调用顺序、用户纠正过的地方(这些是最有价值的信号)、输入/输出格式、产物路径。
 2. **对照判断标准**(见「判断规则 · 判断标准」):值得才继续;不值得就说明理由,建议放记忆或 AGENTS.md。
-3. **写 SKILL.md**:源码落 erlin-skills 仓库 `packages/resources/skills/erlin-<name>/SKILL.md`,保留 frontmatter 必填 name/description/keywords；正文按需要写触发、流程、边界与示例，已有六段可沿用，新技能不强制凑齐。优先补现有技能，避免重复。
-4. **注册**:erlin-meta「Erlin 技能清单」对应分组加表格行(需要进每会话速查表再加「高频入口」行)+ `skill-metadata.test.ts` 计数改数;`pnpm test` 全绿。
+3. **写 SKILL.md**:源码落 erlin-skills 仓库 `skills/<bucket>/erlin-<name>/SKILL.md`(bucket 从 workflow/apple/web/garden 选),保留 frontmatter 必填 name/description/keywords；正文按需要写触发、流程、边界与示例，已有六段可沿用，新技能不强制凑齐。优先补现有技能，避免重复。
+4. **注册**:erlin-meta「Erlin 技能清单」对应分组加表格行(需要进每会话速查表再加「高频入口」行)+ `tests/skill-catalog.test.ts` 计数改数;该测试还强制 maturity 字段、`agents/openai.yaml` 镜像、`docs/<bucket>/<name>.md`、`.claude-plugin/plugin.json`、FLOW-MAP、bucket README 同步;`pnpm test` 全绿。
 5. **测试**:用 2-3 个真实提示走一遍,检查触发是否正常、输出是否贴合。
 6. **迭代**:测试发现问题就改,改完重测;过拟合的规则宁可删。仅用户授权时 commit；不自动修改记忆索引。
 
@@ -55,10 +55,10 @@ Erlin 的技能蒸馏方法论:完成一段有价值的工作后,判断它是否
 
 # 输出格式
 
-- **源码唯一位置**:erlin-skills 仓库 `packages/resources/skills/<name>/SKILL.md`,由 erli symlink 进 `~/.agents/skills/`(本机改完即生效)。禁止直接在 `~/.agents/skills/` 手建 erlin-* 目录——不入 git、不被校验、不被调度。
+- **源码唯一位置**:erlin-skills 仓库 `skills/<bucket>/<name>/SKILL.md`,由 `scripts/link-skills.sh` symlink 进 `~/.agents/skills/`(本机改完即生效)。禁止直接在 `~/.agents/skills/` 手建 erlin-* 目录——不入 git、不被校验、不被调度。
 - 不放 `~/.zcode/skills/`:同名会覆盖 `~/.agents` 的安装。
 - 命名:`erlin-<kebab-case>`;目录名必须与 frontmatter `name` 一致。
-- 可复用代码放 `assets/`,长文档放 `references/`;正文反引号引用的本地路径必须真实存在(校验器强制)。
+- 可复用代码放 `assets/`,长文档放 `references/`;正文反引号引用的本地路径必须真实存在(人工核对,无自动校验)。
 - frontmatter、目录和资源引用满足现有校验；README 的六段示例仅作可选结构，不机械填空。
 
 # 示例

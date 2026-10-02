@@ -15,7 +15,7 @@ sips -g pixelWidth -g pixelHeight <dir>/*.png | grep -E "pixel|:"
 识别截图文字 + 包围盒坐标，核验表盘数字/界面文案是否完整、时间是否与状态栏一致。脚本遇到图片读取、OCR 执行或空结果时返回非零：
 
 ```sh
-SKILL_DIR="$HOME/.agents/skills/erlin-app-store-marketing"
+SKILL_DIR="<本技能目录>"  # 宿主注入的技能实际安装路径；symlink 安装时即 ~/.agents/skills/erlin-app-store-marketing
 swift "$SKILL_DIR/scripts/ocr_screens.swift" <image_path> ...
 ```
 
@@ -30,7 +30,7 @@ swift "$SKILL_DIR/scripts/ocr_screens.swift" <image_path> ...
 平均 RGB + 采样区颜色，核验皮肤色调（暗底/暖白/琥珀）。脚本遇到图片读取、像素缓冲区或空采样时返回非零：
 
 ```sh
-SKILL_DIR="$HOME/.agents/skills/erlin-app-store-marketing"
+SKILL_DIR="<本技能目录>"  # 宿主注入的技能实际安装路径；symlink 安装时即 ~/.agents/skills/erlin-app-store-marketing
 swift "$SKILL_DIR/scripts/avg_color.swift" <image_path> ...
 ```
 

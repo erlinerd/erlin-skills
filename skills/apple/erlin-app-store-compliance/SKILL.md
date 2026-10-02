@@ -2,7 +2,7 @@
 name: erlin-app-store-compliance
 maturity: engineering
 description: >-
-  App Store rejection remediation (especially IAP: Guideline 4.10, 3.1.1), pre-submission audits, and listing metadata localization (description/keywords/subtitle, en-US default). Use when rejected, before submitting, or when translating store copy. iOS App 被 App Store 审核拒绝（尤其 IAP/付费：Guideline 4.10、3.1.1）后的整改与提审前自查——Pro 卖点重定位为 App 自身高级体验，扫清禁用表达；并负责提审文案多语言化。用户说"被拒了""审核被拒""4.10""提审前查一遍""翻译 App Store 文案"时使用——即使没提 skill 名。
+  App Store rejection remediation (especially IAP: Guideline 4.10), pre-submission audits, and listing metadata localization (description/keywords/subtitle, en-US default). Use when rejected, before submitting, or when translating store copy. iOS App 被 App Store 审核拒绝（尤其 IAP/付费：Guideline 4.10）后的整改与提审前自查——Pro 卖点重定位为 App 自身高级体验，扫清禁用表达；并负责提审文案多语言化。用户说"被拒了""审核被拒""4.10""提审前查一遍""翻译 App Store 文案"时使用——即使没提 skill 名。
 when_to_use: App 被拒审整改、提审前自查或提审文案多语言化时使用；用户说“被 App Store 拒了/审核被拒/4.10/不能卖 iCloud/订阅卖点整改/Pro 文案改改/提审前查一遍/翻译 App Store 文案/本地化商店元数据”即触发，无需点名本技能。范围含仓库外 RevenueCat Paywall / ASC IAP 商品的正确处理。
 keywords:
   - App Store 拒了
@@ -157,4 +157,4 @@ Text(NSLocalizedString("pro.paywall.title", comment: ""))
 - Pro 权益必须真实存在；没做的功能不许写进付费墙。
 - 源文案改了，已提交的 PNG/视频必须重渲、服务端/后台配置的 Paywall 文案必须同步改，否则不算完成。
 - 翻译校验全过才可交付：字符限额（描述 ≤ 4000 / 关键词 ≤ 100 逗号分隔不重复含空格计字符 / 推广文本 ≤ 170 / 副标题 ≤ 30 / 新增内容 ≤ 4000）；关键词按目标市场习惯重排；禁止逐字翻译腔。
-- 品牌红线（示例红线，源项目 Demo Clock 经验；项目 BRAND.md 优先，无则按项目语气自定）：全站/全文案禁用 em-dash（— 与 ——），英文用句号、冒号或逗号断开，中文用句号/逗号；不把「智能 / AI / 效率」当卖点词，语气安静、克制、器物感；诚实条款——说"无账号、无收集、完全本地"就必须做到；英文极简、短句、不用感叹号堆砌。
+- 品牌红线：先读项目 `docs/BRAND.md`（或等价品牌文档）锁定红线；无则问用户或按项目语气自定。诚实条款通用——文案承诺的（"无账号、无收集、完全本地"）必须做到。具体红线示例（em-dash 禁令、卖点词禁用、商标词等）见 `references/store-copy-example.md`。

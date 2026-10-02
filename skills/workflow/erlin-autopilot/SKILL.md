@@ -50,7 +50,7 @@ requires:
 6. **隔离执行环境 → Implement**：
    - 每个任务一个隔离上下文 + 一个子代理，并发上限 **3**（任务极小且追得过来才提高）。原生回退时用 `references/delegation-prompt.md` 模板派发，给 worktree **绝对路径**、Spec、验收标准。
    - 一任务一分支（按仓库分支策略命名，无策略时用 erlin-dev-standards 的 git.md 默认，base branch 按 erlin-dev-standards）；并行单元禁止共享 working tree。
-   - 子代理内部纪律不降级：erlin-dev-standards 全条款照常（契约先行、测试、验证门）；按行为风险选择测试；明确要求 TDD 时走 tdd 能力，完成前对自身 diff 做 review 并修复所发现的问题。能力名→具体技能映射查 `erlin-meta`。
+   - 子代理内部纪律不降级：erlin-dev-standards 全条款照常（契约先行、测试、验证门）；按行为风险选择测试；明确要求 TDD 时走红绿循环，完成前对自身 diff 做 standards+spec 两轴 review 并修复所发现的问题。技能路由查 `erlin-meta`。
    - 主会话只编排，不做任务本身——主会话一忙，worktree 里的代理就漂了。
 7. **Verify → Review → 按授权 Integrate**：
    - 待审交付点：验证并审查每个分支后保留分支/工作区，直接交付 brief；以下合并步骤仅在已获集成授权时执行。

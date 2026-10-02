@@ -30,14 +30,17 @@ keywords:
      - `GENERATE_INFOPLIST_FILE = YES`：Debug 设 `INFOPLIST_KEY_CFBundleDisplayName` = `XX Dev`
      - 手写 Info.plist：把 `CFBundleDisplayName` 的值改为 `$(DEV_DISPLAY_NAME)`，Debug 设 `XX Dev`、Release 设原名（变量注入细节见 references/advanced.md）
 3. **生成角标图标**：在 Assets.xcassets 下新建 `AppIcon-Dev.appiconset`，Contents.json 结构照抄现有 AppIcon.appiconset，用附带脚本生成 1024 图：
-   `node "$HOME/.agents/skills/erlin-app-dev-build/scripts/make_dev_icon.mjs" <正式图标.png> <AppIcon-Dev.appiconset/icon-1024.png>`
+   先设 `SKILL_DIR="<本技能目录>"`（宿主注入的技能实际路径），再跑 `node "$SKILL_DIR/scripts/make_dev_icon.mjs" <正式图标.png> <AppIcon-Dev.appiconset/icon-1024.png>`
    脚本默认**左上角白色标签 + 黑色 "dev" 文字**（规格：左上角、约图标 1/9 面积、dev 字体大、**仅右下角圆角**）；`dot` 样式可换橙色圆点（呼应 TestFlight 橙），用法见脚本头部注释。生成的 png 和复现所需脚本纳入本次差异，仅已有授权时提交，正式图标改版后重跑一次。
 4. **验证**：Debug、Release 双配置构建通过；Debug 产物 `CFBundleDisplayName` 为 `XX Dev`、图标集为 `AppIcon-Dev`；Release 产物的显示名、bundle id、图标与改动前完全一致。
 
 macOS 补充（仅角标，名称 id 均不动）：macOS 可按不同路径放置副本，但同 ID 仍可能共享偏好、容器或服务注册，不能承诺隔离；需要独立身份时使用不同 Bundle ID 并核查配套能力。macOS 没有系统图标蒙版（iOS 才有统一裁圆角），直角色标会盖住图标的透明圆角——左上角变直角、轮廓破缺。`make_dev_icon.mjs` 输出 1024 图后，把角标 alpha 与源图 alpha 相乘：
 
 ```swift
+// badge_1024 = make_dev_icon.mjs 输出的角标图；source_1024 = 原正式图标
 import AppKit
+let badge_1024 = CommandLine.arguments[1]
+let source_1024 = CommandLine.arguments[2]
 let badgeRep = NSBitmapImageRep(data: try Data(contentsOf: URL(fileURLWithPath: badge_1024)))!
 let iconRep = NSBitmapImageRep(data: try Data(contentsOf: URL(fileURLWithPath: source_1024)))!
 for y in 0..<badgeRep.pixelsHigh {
@@ -89,7 +92,7 @@ try badgeRep.representation(using: .png, properties: [:])!.write(to: URL(fileURL
 
 ### make_dev_icon.mjs（附带脚本）
 
-`node "$HOME/.agents/skills/erlin-app-dev-build/scripts/make_dev_icon.mjs" <正式图标.png> <AppIcon-Dev.appiconset/icon-1024.png>` → 输出 1024 图：左上角白色标签 + 黑色 "dev" 文字（约图标 1/9 面积、dev 字体大、仅右下角圆角）。
+先设 `SKILL_DIR="<本技能目录>"`（宿主注入的技能实际路径），再跑 `node "$SKILL_DIR/scripts/make_dev_icon.mjs" <正式图标.png> <AppIcon-Dev.appiconset/icon-1024.png>` → 输出 1024 图：左上角白色标签 + 黑色 "dev" 文字（约图标 1/9 面积、dev 字体大、仅右下角圆角）。
 
 ## 最终输出
 

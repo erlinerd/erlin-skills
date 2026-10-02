@@ -172,9 +172,11 @@ func renderVertical(spec: RenderSpec, shot: NSImage, shotSize: CGSize) {
     let heightF = CGFloat(spec.canvasH)
 
     if spec.decor == "dots" && spec.motif.count >= 3 {
-        drawDot(centerX: widthF * 0.074, centerY: heightF * 0.958, diameter: widthF * 0.037, color: spec.motif[1])
-        drawDot(centerX: widthF * 0.932, centerY: heightF * 0.904, diameter: widthF * 0.047, color: spec.motif[3])
-        drawDot(centerX: widthF * 0.879, centerY: heightF * 0.958, diameter: widthF * 0.024, color: spec.motif[5])
+        // 色板可能少于 6 色：索引取模回绕，避免越界 trap
+        let m = spec.motif
+        drawDot(centerX: widthF * 0.074, centerY: heightF * 0.958, diameter: widthF * 0.037, color: m[1 % m.count])
+        drawDot(centerX: widthF * 0.932, centerY: heightF * 0.904, diameter: widthF * 0.047, color: m[3 % m.count])
+        drawDot(centerX: widthF * 0.879, centerY: heightF * 0.958, diameter: widthF * 0.024, color: m[5 % m.count])
     }
 
     var cursorY = heightF * 0.045
@@ -226,8 +228,9 @@ func renderWide(spec: RenderSpec, shot: NSImage, shotSize: CGSize) {
     let heightF = CGFloat(spec.canvasH)
 
     if spec.decor == "dots" && spec.motif.count >= 3 {
-        drawDot(centerX: widthF * 0.038, centerY: heightF * 0.07, diameter: widthF * 0.028, color: spec.motif[1])
-        drawDot(centerX: widthF * 0.073, centerY: heightF * 0.045, diameter: widthF * 0.016, color: spec.motif[3])
+        let m = spec.motif
+        drawDot(centerX: widthF * 0.038, centerY: heightF * 0.07, diameter: widthF * 0.028, color: m[1 % m.count])
+        drawDot(centerX: widthF * 0.073, centerY: heightF * 0.045, diameter: widthF * 0.016, color: m[3 % m.count])
     }
 
     let phoneH = heightF * 0.87

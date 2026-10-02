@@ -12,8 +12,23 @@ export const rasterKernel = join(dirname(fileURLToPath(import.meta.url)), "raste
 export function startMeasureKernel() {
   const child = spawn("swift", [rasterKernel, "measure"], { stdio: ["pipe", "pipe", "inherit"] });
   const pending = [];
+  // swift 不存在（非 macOS / 缺 Xcode CLT）时 ENOENT 走 'error' 事件；不监听会抛未捕获异常
+  child.on("error", (e) => {
+    console.error(`无法启动 swift 栅格内核（仅 macOS，需 Xcode CLT）: ${e.message}`);
+    while (pending.length) pending.shift()({ w: 0, capH: 0 });
+    process.exit(1);
+  });
   const reader = createInterface({ input: child.stdout });
-  reader.on("line", (line) => pending.shift()?.(JSON.parse(line)));
+  reader.on("line", (line) => {
+    const resolve = pending.shift();
+    if (!resolve) return;
+    try {
+      resolve(JSON.parse(line));
+    } catch {
+      // 内核输出异常行：按零宽处理，不打断 measure 协议
+      resolve({ w: 0, capH: 0 });
+    }
+  });
   child.on("exit", () => {
     while (pending.length) pending.shift()({ w: 0, capH: 0 });
   });

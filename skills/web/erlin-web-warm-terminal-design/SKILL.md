@@ -53,58 +53,7 @@ keywords:
 
 产出页面必须遵循以下规格（完整可直接粘贴的 CSS 见 `references/tokens.css`）。
 
-**设计令牌**
-
-| 令牌 | 值 | 用途 |
-| --- | --- | --- |
-| `--dcc-bg` | `#151412` | 页面底色（暖近黑） |
-| `--dcc-panel` | `#1c1b19` | 面板/卡片底层 |
-| `--dcc-raised` | `#25231f` | 卡片内容层 |
-| `--dcc-ink` | `#f2eee7` | 主文字（暖奶油） |
-| `--dcc-muted` | `#b3aca2` | 正文次级文字 |
-| `--dcc-faint` | `#817a70` | 元数据/弱化文字 |
-| `--dcc-line` | `#35322c` | hairline 边框与分隔线 |
-| `--dcc-signal` | `#f08a64` | 唯一强调色（橙），eyebrow/按钮/激活态 |
-| `--dcc-signal-soft` | `#3a251f` | 信号色的暗色晕染（focus ring/光点底圈） |
-| `--dcc-on-signal` | `#211814` | 信号色之上的深色文字与按钮 |
-
-**字体系统**
-
-- **Display**：Space Grotesk（Google Fonts / `next/font/google`）。标题 weight 600–650，字距收紧到 `-0.06em ~ -0.085em`，行高 `0.91 ~ 0.96`，`text-wrap: balance`，并用 `max-width` 的 ch 值控制断行（h1 约 11ch，卡片标题约 16ch）——大而紧、敢压行，是排版的张力来源。
-- **Metadata**：JetBrains Mono。只用于 eyebrow 标签、编号、状态行、版本号、footer：`0.55 ~ 0.7rem`、大写、`letter-spacing 0.08 ~ 0.13em`。eyebrow 一律用 signal 色。
-- **正文/中文**：系统 sans 栈（中文自然回退苹方/思源黑），`0.76 ~ 1.18rem`，行高 `1.55 ~ 1.7`，用 `--dcc-muted` 色，`text-wrap: pretty`。
-- 层级 = 字号对比 + 字重对比 + mono/sans 声部对比。不用装饰字体。
-
-**布局语法**
-
-- **容器**：`width: min(100% - 3rem, 1280px); margin-inline: auto`（移动端收窄到 `100% - 2rem`）。
-- **分节靠 hairline**：章节之间用 `border-top: 1px solid var(--dcc-line)` 分隔，`padding-block: clamp(4rem, 8vw, 8rem)`。不用大色块分段。
-- **hero**：左右不对称双栏 grid（约 `0.85fr / 1.15fr`，gap `clamp(3rem, 8vw, 8rem)`），左侧文案、右侧可交互产品演示卡（不是截图，是带状态切换的真组件）。
-- **章节 intro 与内容再分栏**：如 `0.72fr / 1.28fr`（左小 intro + 右三步）、`0.65fr / 1fr`（左印章 + 右宣言）。
-- **编号步骤**：3 列 grid，每项 `border-top` hairline + mono 橙色编号 `01/02/03`，标题下压 `margin-top: 4.5rem` 制造呼吸感。
-- **背景坐标纸**：fixed 全屏 72px 网格线（奶油色 3% 透明度，1px），底部用 mask 渐隐。内容 `z-index: 1` 抬到网格上。
-
-**组件配方**
-
-**按钮**
-
-- 主按钮：signal 实底 + `#211814` 文字，radius `0.6rem`，`min-height 2.8rem`，字号 `0.8rem`/weight 650，尾部带箭头字形 `<span>↗</span>`；hover 换 `#ff9b72` + `translateY(-2px)`。
-- 次按钮：透明底、muted 文字，hover 变 ink 并同样上浮。
-- 导航 CTA：hairline 边框，hover 换 signal 边框 + signal-soft 底。
-- 胶囊小按钮（重播/刷新类）：`border-radius: 999px` + hairline 边框。
-
-**卡片**
-
-- 外层 radius `1rem`、内层 `0.7rem`，hairline 边框，panel/raised 实底（不用玻璃拟态）。
-- 阴影极克制：整页最多一处大软阴影（hero 卡 `0 2rem 5rem rgb(0 0 0 / 22%)`），其余靠边框。
-- 激活态 = signal 边框 + `0 0 0 0.2rem var(--dcc-signal-soft)` 外圈 + `translateY(-0.2rem)`，220ms。
-- 装饰：卡片右下角外溢一个 `5rem` 的 signal 圆环（opacity 0.4）。
-
-**终端面板细节**：卡片顶部一条 mono 状态行（下 hairline 分隔）：左管道标签（`SOURCE → VOICE → DRAFT`），右状态文字 + 胶囊按钮 + 信号点（`0.45rem` 圆点外套 `0.3rem` signal-soft 光环）。骨架占位用圆角条（88% signal / 62% line / 74% line）。版本号用 mono 描边小 chip，激活时填充 signal。
-
-**CTA 横幅（反色段）**：整块 signal 实底、`#211814` 文字、radius `1rem`、`align-items: end` 的两端布局；按钮反转为 `#211814` 底 + ink 文字。这是全页唯一的"满色块"时刻，放在结尾做收束。
-
-**印章元素**：大号 signal 描边圆环（`clamp(7rem, 15vw, 12rem)`）内放一个超大字母，旁边竖排 mono 小字（如 `KEEP / THE / THREAD`）。每页至多一处。
+设计令牌、字体系统、布局语法与组件配方的**唯一事实源是 `references/tokens.css`**（完整可粘贴，类名与 page-skeleton.tsx 一一对应）——本文件不复述具体值，套用前先读它；逐节尺寸与断行规格见 `references/page-blueprint.md`。
 
 **动效与可及性**
 

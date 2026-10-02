@@ -18,7 +18,7 @@ keywords:
 
 三层架构：**raw 源料**（不可变，LLM 只读）/ **wiki 页面**（LLM 全权拥有，用户只读不写）/ **schema 约定**（本技能 + vault 内 `Wiki/SCHEMA.md`）。分工：人负责供料、探索、提问与把关；LLM 负责全部簿记——摘要、交叉引用、归档、账本。Karpathy 原话："Obsidian 是 IDE，LLM 是程序员，wiki 是代码库。"
 
-全部操作经 Obsidian CLI（`/opt/homebrew/bin/obsidian`，`vault=<名>` 指定库），Obsidian 界面实时可见（graph view 看结构）。相邻分工：erlin-profile 存个人属性（~/.me），本技能建主题知识库；删页叠加 erlin-safe-delete。
+全部操作经 Obsidian CLI（PATH 中的 `obsidian`，用 `command -v obsidian` 探测；`vault=<名>` 指定库），Obsidian 界面实时可见（graph view 看结构）。相邻分工：erlin-profile 存个人属性（~/.me），本技能建主题知识库；删页叠加 erlin-safe-delete。
 </goal>
 
 # 执行步骤
@@ -87,5 +87,5 @@ gist 全文（curl raw）、`obsidian create`/`search` 输出、index 当前内�
 - 引用不可造假：wikilink 目标不存在时要么建页、要么明确告知是 unresolved，不许静默留死链。
 - 不引入外部检索依赖（qmd/嵌入/RAG）除非用户点名。
 - 删页/批量改名走 `erlin-safe-delete`；`SCHEMA.md` 约定变更需用户同意。
-- CLI 不可用（Obsidian 未运行等）时降级为直接文件系统操作并如实说明。
+- CLI 不可用（`command -v obsidian` 无结果或 Obsidian 未运行等）时降级为直接文件系统操作并如实说明；先确认是命令不存在而非仅路径不同。
 </gates>
