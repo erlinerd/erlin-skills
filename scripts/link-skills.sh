@@ -12,6 +12,17 @@ SKIP_DIRS="_attic"
 
 for target in "${TARGETS[@]}"; do
   mkdir -p "$target"
+  # 清理悬空链接：技能退役/改名后 ln -sfn 不会删旧链接。
+  # 只删指向本仓库 skills/ 的，不动其他来源（别的技能仓库等）的链接
+  for link in "$target"/*; do
+    if [[ -L "$link" && ! -e "$link" ]]; then
+      dest="$(readlink "$link")"
+      if [[ "$dest" == "$SKILLS_DIR"/* ]]; then
+        unlink "$link"
+        echo "  removed dangling $link"
+      fi
+    fi
+  done
   for bucket in "$SKILLS_DIR"/*/; do
     bucket="$(basename "$bucket")"
     [[ " $SKIP_DIRS " == *" $bucket "* ]] && continue
