@@ -1,0 +1,5 @@
+interface:
+  display_name: "Bdd"
+  short_description: "BDD 测试规范（Web + Apple 双平台）：场景规格统一 Markdown（docs/bdd/*.md）；Web"
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,5 @@
+interface:
+  display_name: "Profile"
+  short_description: "用户个人知识库"
+policy:
+  allow_implicit_invocation: true

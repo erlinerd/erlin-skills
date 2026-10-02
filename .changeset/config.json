@@ -1,0 +1,12 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.1.1/schema.json",
+  "changelog": "@changesets/cli/changelog",
+  "commit": false,
+  "fixed": [],
+  "linked": [],
+  "access": "public",
+  "baseBranch": "main",
+  "updateInternalDependencies": "patch",
+  "ignore": ["erlin-skills"],
+  "___note": "changesets 不支持 private 根包发版：根包 ignore（ignore 列表只能列项目里存在的包，否则所有 changesets 命令抛 ValidationError），版本由 release.yml 手动 tag 驱动，changeset 文件仅作变更记录"
+}

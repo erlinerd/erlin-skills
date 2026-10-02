@@ -1,0 +1,5 @@
+interface:
+  display_name: "App Store Marketing"
+  short_description: "生成 App Store 截图物料全流程"
+policy:
+  allow_implicit_invocation: true

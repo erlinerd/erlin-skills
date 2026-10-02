@@ -1,0 +1,5 @@
+interface:
+  display_name: "Feishu Wiki"
+  short_description: "用官方 @larksuite/cli（lark-cli）维护飞书知识库文档"
+policy:
+  allow_implicit_invocation: false

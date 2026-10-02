@@ -1,0 +1,5 @@
+interface:
+  display_name: "App Icon"
+  short_description: "根据产品生成 App 图标/wordmark logo 的完整工作流"
+policy:
+  allow_implicit_invocation: true

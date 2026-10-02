@@ -1,0 +1,855 @@
+/* Warm Terminal — complete paste-ready stylesheet.
+   Extracted from personOS landing (apps/landing/app/globals.css .launch-* section, verified 2026-08).
+   Scope everything under .dcc to avoid leaking into host styles.
+   Pair with references/page-skeleton.tsx, which uses exactly these class names. */
+
+/* Prerequisites outside this file:
+   - html { scroll-behavior: smooth; }  (anchor nav relies on it)
+   - Load fonts: Space Grotesk (display) + JetBrains Mono (metadata),
+     e.g. next/font/google exposing --font-space-grotesk / --font-jetbrains-mono,
+     or <link> Google Fonts and adjust the two variables below. */
+
+.dcc {
+  /* ===== Color tokens (all warm — never introduce cool blues/grays) ===== */
+  --dcc-bg: #151412;
+  --dcc-panel: #1c1b19;
+  --dcc-raised: #25231f;
+  --dcc-ink: #f2eee7;
+  --dcc-muted: #b3aca2;
+  --dcc-faint: #817a70;
+  --dcc-line: #35322c;
+  --dcc-signal: #f08a64;
+  --dcc-signal-soft: #3a251f;
+  --dcc-on-signal: #211814;
+  --dcc-signal-hover: #ff9b72;
+  --dcc-dark-hover: #30251f;
+
+  /* ===== Font stacks ===== */
+  --dcc-font-display: var(--font-space-grotesk, 'Space Grotesk'), ui-sans-serif,
+    system-ui, sans-serif;
+  --dcc-font-mono: var(--font-jetbrains-mono, 'JetBrains Mono'), ui-monospace,
+    monospace;
+  --dcc-font-body: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'PingFang SC',
+    'Hiragino Sans GB', 'Noto Sans SC', sans-serif;
+
+  position: relative;
+  min-height: 100dvh;
+  overflow: hidden;
+  background: var(--dcc-bg);
+  color: var(--dcc-ink);
+  font-family: var(--dcc-font-body);
+}
+
+/* ===== Blueprint grid backdrop (fades toward the bottom) ===== */
+.dcc::before {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgb(242 238 231 / 3%) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(242 238 231 / 3%) 1px, transparent 1px);
+  background-size: 72px 72px;
+  content: '';
+  mask-image: linear-gradient(to bottom, black, transparent 74%);
+}
+
+.dcc > * {
+  position: relative;
+  z-index: 1;
+}
+
+.dcc a,
+.dcc button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ===== Container — every section uses this ===== */
+.dcc-container {
+  width: min(100% - 3rem, 1280px);
+  margin-inline: auto;
+}
+
+/* Hairline-separated section rhythm */
+.dcc-section {
+  border-top: 1px solid var(--dcc-line);
+  padding-block: clamp(4rem, 8vw, 8rem);
+}
+
+/* ===== Type voices ===== */
+.dcc-eyebrow,
+.dcc-card-label {
+  margin: 0;
+  color: var(--dcc-signal);
+  font-family: var(--dcc-font-mono), ui-monospace, monospace;
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.dcc-h1 {
+  max-width: 11ch;
+  margin: 1.4rem 0 1.6rem;
+  color: var(--dcc-ink);
+  font-family: var(--dcc-font-display), ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(3.5rem, 6.3vw, 6.7rem);
+  font-weight: 650;
+  letter-spacing: -0.085em;
+  line-height: 0.91;
+  text-wrap: balance;
+}
+
+.dcc-h2 {
+  margin: 1.2rem 0 1rem;
+  color: var(--dcc-ink);
+  font-family: var(--dcc-font-display), ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(2.4rem, 4.3vw, 4.8rem);
+  font-weight: 600;
+  letter-spacing: -0.08em;
+  line-height: 0.96;
+  text-wrap: balance;
+}
+
+/* Hero lead paragraph */
+.dcc-intro {
+  max-width: 34rem;
+  margin: 0;
+  color: var(--dcc-muted);
+  font-size: clamp(1rem, 1.3vw, 1.18rem);
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+/* Section body paragraph (slightly smaller than hero intro) */
+.dcc-section-body {
+  max-width: 34rem;
+  margin: 0;
+  color: var(--dcc-muted);
+  font-size: 0.98rem;
+  line-height: 1.7;
+}
+
+/* ===== Nav ===== */
+.dcc-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 5rem;
+  border-bottom: 1px solid var(--dcc-line);
+}
+
+.dcc-wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--dcc-ink);
+  text-decoration: none;
+}
+
+.dcc-wordmark-text {
+  display: grid;
+  gap: 0.08rem;
+}
+
+.dcc-wordmark-text strong {
+  font-family: var(--dcc-font-display), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1rem;
+  letter-spacing: -0.04em;
+}
+
+.dcc-wordmark-text small {
+  color: var(--dcc-faint);
+  font-family: var(--dcc-font-mono), ui-monospace, monospace;
+  font-size: 0.57rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Signal mark chip: single lowercase letter */
+.dcc-mark {
+  display: inline-grid;
+  width: 2.25rem;
+  height: 2.25rem;
+  place-items: center;
+  border-radius: 0.7rem;
+  background: var(--dcc-signal);
+  color: var(--dcc-on-signal);
+  font-family: var(--dcc-font-display), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: -0.12em;
+}
+
+.dcc-links {
+  display: flex;
+  align-items: center;
+  gap: 1.35rem;
+  color: var(--dcc-muted);
+  font-size: 0.76rem;
+}
+
+.dcc-links a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 180ms ease;
+}
+
+.dcc-links a:hover {
+  color: var(--dcc-ink);
+}
+
+.dcc-locale {
+  border: 0;
+  background: transparent;
+  color: var(--dcc-muted);
+  cursor: pointer;
+  font: inherit;
+  transition: color 180ms ease;
+}
+
+.dcc-locale:hover {
+  color: var(--dcc-ink);
+}
+
+.dcc-nav-cta {
+  border: 1px solid var(--dcc-line);
+  border-radius: 0.55rem;
+  padding: 0.62rem 0.82rem;
+  color: var(--dcc-ink);
+  transition:
+    border-color 180ms ease,
+    background 180ms ease;
+}
+
+.dcc-nav-cta:hover {
+  border-color: var(--dcc-signal);
+  background: var(--dcc-signal-soft);
+}
+
+/* ===== Hero ===== */
+.dcc-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(31rem, 1.15fr);
+  gap: clamp(3rem, 8vw, 8rem);
+  align-items: center;
+  min-height: 43rem;
+  padding-block: clamp(4.5rem, 9vw, 8rem);
+}
+
+.dcc-hero-copy {
+  max-width: 36rem;
+}
+
+.dcc-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2.15rem;
+}
+
+/* Mono credibility line under the CTAs */
+.dcc-proof {
+  margin: 2.8rem 0 0;
+  color: var(--dcc-faint);
+  font-family: var(--dcc-font-mono), ui-monospace, monospace;
+  font-size: 0.65rem;
+  line-height: 1.7;
+}
+
+/* ===== Buttons ===== */
+.dcc-btn-primary,
+.dcc-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  min-height: 2.8rem;
+  border-radius: 0.6rem;
+  padding: 0.72rem 0.95rem;
+  font-size: 0.8rem;
+  font-weight: 650;
+  text-decoration: none;
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    color 180ms ease;
+}
+
+.dcc-btn-primary {
+  background: var(--dcc-signal);
+  color: var(--dcc-on-signal);
+}
+
+.dcc-btn-primary:hover {
+  background: var(--dcc-signal-hover);
+  color: var(--dcc-on-signal);
+  transform: translateY(-2px);
+}
+
+.dcc-btn-primary > span,
+.dcc-btn-secondary > span {
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.dcc-btn-secondary {
+  color: var(--dcc-muted);
+}
+
+.dcc-btn-secondary:hover {
+  color: var(--dcc-ink);
+  transform: translateY(-2px);
+}
+
+/* ===== Terminal demo panel (hero right column) ===== */
+.dcc-demo {
+  position: relative;
+  border: 1px solid var(--dcc-line);
+  border-radius: 1rem;
+  background: var(--dcc-panel);
+  box-shadow: 0 2rem 5rem rgb(0 0 0 / 22%);
+  padding: clamp(1rem, 2vw, 1.5rem);
+}
+
+/* Signal ring ornament escaping the panel's bottom-right corner */
+.dcc-demo::after {
+  position: absolute;
+  right: 1.5rem;
+  bottom: -1.6rem;
+  width: 5rem;
+  height: 5rem;
+  border: 1px solid var(--dcc-signal);
+  border-radius: 50%;
+  opacity: 0.4;
+  content: '';
+}
+
+.dcc-demo-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--dcc-line);
+  padding: 0.25rem 0.1rem 1rem;
+  color: var(--dcc-faint);
+  font-family: var(--dcc-font-mono), ui-monospace, monospace;
+  font-size: 0.59rem;
+  letter-spacing: 0.12em;
+}
+
+.dcc-demo-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+/* Live status text (sans, not mono) */
+.dcc-demo-status {
+  color: var(--dcc-muted);
+  font-family: var(--dcc-font-display), ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.64rem;
+}
+
+/* Pill replay control */
+.dcc-demo-replay {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid var(--dcc-line);
+  border-radius: 999px;
+  padding: 0.35rem 0.55rem;
+  background: transparent;
+  color: var(--dcc-ink);
+  cursor: pointer;
+  font-family: var(--dcc-font-display), ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.62rem;
+  transition:
+    border-color 180ms ease,
+    color 180ms ease;
+}
+
+.dcc-demo-replay:hover {
+  border-color: var(--dcc-signal);
+  color: var(--dcc-signal);
+}
+
+.dcc-demo-replay > span {
+  color: var(--dcc-signal);
+  font-size: 0.85rem;
+}
+
+/* Signal status dot with soft halo */
+.dcc-dot {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--dcc-signal);
+  box-shadow: 0 0 0 0.3rem var(--dcc-signal-soft);
+}
+
+/* Two cards joined by a connector, result card below */
+.dcc-demo-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 2rem minmax(0, 1fr);
+  gap: 0.8rem;
+  align-items: stretch;
+  margin-top: 1.1rem;
+}
+
+.dcc-demo-card {
+  position: relative;
+  border: 1px solid var(--dcc-line);
+  border-radius: 0.7rem;
+  background: var(--dcc-raised);
+  min-height: 13.6rem;
+  padding: 1.2rem;
+  transition:
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    transform 220ms ease;
+}
+
+.dcc-demo-card[data-active='true'] {
+  border-color: var(--dcc-signal);
+  box-shadow: 0 0 0 0.2rem var(--dcc-signal-soft);
+  transform: translateY(-0.2rem);
+}
+
+.dcc-card-title {
+  max-width: 16ch;
+  margin: 1.5rem 0 0;
+  color: var(--dcc-ink);
+  font-family: var(--dcc-font-display), ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(1.25rem, 2.25vw, 2rem);
+  font-weight: 600;
+  letter-spacing: -0.06em;
+  line-height: 1.02;
+}
+
+.dcc-card-meta {
+  margin: 1.2rem 0 0;
+  color: var(--dcc-muted);
+  font-size: 0.76rem;
+  line-height: 1.55;
+}
+
+.dcc-card-arrow {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  color: var(--dcc-signal);
+  font-size: 1.2rem;
+}
+
+/* "+" connector column between the two cards */
+.dcc-connector {
+  display: grid;
+  place-items: center;
+  color: var(--dcc-signal);
+  font-size: 1.2rem;
+  transition: transform 220ms ease;
+}
+
+.dcc-connector[data-active='true'] {
+  transform: scale(1.12);
+}
+
+.dcc-connector > span {
+  display: grid;
+  width: 1.7rem;
+  height: 1.7rem;
+  place-items: center;
+  border: 1px solid var(--dcc-signal);
+  border-radius: 50%;
+}
+
+.dcc-voice-name {
+  max-width: 11ch;
+  margin: 1.5rem 0 0;
+  color: var(--dcc-ink);
+  font-family: var(--dcc-font-display), ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: -0.06em;
+  line-height: 1.06;
+}
+
+/* Skeleton placeholder bars: 88% signal / 62% line / 74% line */
+.dcc-voice-lines {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 2rem;
+}
+
+.dcc-voice-lines > span {
+  display: block;
+  height: 0.35rem;
+  border-radius: 999px;
+  background: var(--dcc-line);
+}
+
+.dcc-voice-lines > span:first-child {
+  width: 88%;
+  background: var(--dcc-signal);
+}
+
+.dcc-voice-lines > span:nth-child(2) {
+  width: 62%;
+}
+
+.dcc-voice-lines > span:last-child {
+  width: 74%;
+}
+
+/* Full-width result card — note it uses the page bg, darker than the panel */
+.dcc-demo-result {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.8rem;
+  border: 1px solid var(--dcc-line);
+  border-radius: 0.7rem;
+  background: var(--dcc-bg);
+  padding: 1.35rem 1.2rem 1.2rem;
+  transition:
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    transform 220ms ease;
+}
+
+.dcc-demo-result[data-active='true'] {
+  border-color: var(--dcc-signal);
+  box-shadow: 0 0 0 0.2rem var(--dcc-signal-soft);
+  transform: translateY(-0.2rem);
+}
+
+.dcc-demo-result .dcc-card-title {
+  margin-top: 1.15rem;
+}
+
+.dcc-demo-result .dcc-card-meta {
+  max-width: 44ch;
+  margin-top: 1rem;
+}
+
+/* Mono version chip; fills solid at the final stage */
+.dcc-chip {
+  align-self: flex-start;
+  border: 1px solid var(--dcc-signal);
+  border-radius: 0.4rem;
+  padding: 0.3rem 0.4rem;
+  color: var(--dcc-signal);
+  font-family: var(--dcc-font-mono), ui-monospace, monospace;
+  font-size: 0.62rem;
+}
+
+.dcc-demo[data-stage='3'] .dcc-chip {
+  background: var(--dcc-signal);
+  color: var(--dcc-on-signal);
+}
+
+/* ===== "How" section: small intro + 3 numbered steps ===== */
+.dcc-how {
+  display: grid;
+  grid-template-columns: minmax(16rem, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(3rem, 8vw, 8rem);
+}
+
+.dcc-section-intro {
+  max-width: 24rem;
+}
+
+.dcc-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dcc-steps > li {
+  border-top: 1px solid var(--dcc-line);
+  padding-top: 1rem;
+}
+
+.dcc-steps > li > span {
+  color: var(--dcc-signal);
+  font-family: var(--dcc-font-mono), ui-monospace, monospace;
+  font-size: 0.7rem;
+}
+
+.dcc-steps h3 {
+  margin: 4.5rem 0 0.75rem;
+  color: var(--dcc-ink);
+  font-family: var(--dcc-font-display), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+}
+
+.dcc-steps p {
+  margin: 0;
+  color: var(--dcc-muted);
+  font-size: 0.82rem;
+  line-height: 1.65;
+}
+
+/* ===== "Why" section: circular stamp + statement ===== */
+.dcc-why {
+  display: grid;
+  grid-template-columns: minmax(12rem, 0.65fr) minmax(0, 1fr);
+  gap: clamp(3rem, 9vw, 9rem);
+  align-items: center;
+}
+
+.dcc-why-copy {
+  max-width: 40rem;
+}
+
+.dcc-stamp {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--dcc-signal);
+}
+
+.dcc-stamp-circle {
+  display: grid;
+  width: clamp(7rem, 15vw, 12rem);
+  height: clamp(7rem, 15vw, 12rem);
+  place-items: center;
+  border: 1px solid var(--dcc-signal);
+  border-radius: 50%;
+  font-family: var(--dcc-font-display), ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(4rem, 9vw, 8rem);
+  font-weight: 650;
+  letter-spacing: -0.16em;
+  line-height: 1;
+}
+
+.dcc-stamp-caption {
+  color: var(--dcc-faint);
+  font-family: var(--dcc-font-mono), ui-monospace, monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+/* ↳-prefixed claim list */
+.dcc-taglist {
+  display: grid;
+  gap: 0.85rem;
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dcc-taglist > li {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--dcc-ink);
+  font-size: 0.84rem;
+}
+
+.dcc-taglist > li > span {
+  color: var(--dcc-signal);
+}
+
+/* ===== Inverted CTA band — the page's single full-color moment ===== */
+.dcc-cta {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 2rem;
+  border-radius: 1rem;
+  background: var(--dcc-signal);
+  color: var(--dcc-on-signal);
+  padding: clamp(2rem, 5vw, 4.5rem);
+}
+
+.dcc-cta .dcc-eyebrow,
+.dcc-cta .dcc-h2,
+.dcc-cta .dcc-section-body {
+  color: var(--dcc-on-signal);
+}
+
+.dcc-cta .dcc-h2 {
+  max-width: 11ch;
+}
+
+.dcc-btn-dark {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  min-height: 2.8rem;
+  border-radius: 0.6rem;
+  padding: 0.72rem 0.95rem;
+  background: var(--dcc-on-signal);
+  color: var(--dcc-ink);
+  font-size: 0.8rem;
+  font-weight: 650;
+  text-decoration: none;
+  transition: background 180ms ease;
+}
+
+.dcc-btn-dark:hover {
+  background: var(--dcc-dark-hover);
+  color: var(--dcc-ink);
+}
+
+/* ===== Footer (mono, faint) ===== */
+.dcc-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 7rem;
+  color: var(--dcc-faint);
+  font-family: var(--dcc-font-mono), ui-monospace, monospace;
+  font-size: 0.62rem;
+}
+
+.dcc-footer p {
+  margin: 0;
+}
+
+.dcc-footer-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.dcc-footer a {
+  color: var(--dcc-muted);
+  text-decoration: none;
+  transition: color 180ms ease;
+}
+
+.dcc-footer a:hover {
+  color: var(--dcc-ink);
+}
+
+/* ===== Accessibility ===== */
+.dcc a:focus-visible,
+.dcc button:focus-visible {
+  outline: 2px solid var(--dcc-signal);
+  outline-offset: 4px;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 900px) {
+  .dcc-hero {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 3.5rem;
+    min-height: auto;
+  }
+
+  .dcc-h1 {
+    max-width: 12ch;
+  }
+
+  .dcc-demo {
+    max-width: 46rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .dcc-container {
+    width: min(100% - 2rem, 1280px);
+  }
+
+  .dcc-nav {
+    min-height: 4.5rem;
+  }
+
+  .dcc-links {
+    gap: 0.7rem;
+  }
+
+  /* Keep only the CTA visible in nav */
+  .dcc-links > a:not(.dcc-nav-cta) {
+    display: none;
+  }
+
+  .dcc-nav-cta {
+    padding: 0.55rem 0.65rem;
+    font-size: 0.66rem;
+  }
+
+  .dcc-hero {
+    gap: 2.8rem;
+    padding-block: 4rem 5rem;
+  }
+
+  .dcc-h1 {
+    margin-top: 1.1rem;
+    font-size: clamp(3.1rem, 15vw, 5rem);
+  }
+
+  .dcc-demo-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .dcc-demo-status {
+    display: none;
+  }
+
+  .dcc-demo-controls {
+    gap: 0.45rem;
+  }
+
+  .dcc-connector {
+    min-height: 1.4rem;
+  }
+
+  .dcc-demo-card {
+    min-height: 10rem;
+  }
+
+  .dcc-how,
+  .dcc-why {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.5rem;
+  }
+
+  .dcc-steps {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+  }
+
+  .dcc-steps h3 {
+    margin-top: 1.8rem;
+  }
+
+  .dcc-stamp {
+    justify-content: center;
+  }
+
+  .dcc-cta {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .dcc-footer {
+    align-items: start;
+    flex-direction: column;
+    justify-content: center;
+    padding-block: 1.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dcc * {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

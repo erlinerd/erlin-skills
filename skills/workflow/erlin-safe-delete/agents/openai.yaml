@@ -1,0 +1,5 @@
+interface:
+  display_name: "Safe Delete"
+  short_description: "本机文件/目录/缓存的删除纪律"
+policy:
+  allow_implicit_invocation: true

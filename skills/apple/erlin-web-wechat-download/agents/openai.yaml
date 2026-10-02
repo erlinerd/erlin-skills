@@ -1,0 +1,5 @@
+interface:
+  display_name: "Web Wechat Download"
+  short_description: "给有 App Store 下载链接的官网做微信内跳转兼容"
+policy:
+  allow_implicit_invocation: true

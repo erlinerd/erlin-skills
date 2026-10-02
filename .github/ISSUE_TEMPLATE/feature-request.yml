@@ -1,0 +1,21 @@
+name: Feature request
+description: Suggest a new skill or an improvement
+labels: ["needs-triage"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What workflow is slow, broken, or missing? Concrete scenario beats abstract need.
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind
+      options:
+        - New skill
+        - Improvement to existing skill
+        - Repo/tooling
+    validations:
+      required: true

@@ -1,0 +1,5 @@
+interface:
+  display_name: "App Dev Build"
+  short_description: "给 iOS/macOS 项目生成带 dev 角标的 Debug 开发版"
+policy:
+  allow_implicit_invocation: true

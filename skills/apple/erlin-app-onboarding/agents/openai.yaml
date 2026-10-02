@@ -1,0 +1,5 @@
+interface:
+  display_name: "App Onboarding"
+  short_description: "重做/刷新引导页（onboarding、first-run、welcome）时给足 Apple 品味"
+policy:
+  allow_implicit_invocation: true

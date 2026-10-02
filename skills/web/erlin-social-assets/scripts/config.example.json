@@ -1,0 +1,60 @@
+{
+  "brand": {
+    "background": "#F4F1E7",
+    "accent": "#E05440",
+    "ink": "#292623",
+    "secondary": "#73706B",
+    "motif": ["#E05440", "#F28C40", "#F5C242", "#5FA052", "#3D9C9C", "#4A7DBF", "#8C6BB1"]
+  },
+  "outputs": [
+    {
+      "file": "out/xhs-1242x1660.png",
+      "width": 1242,
+      "height": 1660,
+      "layout": "vertical",
+      "shot": "../../shots/workbench.png",
+      "logoText": "拼豆图纸",
+      "title1": "照片变图纸，",
+      "title2": "豆量照着买",
+      "title2Color": "accent",
+      "subtitle": "本地生成 · 所改即所见 · PNG / PDF 图纸",
+      "footer": "iOS · 拼豆图纸"
+    },
+    {
+      "file": "out/ig-1080x1350.png",
+      "width": 1080,
+      "height": 1350,
+      "layout": "vertical",
+      "shot": "../../shots/workbench.png",
+      "title1": "照片变图纸，",
+      "title2": "豆量照着买",
+      "title2Color": "accent",
+      "subtitle": "每种颜色要多少豆，一目了然",
+      "footer": "iOS · 拼豆图纸"
+    },
+    {
+      "file": "out/x-1600x900.png",
+      "width": 1600,
+      "height": 900,
+      "layout": "wide",
+      "shot": "../../shots/workbench.png",
+      "title1": "照片变图纸",
+      "title2": "豆量照着买",
+      "subtitle": "照片一键变拼豆图纸，每种颜色多少颗豆一目了然。",
+      "footer": "本地生成 · 不上传 · PNG / PDF"
+    },
+    {
+      "file": "out/m1-1290x2796.png",
+      "width": 1290,
+      "height": 2796,
+      "layout": "vertical",
+      "shot": "../../shots/workbench.png",
+      "logoText": "拼豆图纸",
+      "title1": "照片变图纸，",
+      "title2": "豆量照着买",
+      "title2Color": "#E05440",
+      "subtitle": "本地生成 · 不上传 · PNG / PDF 图纸",
+      "footer": "iOS · 拼豆图纸"
+    }
+  ]
+}

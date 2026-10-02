@@ -1,0 +1,5 @@
+interface:
+  display_name: "Arch Review"
+  short_description: "架构评审（diff 合规审查走 code-review）：从单一职责、开闭原则、低耦合、组件复用等七原则评估代码的架构质"
+policy:
+  allow_implicit_invocation: true

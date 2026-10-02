@@ -1,0 +1,5 @@
+interface:
+  display_name: "Asc"
+  short_description: "App Store Connect API 命令行工具"
+policy:
+  allow_implicit_invocation: false

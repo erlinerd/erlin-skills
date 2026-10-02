@@ -1,0 +1,5 @@
+interface:
+  display_name: "Skill Distill"
+  short_description: "把验证过的工作流提炼成 erlin-* 个人技能，必要元数据与资源引用由仓库现有校验约束，正文按需要组织"
+policy:
+  allow_implicit_invocation: true

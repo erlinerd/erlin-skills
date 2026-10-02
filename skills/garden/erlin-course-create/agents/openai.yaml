@@ -1,0 +1,5 @@
+interface:
+  display_name: "Course Create"
+  short_description: "课程制作的引导流程"
+policy:
+  allow_implicit_invocation: true

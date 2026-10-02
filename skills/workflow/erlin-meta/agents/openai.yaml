@@ -1,0 +1,5 @@
+interface:
+  display_name: "Meta"
+  short_description: "轻量技能路由：维护 hook 高频入口与仓库目录校验表"
+policy:
+  allow_implicit_invocation: true

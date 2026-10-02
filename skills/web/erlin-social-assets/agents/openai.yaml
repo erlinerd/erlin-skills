@@ -1,0 +1,5 @@
+interface:
+  display_name: "Social Assets"
+  short_description: "根据 app 截图与品牌资产生成社交平台宣传物料"
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,5 @@
+interface:
+  display_name: "Dev Standards"
+  short_description: "写代码时的通用工程规范（任何语言任何项目）"
+policy:
+  allow_implicit_invocation: true

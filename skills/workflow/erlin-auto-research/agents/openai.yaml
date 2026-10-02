@@ -1,0 +1,5 @@
+interface:
+  display_name: "Auto Research"
+  short_description: "数值指标自动实验循环"
+policy:
+  allow_implicit_invocation: true

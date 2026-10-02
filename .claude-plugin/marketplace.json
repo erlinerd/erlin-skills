@@ -1,0 +1,17 @@
+{
+  "name": "erlinerd-erlin-skills",
+  "owner": {
+    "name": "erlinerd",
+    "url": "https://github.com/erlinerd"
+  },
+  "plugins": [
+    {
+      "name": "erlin-skills",
+      "source": "./",
+      "description": "Erlin personal AI coding workflow skills (27, in four buckets).",
+      "version": "1.0.0"
+    }
+  ],
+  "description": "Erlin personal AI coding workflow skills — engineering flow, App Store shipping, web motion, personal knowledge.",
+  "version": "1.0.0"
+}

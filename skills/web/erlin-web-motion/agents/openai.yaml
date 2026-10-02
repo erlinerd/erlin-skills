@@ -1,0 +1,5 @@
+interface:
+  display_name: "Web Motion"
+  short_description: "为 Next.js/React 站点引入 motion 动效库、从 framer-motion 迁移导入，并铺设滚动揭示"
+policy:
+  allow_implicit_invocation: true

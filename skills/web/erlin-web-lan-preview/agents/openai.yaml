@@ -1,0 +1,5 @@
+interface:
+  display_name: "Web Lan Preview"
+  short_description: "把图片/物料目录变成局域网可看的预览服务"
+policy:
+  allow_implicit_invocation: true

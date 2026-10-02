@@ -1,0 +1,22 @@
+node_modules/
+.turbo/
+dist/
+.opencode/
+.claude/
+.erli/
+.DS_Store
+__pycache__/
+*.pyc
+*.bak-*
+.pi/
+
+# codegraph 本地语义索引
+codegraph/
+.codegraph/
+.video_agent/
+
+# 历史事故目录（link-skills.sh 引号 bug 遗留，已确认无内容价值）
+/~
+
+# 本地 issue tracker（决策记录含工作语境，不入公开仓库）
+.scratch/

@@ -1,0 +1,58 @@
+name: Skill issue
+description: A skill didn't trigger, or did the wrong thing
+labels: ["needs-triage"]
+body:
+  - type: dropdown
+    id: skill
+    attributes:
+      label: Which skill?
+      options:
+        - erlin-dev-standards
+        - erlin-bdd
+        - erlin-arch-review
+        - erlin-product-review
+        - erlin-app-icon
+        - erlin-app-store-marketing
+        - erlin-app-store-compliance
+        - erlin-asc
+        - erlin-social-assets
+        - erlin-autopilot
+        - erlin-auto-research
+        - erlin-safe-delete
+        - erlin-meta
+        - erlin-app-coding-standards
+        - erlin-app-dev-build
+        - erlin-app-onboarding
+        - erlin-web-wechat-download
+        - erlin-web-motion
+        - erlin-web-warm-terminal-design
+        - erlin-web-lan-preview
+        - erlin-skill-distill
+        - erlin-course-create
+        - erlin-course-review
+        - erlin-learning-plan
+        - erlin-obsidian-wiki
+        - erlin-feishu-wiki
+        - erlin-profile
+        - other / not sure
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened instead?
+    validations:
+      required: true
+  - type: input
+    id: host
+    attributes:
+      label: Host + version
+      description: "e.g. Claude Code 1.x, install method (plugin / link-skills.sh)"
+    validations:
+      required: true

@@ -1,0 +1,5 @@
+interface:
+  display_name: "Course Review"
+  short_description: "严格评审课程/课件"
+policy:
+  allow_implicit_invocation: true

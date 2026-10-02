@@ -1,0 +1,21 @@
+{
+  "name": "erlin-skills",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Erlin personal AI coding workflow skills — engineering flow, App Store shipping, web motion, personal knowledge",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/erlinerd/erlin-skills"
+  },
+  "scripts": {
+    "version": "changeset version && node scripts/sync-plugin-version.mjs",
+    "check-plugin-version": "node scripts/sync-plugin-version.mjs --check",
+    "test": "vitest run && node --test \"skills/**/*.test.mjs\""
+  },
+  "devDependencies": {
+    "@changesets/changelog-github": "^0.7.0",
+    "@changesets/cli": "^2.30.0",
+    "vitest": "^4.1.5"
+  }
+}

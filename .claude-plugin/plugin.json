@@ -1,0 +1,47 @@
+{
+  "name": "erlin-skills",
+  "description": "Erlin personal AI coding workflow: 27 skills covering engineering flow, App Store shipping, web motion, and personal knowledge (workflow/apple/web/garden buckets).",
+  "version": "1.0.0",
+  "skills": [
+    "./skills/apple/erlin-app-coding-standards",
+    "./skills/apple/erlin-app-dev-build",
+    "./skills/apple/erlin-app-icon",
+    "./skills/apple/erlin-app-onboarding",
+    "./skills/apple/erlin-app-store-compliance",
+    "./skills/apple/erlin-app-store-marketing",
+    "./skills/workflow/erlin-arch-review",
+    "./skills/apple/erlin-asc",
+    "./skills/workflow/erlin-auto-research",
+    "./skills/workflow/erlin-autopilot",
+    "./skills/workflow/erlin-bdd",
+    "./skills/garden/erlin-course-create",
+    "./skills/garden/erlin-course-review",
+    "./skills/workflow/erlin-dev-standards",
+    "./skills/garden/erlin-feishu-wiki",
+    "./skills/garden/erlin-learning-plan",
+    "./skills/workflow/erlin-meta",
+    "./skills/garden/erlin-obsidian-wiki",
+    "./skills/workflow/erlin-product-review",
+    "./skills/garden/erlin-profile",
+    "./skills/workflow/erlin-safe-delete",
+    "./skills/garden/erlin-skill-distill",
+    "./skills/web/erlin-social-assets",
+    "./skills/web/erlin-web-lan-preview",
+    "./skills/web/erlin-web-motion",
+    "./skills/web/erlin-web-warm-terminal-design",
+    "./skills/apple/erlin-web-wechat-download"
+  ],
+  "author": {
+    "name": "erlinerd"
+  },
+  "repository": "https://github.com/erlinerd/erlin-skills",
+  "license": "MIT",
+  "keywords": [
+    "engineering",
+    "skills",
+    "app-store",
+    "swift",
+    "web-motion",
+    "workflow"
+  ]
+}

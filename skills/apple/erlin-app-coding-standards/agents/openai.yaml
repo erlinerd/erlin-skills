@@ -1,0 +1,5 @@
+interface:
+  display_name: "App Coding Standards"
+  short_description: "写、改、review Swift/SwiftUI 代码或做 Tuist/SPM 工程调整时使用"
+policy:
+  allow_implicit_invocation: true

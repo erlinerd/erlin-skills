@@ -1,0 +1,5 @@
+interface:
+  display_name: "Obsidian Wiki"
+  short_description: "在 Obsidian vault 里按 Karpathy 的 LLM Wiki pattern、用官方 obsidian"
+policy:
+  allow_implicit_invocation: true

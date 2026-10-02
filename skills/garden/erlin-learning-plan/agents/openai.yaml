@@ -1,0 +1,5 @@
+interface:
+  display_name: "Learning Plan"
+  short_description: "把一个项目、代码库或文档集安排成一份可执行的系统学习计划"
+policy:
+  allow_implicit_invocation: true

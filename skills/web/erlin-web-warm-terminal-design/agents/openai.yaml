@@ -1,0 +1,5 @@
+interface:
+  display_name: "Web Warm Terminal Design"
+  short_description: "Apply or fully replicate the Warm Terminal style "
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,5 @@
+interface:
+  display_name: "Autopilot"
+  short_description: "多任务并行编排"
+policy:
+  allow_implicit_invocation: false
