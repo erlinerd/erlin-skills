@@ -1,5 +1,6 @@
 ---
 name: erlin-app-onboarding
+maturity: productivity
 description: 重做/刷新引导页（onboarding、first-run、welcome）时给足 Apple 品味——每步插画做成"产品自己的迷你场景"，首屏 display 级大字，动效有叙事顺序且 reduced-motion 安全。用户说"更新引导页""引导页太平淡""做个 welcome"时使用——即使没明说"要有品味"也按此做。
 when_to_use: 新建或重做移动端引导页（onboarding/first-run/welcome）、评估引导页该不该重做、或给引导页配插画与动效时使用；用户说"更新引导页/引导页太平淡/做个 welcome"即触发。
 keywords:

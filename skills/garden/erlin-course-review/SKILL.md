@@ -1,5 +1,6 @@
 ---
 name: erlin-course-review
+maturity: in-progress
 description: 严格评审课程/课件——按通用课程标准（QM 8 大类、OSCQR、Bloom 修订版、逆向设计对齐、Gagné 九事件、Mayer 多媒体原则）给出过/不过三档判决和 P0/P1/P2 分级问题清单。评课、审课、课件验收、上线前把关、写完课件自审时使用——即使没点名 skill。与 erlin-course-create 配套：那个管写之前，这个管写完之后。
 when_to_use: 用户要求评课/审稿/验收/检查课程质量、课程上线前把关、写完一节课或一条课程线需要自审时使用。不评代码实现质量（erlin-dev-standards / erlin-arch-review 管辖），不评 UI 视觉品味（emil-design-eng 管辖），不做个人学习计划（erlin-learning-plan 管辖）。
 keywords:

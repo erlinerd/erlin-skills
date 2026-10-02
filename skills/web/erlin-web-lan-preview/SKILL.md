@@ -1,5 +1,6 @@
 ---
 name: erlin-web-lan-preview
+maturity: productivity
 description: 把图片/物料目录变成局域网可看的预览服务——一条命令起服务、自动生成画廊首页、后台常驻、可列出/停止。用户提到"局域网看图""手机看图""LAN 预览""开个服务看""serve images""物料预览""二维码看图"时使用——即使没提 skill 名。
 when_to_use: 把图片/物料目录一键变成局域网可看的预览画廊——起服务、报 URL、手机同 Wi-Fi 查看、用完即停时使用；提及"局域网看图/手机看图/LAN 预览/物料预览"即触发。
 keywords:

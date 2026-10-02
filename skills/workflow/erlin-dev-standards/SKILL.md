@@ -1,5 +1,6 @@
 ---
 name: erlin-dev-standards
+maturity: engineering
 description: >-
   Generic engineering discipline for writing or changing code in any language: read before editing, minimal diff, evidence-backed completion, never fail silently. Use when implementing features, fixing bugs, refactoring, claiming work done, running tests or builds, triaging errors, or judging whether a change is acceptable — even if the skill is not named. 写代码时的通用工程规范（任何语言任何项目）——改动前先读、最小切口、证据闭环、失败不静默。动手写或改代码前、准备声称"完成/修好"前、跑测试或构建时、定位报错原因时、判断"这算不算通过"时、要开 worktree 隔离改动时、安排多任务/多票推进时使用——即使没提 skill 名。
 when_to_use: 写、改代码与推进任务的全程使用：被要求“实现/加个功能/修个 bug/重构”、写完准备声称完成、跑测试或构建、定位报错原因、判断“这算不算通过”、开 worktree 或并行隔离改动、安排多任务/多票推进或决定串行还是并行，以及拿捏“这样改行吗”“要不要抽象一下”这类实现决策时使用。与 erlin-arch-review（事后审架构）互补：本技能管写的时候，那个管写完之后。Swift/SwiftUI 项目额外叠加 erlin-app-coding-standards。

@@ -1,5 +1,6 @@
 ---
 name: erlin-skill-distill
+maturity: productivity
 description: 把验证过的工作流提炼成 erlin-* 个人技能，必要元数据与资源引用由仓库现有校验约束，正文按需要组织。用户说"提炼成技能""做成 skill""沉淀一下""这个流程值得记""创建 erlin 技能"时使用——即使没明说 skill;重复出现且已验证的流程可主动评估，单次成功不自动沉淀。
 when_to_use: 把一段验证过、有复用价值的工作流提炼成 erlin-* 技能——先判断值不值得蒸馏，再按实际需要组织正文并落地 SKILL.md 并注册进 erlin-meta 时使用；用户说"提炼成技能/做成 skill/沉淀一下"或重复需求已验证、确有持续复用价值时评估。
 keywords:

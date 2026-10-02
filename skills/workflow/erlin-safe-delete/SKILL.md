@@ -1,5 +1,6 @@
 ---
 name: erlin-safe-delete
+maturity: engineering
 description: 本机文件/目录/缓存的删除纪律——删除前先列清单（路径+实测大小）请用户确认，批准后移入废纸篓而不是直接删；适用于用户资产与系统清理；已授权代码删改和本次自建无用临时物不另设审批。
 when_to_use: 用户资产或系统清理落地之前：手工删目录/文件、包管理器缓存清理（brew cleanup、npm cache clean、pnpm store prune）、模拟器擦除等。与 erlin-dev-standards 分工：那边管 git/仓库内破坏性操作的授权门禁，这边管整机文件系统删除的执行方式。
 keywords:

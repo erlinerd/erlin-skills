@@ -1,5 +1,6 @@
 ---
 name: erlin-autopilot
+maturity: engineering
 description: 多任务并行编排——Inspect→分类→Spec→垂直切片→依赖图→选执行后端（有编排器用编排器，否则原生 worktree 回退）→并行实现→逐张合并过门→brief。只拥有执行流程，不定义工程规范。仅由用户主动输入 /erlin-autopilot 触发（disable-model-invocation=true）。
 when_to_use: 用户主动输入 /erlin-autopilot 编排一批可并行的任务——消息内任务列表、ticket 列表路径、或留空从仓库 issue tracker 拉取时使用；任务间足够独立、值得并行时适用。
 disable-model-invocation: true

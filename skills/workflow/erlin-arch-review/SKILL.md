@@ -1,5 +1,6 @@
 ---
 name: erlin-arch-review
+maturity: engineering
 description: >-
   Architecture review across seven design principles (single responsibility, open-closed, low coupling, component reuse, ...): per-principle scored cards with file:line evidence, plus a remediation list ranked by impact x cost. Use for "architecture review", "code quality", "refactoring advice", "too much coupling" — even if not named; diff compliance review goes to code-review. 架构评审（diff 合规审查走 code-review）：从单一职责、开闭原则、低耦合、组件复用等七原则评估代码的架构质量，输出逐原则评估卡 + 按影响×成本排序的整改清单。当用户说"架构评估""代码质量怎么样""重构建议""单一职责""耦合太高""组件复用"时使用——即使没提 skill 名；也适用于 erlin-autopilot 跑完后想要架构视角的审查。
 when_to_use: 从单一职责、开闭、低耦合、组件复用等七原则评估仓库/模块/组件/diff 的架构质量，输出评估卡与整改清单时使用；用户说"架构评估/代码质量怎么样/重构建议"即触发。分支/PR 的 diff 合规评审使用 code-review。

@@ -37,9 +37,11 @@ cd erlin-skills && ./scripts/link-skills.sh
 
 ## Skills
 
-27 skills in four buckets (`skills/<bucket>/`); retired skills go to `_attic`. Per-bucket listings in each bucket README; human docs at `docs/<bucket>/<skill>.md`. This table is a tour — the authoritative trigger source is each SKILL.md frontmatter.
+27 skills in four buckets (`skills/<bucket>/`); retired skills go to `_attic`. Per-bucket listings in each bucket README; human docs at `docs/<bucket>/<skill>.md`. This section is a tour — the authoritative trigger source is each SKILL.md frontmatter.
 
-### Core — the reason to install (9)
+Every skill declares a **maturity level** in its frontmatter (`maturity: engineering | productivity | in-progress | deprecated`), mirroring [mattpocock/skills](https://github.com/mattpocock/skills)'s lifecycle folders: it tells you how battle-tested a skill is, while the bucket tells you what domain it serves. Contract tests enforce valid levels, and `deprecated` skills never ship in the plugin.
+
+### Engineering (13) — battle-tested daily drivers
 
 | Skill | Bucket | Purpose |
 | ----- | ------ | ------- |
@@ -47,19 +49,27 @@ cd erlin-skills && ./scripts/link-skills.sh
 | [erlin-bdd](./skills/workflow/erlin-bdd/SKILL.md) | workflow | Behavior specs + E2E when changes cross the unit-test threshold (web + Apple) |
 | [erlin-arch-review](./skills/workflow/erlin-arch-review/SKILL.md) | workflow | Seven-principle architecture review with file:line evidence |
 | [erlin-product-review](./skills/workflow/erlin-product-review/SKILL.md) | workflow | Product/UX/growth/business four-view assessment |
+| [erlin-meta](./skills/workflow/erlin-meta/SKILL.md) | workflow | Skill routing + App Store sub-domain dispatch |
+| [erlin-autopilot](./skills/workflow/erlin-autopilot/SKILL.md) | workflow | Multi-task parallel orchestration (user-invoked) |
+| [erlin-safe-delete](./skills/workflow/erlin-safe-delete/SKILL.md) | workflow | Deletion discipline: list → confirm → Trash |
 | [erlin-app-icon](./skills/apple/erlin-app-icon/SKILL.md) | apple | App icon / wordmark design with pixel-accurate verification |
 | [erlin-app-store-marketing](./skills/apple/erlin-app-store-marketing/SKILL.md) | apple | Submission captures + ASO marketing compositions |
 | [erlin-app-store-compliance](./skills/apple/erlin-app-store-compliance/SKILL.md) | apple | Rejection remediation + listing localization |
 | [erlin-asc](./skills/apple/erlin-asc/SKILL.md) | apple | App Store Connect API operations (user-invoked) |
-| [erlin-social-assets](./skills/web/erlin-social-assets/SKILL.md) | web | Launch-day promo assets for every social platform |
+| [erlin-app-dev-build](./skills/apple/erlin-app-dev-build/SKILL.md) | apple | Dev-badged debug builds for iOS/macOS |
+| [erlin-app-coding-standards](./skills/apple/erlin-app-coding-standards/SKILL.md) | apple | Swift 6 / SwiftUI coding & project standards |
 
-### Support (12)
+### Productivity (8) — solid, single-purpose helpers
 
-Unattended orchestration ([erlin-autopilot](./skills/workflow/erlin-autopilot/SKILL.md), user-invoked), metric experiment loops ([erlin-auto-research](./skills/workflow/erlin-auto-research/SKILL.md)), safe deletion ([erlin-safe-delete](./skills/workflow/erlin-safe-delete/SKILL.md)), skill routing ([erlin-meta](./skills/workflow/erlin-meta/SKILL.md)), Swift standards ([erlin-app-coding-standards](./skills/apple/erlin-app-coding-standards/SKILL.md)), dev builds ([erlin-app-dev-build](./skills/apple/erlin-app-dev-build/SKILL.md)), onboarding screens ([erlin-app-onboarding](./skills/apple/erlin-app-onboarding/SKILL.md)), WeChat download links ([erlin-web-wechat-download](./skills/apple/erlin-web-wechat-download/SKILL.md)), web motion ([erlin-web-motion](./skills/web/erlin-web-motion/SKILL.md)), terminal-style landing pages ([erlin-web-warm-terminal-design](./skills/web/erlin-web-warm-terminal-design/SKILL.md)), LAN preview ([erlin-web-lan-preview](./skills/web/erlin-web-lan-preview/SKILL.md)), workflow distillation ([erlin-skill-distill](./skills/garden/erlin-skill-distill/SKILL.md)).
+Metric experiment loops ([erlin-auto-research](./skills/workflow/erlin-auto-research/SKILL.md)), onboarding screens ([erlin-app-onboarding](./skills/apple/erlin-app-onboarding/SKILL.md)), launch-day promo assets ([erlin-social-assets](./skills/web/erlin-social-assets/SKILL.md)), web motion ([erlin-web-motion](./skills/web/erlin-web-motion/SKILL.md)), terminal-style landing pages ([erlin-web-warm-terminal-design](./skills/web/erlin-web-warm-terminal-design/SKILL.md)), LAN preview ([erlin-web-lan-preview](./skills/web/erlin-web-lan-preview/SKILL.md)), WeChat download links ([erlin-web-wechat-download](./skills/apple/erlin-web-wechat-download/SKILL.md)), workflow distillation ([erlin-skill-distill](./skills/garden/erlin-skill-distill/SKILL.md)).
 
-### Personal (6) — personal workflow, not polished for public use
+### In progress (6) — personal workflow, not polished for public use
 
 [erlin-course-create](./skills/garden/erlin-course-create/SKILL.md) · [erlin-course-review](./skills/garden/erlin-course-review/SKILL.md) · [erlin-learning-plan](./skills/garden/erlin-learning-plan/SKILL.md) · [erlin-obsidian-wiki](./skills/garden/erlin-obsidian-wiki/SKILL.md) · [erlin-feishu-wiki](./skills/garden/erlin-feishu-wiki/SKILL.md) · [erlin-profile](./skills/garden/erlin-profile/SKILL.md) — shipped because the contract tests keep them working, but they carry personal conventions.
+
+### Deprecated (0)
+
+Empty today — retired skills move to `skills/_attic/` and never ship in the plugin. The convention is enforced by contract tests before it is ever needed.
 
 ## Commands
 

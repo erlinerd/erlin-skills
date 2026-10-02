@@ -1,5 +1,6 @@
 ---
 name: erlin-obsidian-wiki
+maturity: in-progress
 description: 在 Obsidian vault 里按 Karpathy 的 LLM Wiki pattern、用官方 obsidian CLI 增量编译并维护互链知识库——"收进 wiki/查 wiki/整理 wiki/llm wiki"时使用，即使用户没提 Karpathy 三个字。
 when_to_use: 三类请求——Ingest（把新源料编译进 wiki）、Query（对 wiki 提问并把好答案回填成页）、Lint（健康检查）；目标库默认 ~/Obsidian/Obsidian Vault。与 erlin-profile 分工：~/.me 存个人属性事实，本技能建主题知识库。
 keywords:

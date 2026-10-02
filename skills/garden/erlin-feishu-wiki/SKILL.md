@@ -1,5 +1,6 @@
 ---
 name: erlin-feishu-wiki
+maturity: in-progress
 description: 用官方 @larksuite/cli（lark-cli）维护飞书知识库文档——本地 markdown 草稿 → 安全上传 → markdown 回查。用户提到"飞书文档/知识库/wiki 页""上传/更新/回查飞书页面""lark-cli 操作 wiki""多页批量覆盖并验证"时使用。**整篇覆盖远端页面：仅用户显式调用本技能时执行，模型不自动触发。**
 when_to_use: 用 lark-cli 上传/更新/回查飞书知识库文档——本地 Markdown 草稿 dry-run 确认后整篇覆盖上传并远端回查验证时使用；提及"飞书文档/知识库/wiki 页/lark-cli 操作 wiki"即触发。**写远端页面，仅用户显式调用时执行，模型不自动触发。**
 disable-model-invocation: true

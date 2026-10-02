@@ -1,5 +1,6 @@
 ---
 name: erlin-asc
+maturity: engineering
 description: >-
   App Store Connect API CLI: create and manage App records, Bundle IDs, localized names; look up Apps and Builds; prepare for release. Keys live in an XDG JSON config (paths only, never key contents). Use for "create an app", "App Store Connect", release prep. Explicit user invocation only; confirm before writes. App Store Connect API 命令行工具。当用户要创建/管理 ASC 的 App 记录、Bundle ID、多语言名称、查 App 或 Build，或提到"建 App/上架准备"时使用。配置存 XDG JSON（只存密钥路径，不存密钥内容）。仅用户显式调用；写操作先确认。
 when_to_use: 创建/管理 App Store Connect 的 App 记录、Bundle ID、多语言名称，查询 App 或 Build，做上架准备与 ASC 相关操作时使用；提及"建 App/上架准备/App Store Connect"即触发。**本技能写外部 ASC 记录，仅用户显式调用时执行，模型不自动触发。**

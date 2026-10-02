@@ -1,5 +1,6 @@
 ---
 name: erlin-app-icon
+maturity: engineering
 description: >-
   Full workflow for app icons and wordmark logos: palette extraction from brand colors, pixel-accurate rendering with verification, AppIcon asset catalog integration, build confirmation. Use when the user mentions "design a logo", "generate an icon", "app icon", "wordmark" — even if not explicit. 根据产品生成 App 图标/wordmark logo 的完整工作流——品牌色板取色、像素级精确渲染与验证、接入 AppIcon 资源集并构建确认。用户提到"设计 logo""生成 icon/图标""App 图标""上架图标""wordmark""把 XX 作为 icon"时使用，即使没明说。
 when_to_use: 从产品品牌生成 App 图标或 wordmark logo——取品牌色板、像素级渲染与验证、接入 AppIcon 资源集时使用；提及"设计 logo/生成 icon/上架图标/把 XX 作为 icon"即触发。

@@ -1,5 +1,6 @@
 ---
 name: erlin-web-wechat-download
+maturity: productivity
 description: 给有 App Store 下载链接的官网做微信内跳转兼容——检测 MicroMessenger webview，拦截下载按钮并提示用户在 Safari 打开。仅在请求涉及微信/WeChat 与官网或 App Store 下载链接时使用。
 when_to_use: 给带 App Store 下载链接的官网做微信内跳转兼容——检测 MicroMessenger webview、拦截下载按钮并引导用户在 Safari 打开时使用；请求涉及微信/WeChat 与官网下载链接时触发。
 keywords:

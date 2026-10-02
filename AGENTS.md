@@ -46,7 +46,7 @@ Historical erli-* slash commands and the erli CLI were removed (2026-10-02, spec
 
 ## Skills
 
-Skills live in `skills/<bucket>/<name>/SKILL.md` — four buckets: `workflow` (main flow + reviews), `apple` (App Store chain + platform standards), `web` (web motion + assets), `garden` (personal + distillation); retired skills go to `_attic` (never installed). Each skill's frontmatter is the authoritative trigger source — don't hand-maintain a duplicate catalog outside `skills/workflow/erlin-meta/SKILL.md`.
+Skills live in `skills/<bucket>/<name>/SKILL.md` — four buckets: `workflow` (main flow + reviews), `apple` (App Store chain + platform standards), `web` (web motion + assets), `garden` (personal + distillation); retired skills go to `_attic` (never installed). Each skill's frontmatter is the authoritative trigger source — don't hand-maintain a duplicate catalog outside `skills/workflow/erlin-meta/SKILL.md`. Every skill also declares a lifecycle `maturity` (`engineering` / `productivity` / `in-progress` / `deprecated`, mirroring mattpocock/skills); `deprecated` never ships in the plugin, and promotion requires real-usage evidence.
 
 ## Governance（mattpocock/skills 同构）
 

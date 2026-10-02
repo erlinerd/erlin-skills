@@ -6,7 +6,7 @@ PRs welcome. New skills and behavior changes must keep the catalog contract gree
 
 Seven sync points, in order:
 
-1. **Create** `skills/<bucket>/<skill>/SKILL.md` — pick the bucket by domain (`workflow` engineering, `apple` App Store chain, `web` web/assets, `garden` personal). Frontmatter must include `name` (== directory name), `description`, `keywords` (≥1). Skill body is yours to organize; see existing skills for conventions.
+1. **Create** `skills/<bucket>/<skill>/SKILL.md` — pick the bucket by domain (`workflow` engineering, `apple` App Store chain, `web` web/assets, `garden` personal). Frontmatter must include `name` (== directory name), `description`, `keywords` (≥1), and `maturity` (`engineering` / `productivity` / `in-progress` / `deprecated` — the lifecycle level, mirroring mattpocock/skills; start at `in-progress`, promote with real-usage evidence). Skill body is yours to organize; see existing skills for conventions.
 2. **Invocation policy**: create `<skill>/agents/openai.yaml` mirroring the frontmatter (`interface` + `policy`). User-invoked skills also set `disable-model-invocation: true` in frontmatter.
 3. **Routing table**: add a row to the bucket group in `skills/workflow/erlin-meta/SKILL.md` — format `` | `erlin-xxx` | trigger description | ``.
 4. **Flow map**: add the skill to `skills/workflow/erlin-meta/FLOW-MAP.md` (contract-tested).

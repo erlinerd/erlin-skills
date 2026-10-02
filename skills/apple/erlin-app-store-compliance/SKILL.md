@@ -1,5 +1,6 @@
 ---
 name: erlin-app-store-compliance
+maturity: engineering
 description: >-
   App Store rejection remediation (especially IAP: Guideline 4.10, 3.1.1), pre-submission audits, and listing metadata localization (description/keywords/subtitle, en-US default). Use when rejected, before submitting, or when translating store copy. iOS App 被 App Store 审核拒绝（尤其 IAP/付费：Guideline 4.10、3.1.1）后的整改与提审前自查——Pro 卖点重定位为 App 自身高级体验，扫清禁用表达；并负责提审文案多语言化。用户说"被拒了""审核被拒""4.10""提审前查一遍""翻译 App Store 文案"时使用——即使没提 skill 名。
 when_to_use: App 被拒审整改、提审前自查或提审文案多语言化时使用；用户说“被 App Store 拒了/审核被拒/4.10/不能卖 iCloud/订阅卖点整改/Pro 文案改改/提审前查一遍/翻译 App Store 文案/本地化商店元数据”即触发，无需点名本技能。范围含仓库外 RevenueCat Paywall / ASC IAP 商品的正确处理。

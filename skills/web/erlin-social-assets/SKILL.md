@@ -1,5 +1,6 @@
 ---
 name: erlin-social-assets
+maturity: productivity
 description: >-
   Social media promo assets from app screenshots and brand material: Instagram, X, Xiaohongshu, YouTube, Facebook sizes, with optional Remotion video. App Store marketing compositions belong to erlin-app-store-marketing. 根据 app 截图与品牌资产生成社交平台宣传物料——Instagram、X、小红书、YouTube、Facebook 等规格的宣传图与可选 Remotion 视频。不负责 App Store 营销构图图；该任务使用 erlin-app-store-marketing。
 when_to_use: 生成社媒宣传物料（宣传图/promo/营销素材/推广图）时使用；用户说“社媒宣传/宣传物料/宣传图/宣传视频/promo/social media/营销素材/推广图”即触发，无需点名本技能。宣传视频默认不生成：只有用户指明要视频或直接要求时才生成，生成前确认竖/横与时长。

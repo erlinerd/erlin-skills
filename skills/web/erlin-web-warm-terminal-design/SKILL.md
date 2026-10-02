@@ -1,5 +1,6 @@
 ---
 name: erlin-web-warm-terminal-design
+maturity: productivity
 description: Apply or fully replicate the "Warm Terminal" style — warm dark dev-tool terminal aesthetic. Use when the user names this style, asks to replicate/复刻 the personOS landing page, wants a dark landing page / dark dev-tool UI / 瑞士网格排版 / 终端风 / Linear-Vercel 式暗色页面, or a promo landing page (推广页/产品官网首页) in this style — even if they just say "用那个暗色风格" or "做成 personOS 首页那样".
 when_to_use: 应用或完整复刻 Warm Terminal 暖色暗终端风格——暗色落地页/暗色 dev-tool UI/瑞士网格排版/推广页官网时使用；用户点名该风格、要复刻 personOS 式落地页、或说"用那个暗色风格"即触发。
 keywords:

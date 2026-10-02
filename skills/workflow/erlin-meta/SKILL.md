@@ -1,5 +1,6 @@
 ---
 name: erlin-meta
+maturity: engineering
 description: 轻量技能路由：维护仓库目录校验表与技能选择规则。用户问有哪些技能、该用哪个技能或任务主意图不明确时使用；先利用宿主技能描述，不要求每次开发都加载完整目录。
 when_to_use: 需要技能选择、工程流或 App Store 子域分流时参考；先使用宿主描述，明确的小修无需读取完整目录。
 keywords:

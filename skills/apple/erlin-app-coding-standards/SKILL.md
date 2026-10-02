@@ -1,5 +1,6 @@
 ---
 name: erlin-app-coding-standards
+maturity: engineering
 description: 写、改、review Swift/SwiftUI 代码或做 Tuist/SPM 工程调整时使用——Apple 平台（Swift 6 / SwiftUI / Swift Testing / macOS/iOS）编码与工程规范：严格并发、SwiftUI 架构性能、Swift Testing、高风险文件保护。通用纪律叠加 erlin-dev-standards。
 when_to_use: 写、改、review Swift/SwiftUI 代码，处理并发/actor/@MainActor/Sendable，写单元测试（@Test #expect #require），搭 SwiftUI 视图结构，或做 Tuist/SPM 工程调整时使用；相关 Swift 开发任务即触发，无需点名本技能。
 keywords:

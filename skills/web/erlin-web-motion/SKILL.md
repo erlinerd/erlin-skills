@@ -1,5 +1,6 @@
 ---
 name: erlin-web-motion
+maturity: productivity
 description: 为 Next.js/React 站点引入 motion 动效库、从 framer-motion 迁移导入，并铺设滚动揭示、stagger 网格、页面过渡、导航动效。不负责 SwiftUI、CSS-only 或 Remotion 视频动画。用户提到 Next.js/React 与 motion、framer-motion、滚动揭示、页面过渡或卡片动画时使用。
 when_to_use: 给 Next.js/React 站点引入 motion 动效库、从 framer-motion 迁移导入、或铺设滚动揭示/stagger 网格/页面过渡/导航动效时使用；提及"滚动揭示/页面过渡/卡片动画"即触发。
 keywords:

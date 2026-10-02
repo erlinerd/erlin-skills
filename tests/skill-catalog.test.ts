@@ -14,6 +14,10 @@ interface Skill {
   frontmatter: string;
 }
 
+// 技能生命周期五级（对标 mattpocock/skills 的目录进度分类），
+// 以 frontmatter maturity 字段承载；四桶目录保持功能语义不变（ADR-0001）。
+const MATURITIES = ["engineering", "productivity", "in-progress", "deprecated"];
+
 function listSkills(): Skill[] {
   const skills: Skill[] = [];
   for (const bucket of fs.readdirSync(SKILLS_DIR).sort()) {
@@ -164,8 +168,33 @@ describe("skill catalog contract", () => {
     }
   });
 
-  it("keeps versions consistent across package.json and plugin manifests", () => {
-    const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, "package.json"), "utf8"));
+  it("requires every skill to declare a valid maturity level", () => {
+    for (const s of skills) {
+      const level = s.frontmatter.match(/^maturity:\s*(\S+)\s*$/m)?.[1] ?? "";
+      expect(
+        MATURITIES.includes(level),
+        `${s.name} has invalid maturity '${level}'`,
+      ).toBe(true);
+    }
+    // deprecated 技能不进 plugin 安装面（现空集，规则先行）
+    const plugin = JSON.parse(
+      fs.readFileSync(path.join(ROOT, ".claude-plugin/plugin.json"), "utf8"),
+    );
+    const deprecatedNames = skills
+      .filter(
+        (s) =>
+          s.frontmatter.match(/^maturity:\s*(\S+)\s*$/m)?.[1] === "deprecated",
+      )
+      .map((s) => `./skills/${s.bucket}/${s.name}`);
+    for (const d of deprecatedNames) {
+      expect(
+        plugin.skills,
+        `deprecated skill ${d} must not ship in plugin.json`,
+      ).not.toContain(d);
+    }
+  });
+
+  it("keeps versions consistent across package.json and plugin manifests", () => {    const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, "package.json"), "utf8"));
     const plugin = JSON.parse(fs.readFileSync(path.join(ROOT, ".claude-plugin/plugin.json"), "utf8"));
     const market = JSON.parse(fs.readFileSync(path.join(ROOT, ".claude-plugin/marketplace.json"), "utf8"));
     expect(plugin.version).toBe(pkg.version);
