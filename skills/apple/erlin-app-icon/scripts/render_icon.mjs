@@ -7,12 +7,12 @@
 // config.json（写到项目内并 gitignore，勿改本脚本——技能目录经 symlink 是 git 工作树）:
 //   { "bg": "10,10,12,255", "ink": "...", "accent": "...", "wordmark": "...",
 //     "fontSize": 290, "weights": ["regular"], "variants": ["plain","in-glyph"],
-//     "accentGlyph": "o", "accentDotSize": 58, "trailingDots": false }
+//     "accentGlyph": "o", "accentDotSize": 58 }
 //   所有键可选，缺省回退下方默认值。
 //
 // 设计要点（承自原 .py）:
-//   - 墨迹框居中: 字体度量的理论中心渲染后，扫描实际墨迹像素做自校准平移
-//     （度量有系统偏差，如 SFNS 约 0.07em，实测踩过），中心保证 512±1px。
+//   - 墨迹框居中: 字体度量的理论中心渲染后，扫描实际墨迹像素做自校准平移，
+//     中心保证 512±1px。
 //   - 强调元素定位: 目标字形墨迹中心 = 前缀 advance + 单字墨迹中心；
 //     字形查找按 wordmark 实际字符(注意大小写)。
 //   - 坐标系: 顶部原点、y 向下（与 Vision OCR 的左下原点 bbox 相反，别混）。
@@ -49,15 +49,12 @@ const ACCENT = CFG.accent ?? "255,176,84,255"; // 强调色
 
 const WORDMARK = CFG.wordmark ?? "Demo Clock"; // wordmark 文本(字形查找按实际字符!)
 const FONT_SIZE = CFG.fontSize ?? 290;
-const TRACKING = FONT_SIZE * 0.03; // 字距;0 关闭（原 .py 即未参与渲染，保留配置面）
 const WEIGHTS = CFG.weights ?? ["regular"]; // 输出后缀（kernel 固定 SFNS.ttf 首个 face，保留配置面）
-const FONT_INDEX = 0; // ttc 字面索引（kernel 不支持多 face 选择，保留配置面）
 
 // 变体: "plain" 纯字 | "trailing-dots" 尾部两点(冒号) | "in-glyph" 强调元素嵌入指定字形
 const VARIANTS = CFG.variants ?? ["plain", "in-glyph"];
 const ACCENT_DOT_SIZE = CFG.accentDotSize ?? FONT_SIZE * 0.2; // 强调元素直径(黄金比例:元素:宿主腹腔≈0.618)
 const ACCENT_GLYPH = CFG.accentGlyph ?? "o"; // in-glyph 嵌入的字形(按 wordmark 实际字符)
-const TRAILING_DOTS = CFG.trailingDots ?? false; // trailing-dots:两点跟随
 // ---------------------------------------------
 
 const SIZE = 1024;
@@ -68,7 +65,7 @@ const OUT =
     .filter((a, i) => a !== "--config" && process.argv.slice(2)[i - 1] !== "--config")[0] ||
   "output";
 
-// 原 .py 依赖 uharfbuzz 检测 kerning pair；node 无对应物，省略该警告（中心不受影响）。
+// kerning pair 警告在此省略：仅影响相邻字距警告，不影响中心定位与渲染输出。
 function warnKerning() {}
 
 function kernel(...args) {
@@ -130,7 +127,7 @@ function calibrate(path) {
 function glyphInkCenter(originX, baselineY, text, target) {
   if (!text.includes(target)) return null;
   const index = text.indexOf(target);
-  const prefixWidth = measure(text.slice(0, index)).advance; // FreeType advance,与渲染一致
+  const prefixWidth = measure(text.slice(0, index)).advance; // CoreText advance,与渲染一致
   const [x0, y0, x1, y1] = measure(target).bbox;
   return { cx: originX + prefixWidth + (x0 + x1) / 2, cy: baselineY + (y0 + y1) / 2 };
 }

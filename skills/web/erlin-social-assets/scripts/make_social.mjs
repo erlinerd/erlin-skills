@@ -5,8 +5,10 @@
 //   node scripts/make_social.mjs <config.json>
 //
 // 配置为 JSON，相对路径相对 config.json 所在目录解析，输出 PNG 写到 outputs[].file。
-// 渲染走 macOS 原生 swift kernel（social_raster.swift，替代原 make_social.py 的 Pillow）；
-// 中文字体用系统 PingFang.ttc，按字重自动定位；缺字重时回退 Regular。
+// 渲染走 macOS 原生 swift kernel（social_raster.swift）；
+// 中文字体按 FONT_CANDIDATES 顺序取首个存在的文件；新版 macOS（26+）PingFang.ttc 已移入 AssetsV2
+// 按需资产、不在 /System/Library/Fonts 下，实际回退到 Hiragino Sans GB（kernel 侧字重映射已兼容）。
+// 字重在 ttc 内按关键字链定位（见 social_raster.swift:34 的 weightFallbacks），链全不中时取 ttc 首个字面。
 //
 // 布局两种（排版尺寸全部按画布比例缩放，同一配置可出任意平台规格）:
 //   vertical — 竖版: 角落装饰点 / logo 行 / 大标题两行 / 副文案 / 截图圆角卡 / 装饰点条 / 页脚
@@ -20,7 +22,7 @@ import path from "node:path";
 import { basename, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-// 候选中文字体按序探测（_discover 移植：node 只做存在性检查，ttc 字面枚举在 kernel）；
+// 候选中文字体按序探测：node 只做存在性检查，ttc 字面枚举在 kernel；
 // Hiragino Sans GB / STHeiti 为回退，均覆盖简体中文。
 const FONT_CANDIDATES = [
   "/System/Library/Fonts/PingFang.ttc",
@@ -50,7 +52,7 @@ export function layoutCommand(layout) {
   return layout === "wide" ? "render-wide" : "render-vertical";
 }
 
-// 组装 swift kernel 的 spec：颜色统一解析为 RGB 数组；缺省字段与 python 的 spec.get 一致
+// 组装 swift kernel 的 spec：颜色统一解析为 RGB 数组；decor 缺省 dots，title2Color 缺省 accent，title2/logoText/subtitle/footer 缺省 null
 export function buildSpec(outputSpec, brand, fontFile) {
   return {
     canvasW: outputSpec.width,

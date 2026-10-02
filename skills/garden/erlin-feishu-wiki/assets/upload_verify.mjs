@@ -9,6 +9,7 @@
  *   node upload_verify.mjs verify 00-home
  *
  * 配置：填写 T（文件名 -> doc token）与 KEYS（关键词 -> 期望次数）。
+ * 推荐 FEISHU_WIKI_CONFIG=<json 路径> 提供配置（形态见下方说明）；T/KEYS 内联占位仅适合本地试验。
  * 可用 DRAFT_DIR 环境变量覆盖默认的 .erlin/course/ 草稿目录。
  */
 import { existsSync, readFileSync } from "node:fs";

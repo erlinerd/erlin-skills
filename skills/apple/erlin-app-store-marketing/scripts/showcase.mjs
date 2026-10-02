@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-// Showcase 图生成器：最多 3 张成品截图等高并排在白底画布上，底部可选 GitHub 链接。
-// 布局算法在本文件（与原 showcase.py 一致）；栅格化走 swift 内核（raster.swift showcase）。
+// Showcase 图生成器：多张成品截图等高并排在白底画布上，底部可选 GitHub 链接。
+// 布局算法在本文件；栅格化走 swift 内核（raster.swift showcase）。
 
 import { basename } from "node:path";
 import { startMeasureKernel, runKernel, sipsDimensions } from "./kernel.mjs";
@@ -40,7 +40,7 @@ function parseArgs(argv) {
 async function main() {
   const args = parseArgs(process.argv.slice(2));
 
-  // 全部等高缩放到 TARGET_H（与 python int() 截断一致）
+  // 全部等高缩放到 TARGET_H
   const scaled = args.screenshots.map((shotPath) => {
     const dims = sipsDimensions(shotPath);
     return { path: shotPath, w: Math.floor(dims.width * (TARGET_H / dims.height)) };

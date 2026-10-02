@@ -324,7 +324,7 @@ func runFrame(outPath: String) {
     )
     roundedFill(islandRect, CGFloat(islandH / 2), CGColor(srgbRed: 0, green: 0, blue: 0, alpha: 1))
 
-    // 侧键（部分越出画布边缘，与 python 版坐标一致）
+    // 侧键（坐标继承 python 版；电源键 x∈[1030,1034]、左侧三键 x∈[-4,0]，均整体落在 1030 宽画布之外，实际不渲染——python 版 PIL 同样画不到，属继承的既有行为）
     let buttonColor = CGColor(srgbRed: 25/255, green: 25/255, blue: 25/255, alpha: 1)
     roundedFill(rectFromTop(CGFloat(deviceW), 340, 4, 120), 2, buttonColor)   // 电源键（右侧）
     roundedFill(rectFromTop(-4, 280, 4, 80), 2, buttonColor)                  // 音量上（左侧）

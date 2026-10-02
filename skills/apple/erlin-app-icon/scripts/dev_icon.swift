@@ -1,6 +1,6 @@
 // 生成带角标的 iOS dev 图标栅格内核（被 make_dev_icon.mjs 调用）。
 // 用法: swift dev_icon.swift <输入.png> <输出.png> [角标文字] [capsule|dot]
-// 角标样式与尺寸和原 make_dev_icon.py 保持一致（2026-08-17 用户要求见注释）。
+// 角标承自已退役的 make_dev_icon.py（git 39b3697）：左上角贴边、约占方形 1/9、仅右下角圆角——2026-08-17 用户要求
 
 import AppKit
 

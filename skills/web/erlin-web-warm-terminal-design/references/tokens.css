@@ -1,6 +1,11 @@
 /* Warm Terminal — complete paste-ready stylesheet.
-   Extracted from personOS landing (apps/landing/app/globals.css .launch-* section, verified 2026-08).
-   Scope everything under .dcc to avoid leaking into host styles.
+   Extracted from the personOS landing page (external project), 2026-08.
+   Scoping model: tokens (--dcc-*) are defined on .dcc, and every class
+   carries the dcc- prefix. The .dcc-* selectors are flat global classes,
+   NOT `.dcc .dcc-*` descendants — their layout properties apply anywhere
+   in the host page, so a host that already uses dcc-prefixed class names
+   can still collide. Token-backed colors/fonts only resolve inside the
+   .dcc subtree.
    Pair with references/page-skeleton.tsx, which uses exactly these class names. */
 
 /* Prerequisites outside this file:
@@ -777,7 +782,7 @@
     gap: 0.7rem;
   }
 
-  /* Keep only the CTA visible in nav */
+  /* Hide the plain nav links; the locale toggle and CTA stay visible */
   .dcc-links > a:not(.dcc-nav-cta) {
     display: none;
   }

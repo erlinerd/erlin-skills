@@ -1,12 +1,11 @@
 #!/usr/bin/env node
-// compose.mjs 布局算法测试（对应原 test_compose.py 的 DrawStub 手法：
-// 度量函数注入 stub，验证换行算法本身而非字体渲染）。
+// compose.mjs 布局算法测试：度量函数注入 stub，验证换行算法本身而非字体渲染。
 
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { wordWrap } from "./compose.mjs";
 
-const stubMeasure = async (text) => text.length; // 与 python DrawStub.textlength=len(text) 一致
+const stubMeasure = async (text) => text.length;
 
 test("无空格 CJK 按最大宽逐字断行", async () => {
   assert.deepEqual(await wordWrap("同步你的数据和设置", stubMeasure, 4), ["同步你的", "数据和设", "置"]);

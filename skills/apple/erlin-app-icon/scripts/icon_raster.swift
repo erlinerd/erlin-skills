@@ -1,11 +1,11 @@
-// icon_raster.swift — erlin-app-icon 栅格内核（render_icon.mjs / verify_icon.mjs / test_verify_icon.mjs 共用）。
+// icon_raster.swift — erlin-app-icon 栅格内核（render_icon.mjs / verify_icon.mjs / verify_icon.test.mjs 共用）。
 // 传入坐标一律为顶部原点、y 向下（PIL 语义）；AppKit 绘图 y 轴向上，子命令内部负责换算。
 // 用法: swift icon_raster.swift <子命令> [args...]
 //   measure <fontSize> <text>                                        → {"bbox":[x0,y0,x1,y1],"advance":N}
 //   draw <out.png> <fontSize> <originX> <baselineY> <text> <bg:r,g,b,a> <ink:r,g,b,a>
 //   dot <in.png> <out.png> <cx> <cy> <r> <color:r,g,b,a>
 //   scan <in.png>                                                    → {"width":W,"height":H,"accent":[..]|null,"ink":[..]|null}
-//   fixture <out.png> <offset> <withAccent:0|1> <canvasSize> [withInk:0|1]   → 测试夹具（原 test_verify_icon.py 的 make_icon；无墨迹模式对应纯底色图）
+//   fixture <out.png> <offset> <withAccent:0|1> <canvasSize> [withInk:0|1，缺省 1]   → 测试夹具（原 test_verify_icon.py 的 make_icon；withInk=0 且 withAccent=0 时为纯底色图）
 
 import AppKit
 import CoreText
@@ -241,7 +241,7 @@ func fixtureSubcommand(_ args: [String]) {
     }
     if withAccent {
         NSColor(red: 1, green: 176 / 255, blue: 84 / 255, alpha: 1).setFill()
-        // 强调圆 (480,480)-(544,544)（顶部原点）
+        // 强调色方块 (480,480)-(544,544)（顶部原点；原 .py 为 draw.ellipse 真圆，移植改矩形——外接 bbox 与中心 (512,512) 相同，scan 判定等效）
         NSRect(x: 480, y: CGFloat(size) - 544, width: 64, height: 64).fill()
     }
     NSGraphicsContext.restoreGraphicsState()

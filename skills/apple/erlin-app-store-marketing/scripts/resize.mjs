@@ -1,12 +1,12 @@
 #!/usr/bin/env node
-// 将原生截图等比缩放到 App Store 规格尺寸（供 app-store-screenshots skill 使用）。
+// 将原生截图等比缩放到 App Store 规格尺寸（本 skill 截图管线用，见 SKILL.md Part A A3）。
 //
 // 用法:
 //   node resize.mjs <输入.png> <宽> <高> [输出.png]
 //
 // - 无输出路径时输出到 <输入去后缀>_<宽>x<高>.png
 // - 先中心裁切到目标纵横比，再等比缩放；源与目标纵横比差 >1% 时失败
-// - 图像操作走 macOS 原生 sips（零依赖，替代原 resize.py 的 Pillow）
+// - 图像操作走 macOS 原生 sips（零 npm 依赖）
 
 import { execFileSync } from "node:child_process";
 import { basename, extname, join } from "node:path";

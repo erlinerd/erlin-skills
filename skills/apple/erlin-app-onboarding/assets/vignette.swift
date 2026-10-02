@@ -13,7 +13,7 @@ import SwiftUI
 ///   - `entered`：由宿主步骤切换时置位，驱动一次性入场。
 ///   - reduced-motion 下传入 `motion = nil` → 直接落定。
 ///
-/// 动效顺序：标记现(0.06) → 线画下(0.1) → 卡落位(0.16)；文字 stagger 由宿主负责。
+/// 动效顺序：幽灵卡现(0.05) → 标记现(0.06) → 线画下(0.1) → 卡落位(0.16)；文字 stagger 由宿主负责。
 struct OnboardingVignette<Marker: View>: View {
   let marker: Marker
   var markerSize: CGFloat = 9
@@ -22,11 +22,11 @@ struct OnboardingVignette<Marker: View>: View {
   var capsuleInk: Color = .white
   var ghostCount: Int = 1
   var entered: Bool = true
-  var motion: Animation?           // reduce-motion 时传 nil
+  var motion: Animation?
 
   // 几何常量（240×180 画布,坐标以中心为原点）——可按宿主调整。
   private let cardY: CGFloat = 26      // 主卡中心纵坐标
-  private let axisX: CGFloat = -84     // 轴横坐标（主卡头部内）
+  private let axisX: CGFloat = -84     // 轴横坐标（主卡上方偏左，轴不与主卡重叠，线垂向卡顶）
   var body: some View {
     ZStack {
       glow

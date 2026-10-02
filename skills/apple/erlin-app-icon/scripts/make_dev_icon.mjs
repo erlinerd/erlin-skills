@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// 生成带角标的 iOS dev 图标（1024×1024），供 erlin-app-dev-build skill 使用。
+// 生成带角标的 iOS dev 图标（1024×1024）；dev 构建工作流见 references/dev-build.md
 //
 // 用法:
 //   node make_dev_icon.mjs <输入正式图标.png> <输出路径.png> [角标文字, 默认 dev] [样式: capsule|dot, 默认 capsule]

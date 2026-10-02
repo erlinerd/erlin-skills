@@ -14,7 +14,7 @@ interface Skill {
   frontmatter: string;
 }
 
-// 技能生命周期五级（对标 mattpocock/skills 的目录进度分类），
+// 技能生命周期四级（对标 mattpocock/skills 的目录进度分类，较其五桶弃 misc——ADR-0001 否决空桶照搬），
 // 以 frontmatter maturity 字段承载；四桶目录保持功能语义不变（ADR-0001）。
 const MATURITIES = ["engineering", "productivity", "in-progress", "deprecated"];
 
@@ -283,7 +283,7 @@ describe("skill catalog contract", () => {
     const changelog = fs.readFileSync(path.join(ROOT, "CHANGELOG.md"), "utf8");
     const latest = changelog.match(/^## (\d+\.\d+\.\d+)$/m)?.[1];
     expect(latest, "CHANGELOG.md has no '## X.Y.Z' section").toBeTruthy();
-    // 防止 tag v1.0.0 与元数据 0.2.0 式的版本分裂（2026-10-02 审计发现）
+    // 防止 CHANGELOG 最新节与发布版本漂移（2026-10-02 审计：首次发布提交 e42e938 四处元数据误写 1.0.0，与发布意图 0.0.1 分裂，1e05dad 归一）
     expect(latest).toBe(pkg.version);
   });
 });

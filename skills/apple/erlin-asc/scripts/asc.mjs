@@ -9,7 +9,7 @@
 //                                                   给 App 增加本地化名称
 //   asc.mjs req <METHOD> <path> [json-body]         任意 API 调用
 //
-// 配置: $XDG_CONFIG_HOME/asc/config.json（默认 ~/.config/asc/config.json）
+// 配置: $ASC_CONFIG 优先；否则 $XDG_CONFIG_HOME/asc/config.json（默认 ~/.config/asc/config.json）
 //   {"issuer_id":"...","key_id":"...","key_path":"..."}   ← 只存路径，不存密钥内容
 import { readFileSync, existsSync } from 'node:fs';
 import { homedir } from 'node:os';

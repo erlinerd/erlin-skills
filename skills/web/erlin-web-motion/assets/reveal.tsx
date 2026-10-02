@@ -46,7 +46,7 @@ export function Reveal({
           io.disconnect();
         }
       },
-      // amount 0.15 + negative bottom margin: fires when the element is
+      // threshold 0.15 + negative bottom rootMargin: fires when the element is
       // clearly on screen, without waiting for most of it to cross.
       { threshold: 0.15, rootMargin: "0px 0px -40px 0px" },
     );

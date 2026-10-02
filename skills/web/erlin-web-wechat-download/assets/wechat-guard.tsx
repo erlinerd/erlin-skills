@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 /**
- * 微信内 App Store 链接跳转拦截的引导浮层(通用版,源自 demo clock 官网)。
+ * 微信内 App Store 链接跳转拦截的引导浮层(通用版)。
  * 用法:
  *   1) 在所有 App Store CTA 的 onClick 里:
  *        if (userAgent.includes('MicroMessenger')) { e.preventDefault(); window.dispatchEvent(new Event('erlin:wechat-open')) }

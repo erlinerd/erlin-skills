@@ -28,8 +28,7 @@ function scan(path) {
 const fixed1 = (value) => value.toFixed(1);
 const signed1 = (value) => (value < 0 ? "" : "+") + value.toFixed(1);
 
-// 对一次扫描结果做全部判定: 返回 {lines, error}（error 即原 .py 的 ValueError 文本；
-// lines 与原 .py 的 print 顺序逐字一致，error 抛出前的行都已产生）。
+// 对一次扫描结果做全部判定: 返回 {lines, error}；有 error 时 lines 也已生成（main 先打印 lines 再报错退出）。
 export function evaluate(result, path, { requireAccent = false, accentTarget = null, accentTolerance = 1 } = {}) {
   const { width, height, accent, ink } = result;
   const lines = [];

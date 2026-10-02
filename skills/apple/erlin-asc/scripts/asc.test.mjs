@@ -1,6 +1,8 @@
 #!/usr/bin/env node
-// asc.mjs DER→raw 签名转换的行为测试：合成 ECDSA DER 签名，断言 r/s 高位为零
-// （第 8 位为 1 的 r 会产生 33 字节整数、剥离后剩 31 字节，旧实现左不补零 → 签名错位）。
+// asc.mjs DER→raw 签名转换的行为测试：合成 ECDSA DER + 真实 P-256 签名，
+// 断言 fix() 每侧恒为 32 字节——低值 r/s（DER 编码短于 32 字节）左补零；
+// 高位 r/s（DER 先补 0x00 垫片成 33 字节整数）剥离垫片后为 32 字节原样直通
+// （旧实现既不左补零也不剥垫片 → raw 长度错位 → 签名无效）。
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
@@ -20,7 +22,7 @@ function derInt(bytes) {
   return Buffer.concat([Buffer.from([0x02, padded.length]), padded]);
 }
 
-// {0,…,1} 这样的低值 r 必然 < 2^248，编码后仅 31 字节 → 触发左补零路径
+// 低值 r/s 经 derInt 剥掉全部前导零后，最小 DER 编码内容仅 1/2 字节（< 32）→ 触发 fix 的左补零路径，恢复到 32 字节
 const LOW_R = Buffer.from(Array(31).fill(0).concat([0x01]));
 const HIGH_R = Buffer.concat([Buffer.alloc(1, 0xff), Buffer.alloc(31, 0xab)]); // 32 字节、首字节高位
 const LOW_S = Buffer.from(Array(30).fill(0).concat([0x02, 0x03]));
@@ -32,10 +34,8 @@ function buildDer(r, s) {
 }
 
 function signatureFor(der) {
-  // 通过 crypto.sign 的同一转换路径：临时导入 asc.mjs 不可行（顶层执行），
-  // 故用 spawn 跑一段内联脚本 import 其 jwt 同款逻辑不现实 → 直接复刻调用：
-  // asc.mjs 的 fix 逻辑通过签一个真实 P-256 密钥并打补丁验证代价高，
-  // 这里改为对脚本做最小导入替代：提取 fix 行为做黑盒等价验证。
+  // asc.mjs 顶层即执行主流程、无法 import；这里读源码用正则截取 jwt() 内的 const fix 一行，在临时 probe.mjs 中配合手抄的 DER 解析段（对应 asc.mjs 的 DER→r/s 剥离段）运行——手抄副本：asc.mjs 改解析逻辑时本测试不会自动跟进，仅 fix 一行会被重新提取。
+  // 真实 P-256 多轮签名覆盖见下方第三个用例。
   const dir = mkdtempSync(join(tmpdir(), "asc-sig-"));
   try {
     const probe = join(dir, "probe.mjs");

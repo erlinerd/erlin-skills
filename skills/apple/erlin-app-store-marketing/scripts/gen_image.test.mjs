@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// gen_image.mjs 纯函数测试（对应原 test_gen_image.py：proxy URL 校验 + 输出路径沙箱）。
+// gen_image.mjs 校验函数单元测试（不触网）：proxy URL 校验 + 输出路径沙箱。
 // 校验器是信任边界：环境变量与 CLI 参数都属外部输入，逃逸 cwd 的路径必须拒绝。
 
 import { test } from "node:test";

@@ -2,8 +2,8 @@
 // 用法: swift social_raster.swift <render-vertical|render-wide> <截图.png> <输出.png> < spec.json
 //
 // spec 由 node 侧 buildSpec 组装（颜色已解析为 RGB 数组，字体文件已探测）。
-// 布局与原 make_social.py 逐项对应：PIL 坐标系 y 轴向下，AppKit y 轴向上，
-// 所有 PIL 坐标经 rectPIL() 换算，注释保留视觉位置描述。
+// PIL 坐标系 y 轴向下，AppKit y 轴向上：矩形类元素（圆点/截图卡）的 PIL 坐标经 rectPIL() 换算，注释保留视觉位置描述；
+// 文本在 drawText 内不经 rectPIL，按 baselineY = canvasH - yPil - font.ascender 换算基线（x 轴同向直接沿用）。
 
 import AppKit
 import CoreImage
@@ -57,7 +57,7 @@ func rectPIL(left: CGFloat, top: CGFloat, right: CGFloat, bottom: CGFloat) -> NS
     NSRect(x: left, y: CGFloat(canvasH) - bottom, width: right - left, height: bottom - top)
 }
 
-// 在指定 ttc 内按字重关键字匹配字面（关键字外层、字面内层，与 python get_font 顺序一致）
+// 在指定 ttc 内按字重关键字匹配字面（关键字外层、字面内层）
 func loadFont(size: CGFloat, weight: String) -> NSFont {
     let cacheKey = "\(Int(size))|\(weight)"
     if let cached = fontCache[cacheKey] { return cached }
@@ -130,7 +130,7 @@ func drawPhoneCard(shot: NSImage, shotSize: CGSize, cardX: CGFloat, cardY: CGFlo
     // 截图白边圆角卡 + 柔影。高度按截图纵横比自适应。
     let cardH = cardW * shotSize.height / shotSize.width
     let card = rectPIL(left: cardX - 12, top: cardY - 12, right: cardX + cardW + 12, bottom: cardY + cardH + 12)
-    // 柔影: 整幅透明层上画圆角矩形（下移 26px）→ 高斯模糊 → 合成（对应 python shadow_layer + GaussianBlur(25)）
+    // 柔影: 整幅透明层上画圆角矩形（下移 26px）→ 高斯模糊 → 合成
     guard let shadowRep = NSBitmapImageRep(
         bitmapDataPlanes: nil, pixelsWide: canvasW, pixelsHigh: canvasH,
         bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false,
@@ -159,7 +159,7 @@ func drawPhoneCard(shot: NSImage, shotSize: CGSize, cardX: CGFloat, cardY: CGFlo
     // 白色卡底
     nsColor([255, 255, 255]).setFill()
     roundedPath(card, cornerRadius + 12).fill()
-    // 截图: 圆角裁切后铺进卡内（对应 python resize + mask paste）
+    // 截图: 圆角裁切后铺进卡内
     let inner = rectPIL(left: cardX, top: cardY, right: cardX + cardW, bottom: cardY + cardH)
     roundedPath(inner, cornerRadius).addClip()
     canvasCtx.imageInterpolation = NSImageInterpolation.high
@@ -311,9 +311,8 @@ if command == "render-wide" {
 }
 NSGraphicsContext.restoreGraphicsState()
 
-// 输出 PNG：画布背景铺满、处处不透明，直接保存 RGBA PNG。
-// 与 python convert("RGB") 的差别仅在文件带 alpha=255 通道，像素一致
-// （NSGraphicsContext 位图上下文要求带 alpha，纯 RGB 位图无法直接落盘）。
+// 输出契约：带 alpha 的 RGBA PNG，alpha 恒 255、像素与纯 RGB PNG 一致
+// （NSGraphicsContext 位图上下文要求带 alpha，纯 RGB 位图建上下文得 nil）。
 guard let pngData = canvasRep.representation(using: NSBitmapImageRep.FileType.png, properties: [:]) else {
     fail("PNG 编码失败")
 }

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// 生成 iPhone 设备框模板 PNG（compose.mjs 的叠加素材；常量与输出和原 generate_frame.py 一致）。
+// 生成 iPhone 设备框模板 PNG（compose.mjs 的叠加素材）；尺寸常量以 raster.swift runFrame 为准，compose.mjs 的 DEVICE_* 与之对应。
 // 栅格化走 swift 内核（raster.swift frame）。
 // 用法: node generate_frame.mjs [输出.png]，默认写到本 skill 的 assets/device_frame.png。
 

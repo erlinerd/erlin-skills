@@ -68,7 +68,7 @@ test("拒绝偏心文字墨迹并校验 --require-accent", () => {
 test("强调元素对齐门禁：偏离目标字形中心超容差即失败", () => {
   const directory = mkdtempSync(join(tmpdir(), "verify-icon-"));
   try {
-    // fixture 强调圆固定在 (480,480)-(544,544)，中心 (512,512)；
+    // fixture 强调色方块固定在 (480,480)-(544,544)，中心 (512,512)；
     // 目标字形中心设为 (500,512) → x 差 +12 > 容差 1，必须失败（旧实现只打印不判定 = 假绿）
     const withAccent = makeIcon(directory, "accent-target.png", { accent: true });
     const failed = spawnSync(process.execPath, [verifyScript, "--accent-target", "500,512,1", withAccent], { encoding: "utf8" });

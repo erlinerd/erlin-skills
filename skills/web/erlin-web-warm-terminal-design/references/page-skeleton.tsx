@@ -1,6 +1,6 @@
 /* Warm Terminal — full page skeleton (React + client component).
    Class names pair 1:1 with references/tokens.css.
-   Default copy = the personOS reference site; replace SLOT-marked values to rebrand.
+   Default copy = the personOS reference site's copy, with the brand swapped to placeholder acmeOS. Rebrand by replacing every acmeOS/ACMEOS string — most of them (navWhy, wordmark, aria-label, footer ©) carry no // SLOT mark, so search, don't rely on the marks.
    Requirements: html { scroll-behavior: smooth }, Space Grotesk + JetBrains Mono loaded. */
 
 'use client'

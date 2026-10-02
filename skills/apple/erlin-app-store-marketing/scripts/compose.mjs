@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // App Store 截图合成器：标题文字 + 设备框模板 + App 截图 → 1290×2796 App Store Connect 成图。
-// 设备框按固定 Y 摆放，文字区居中于画布顶部与设备之间（布局与原 compose.py 一致）。
+// 设备框按固定 Y=720 摆放；文字水平居中，起始 Y 固定 200，位于画布顶部与设备之间。
 // 栅格化走 swift 内核（raster.swift compose）；文字宽度度量走 measure 行协议；布局算法在本文件。
 
 import { basename, join, dirname } from "node:path";
@@ -39,7 +39,7 @@ export function hexToRgb(hex) {
   return [0, 2, 4].map((offset) => parseInt(clean.slice(offset, offset + 2), 16));
 }
 
-// 贪心换行：词内按字符断、词间按空格拼（与 python word_wrap 逐行对应）
+// 贪心换行：词内按字符断、词间按空格拼
 export async function wordWrap(text, measureText, maxWidth) {
   const lines = [];
   let cur = "";
@@ -71,7 +71,7 @@ export async function wordWrap(text, measureText, maxWidth) {
   return lines;
 }
 
-// 最大可用字号；measureWidth(text, size) → 宽度（与 python fit_font 对应）
+// 最大可用字号
 export async function fitFont(text, maxWidth, sizeMax, sizeMin, measureWidth) {
   for (let size = sizeMax; size >= sizeMin; size -= 4) {
     if ((await measureWidth(text, size)) <= maxWidth) return size;
@@ -79,7 +79,7 @@ export async function fitFont(text, maxWidth, sizeMax, sizeMin, measureWidth) {
   return sizeMin;
 }
 
-// 产出 swift 内核的文字条目；advance 含 DESC_LINE_GAP（与 python draw_centered 一致）
+// 产出 swift 内核的文字条目；advance 含 DESC_LINE_GAP
 async function placeLines(text, size, capHeight, startY, maxWidth, measureText) {
   const lines = maxWidth ? await wordWrap(text, measureText, maxWidth) : [text];
   const placed = [];

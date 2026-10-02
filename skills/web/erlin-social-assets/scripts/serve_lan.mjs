@@ -8,7 +8,7 @@
 //
 // 行为:
 //   - 扫描目录（含子目录）的图片，首页动态生成画廊（每次刷新重新扫描，新增图即时可见）
-//   - 图片尺寸标注走 sips（macOS 自带，无则只显示文件名）
+//   - 图片尺寸标注走 sips（macOS 自带，取不到尺寸时不标数字、占位显示 —，卡片 meta 呈「文件名 · —」）
 //   - 端口被占自动 +1 递增；进程脱离会话常驻；注册表 ~/.lan-serve/servers.json
 //   - **闲置自动关闭**：默认 10 分钟无任何请求自动退出（--idle 可调），端口不常占
 //   - 绑定 0.0.0.0，同一 Wi-Fi 下手机/平板直接访问
@@ -269,7 +269,7 @@ function runWorker(root, port, idleMinutes) {
   const server = http.createServer((req, res) => {
     lastActivity = Date.now();
     if (req.url === "/__open" && process.platform === "darwin") {
-      // 从 Mac 浏览器点"在 Mac 上打开"→ Finder 弹出该目录；手机端点了无副作用
+      // 任何客户端（Mac 浏览器或手机）点「在 Mac 上打开」都会在服务所在的 Mac 上弹出 Finder（仅 darwin 生效）；该目录就是服务进程所在的目录
       spawn("open", [root], { stdio: "ignore", detached: true }).unref();
       res.writeHead(200, { "Content-Type": "text/plain; charset=utf-8" });
       res.end("ok");
@@ -315,11 +315,6 @@ function saveRegistry(data) {
   fs.writeFileSync(REGISTRY, JSON.stringify(data, null, 2));
 }
 
-function registryStamp(name, started) {
-  // 注册表指纹：进程启动时间。PID 复用后新进程的启动时间不同，据此识别陈旧条目
-  return { name, started };
-}
-
 function processBootTime(pid) {
   // macOS/Linux: 取进程启动时间（秒精度即可区分复用）；失败返回 null
   try {
@@ -335,7 +330,7 @@ function processBootTime(pid) {
   }
 }
 
-// 清理死亡/复用条目；返回 {alive, pruned}，由调用方决定是否回写（--list 不再早退漏存）
+// 清理死亡/复用条目；返回 {alive, pruned}，由调用方决定是否回写（--list 也在早退前回写）
 function pruneDead(entries) {
   const alive = {};
   const pruned = [];
