@@ -18,6 +18,7 @@ keywords:
   - list skills
   - 技能路由
   - 该用哪个技能
+requires: []
 ---
 
 # 目标

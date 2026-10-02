@@ -11,6 +11,7 @@ context_keywords:
   - 官网
   - App Store
   - 下载链接
+requires: []
 ---
 
 # 目标
@@ -32,7 +33,7 @@ context_keywords:
    ```
 
    React 合成事件里 `preventDefault()` 对 `<a>` 导航有效；SSR 里 `navigator` 只在事件回调（客户端）访问，天然安全。
-3. **实现闪层组件**（模板 `assets/wechat-guard.tsx`）：
+3. **实现闪层组件**（模板 `assets/wechat-guard.tsx`；模板样式用 Tailwind utility 类写成，项目没有 Tailwind 时先换成等价 CSS/站点样式体系再用，不要带着无效类名交付）：
    - 默认监听 `erlin:wechat-open`；若项目需要自定义事件名，CTA 和 `<WeChatGuard eventName="..." />` 必须使用同一个值；按 `pathname.startsWith('/en')` 决定中/英文案
    - 挂到**页面根**（server component 可挂 client 子组件）；初始 `visible=false`，SSR 零渲染、不拖 SEO
    - 浮层：半透明遮罩 + 右上角箭头图标 + 标题/正文 + 「知道了」关闭；`stopPropagation` 防点卡片误关
@@ -41,7 +42,7 @@ context_keywords:
    - 中：「微信内无法跳转 App Store。点击右上角「···」，选择「在 Safari 中打开」。」
    - 英：「The App Store link cannot open inside WeChat. Tap the "···" menu at the top right and choose "Open in Safari".」
 5. **验证**：
-   - 构建后确认逻辑进了**客户端 bundle**：`grep -rl "MicroMessenger\|wechat-open" .next/static/`（Next 16/turbopack 下 client 组件**不进 SSR HTML**，搜 HTML 会空——别误判"没上线"）
+   - 构建后确认逻辑进了**客户端 bundle**：`grep -rl "MicroMessenger\|wechat-open" <构建产物目录>/`（Next.js 为 `.next/static/`；Vite 为 `dist/assets/`，其它框架按实际产物目录）。Next 16/turbopack 下 client 组件**不进 SSR HTML**，搜 HTML 会空——别误判"没上线"
    - 真机/微信实测为最终裁决：微信里转发链接点下载按钮 → 应弹浮层而非死链接
 
 # 判断规则
@@ -82,5 +83,5 @@ context_keywords:
 - **无绕过**：别试图 `window.location`/iframe/mask 链接强制跳商店，微信全堵；引导 Safari 是唯一体面路径。
 - 事件名必须带前缀（默认 `erlin:wechat-open`），CTA 与 Guard 必须同值。
 - 浮层初始 `visible=false`，SSR 零渲染、不拖 SEO；样式沿用当前站点品牌 token，不复制示例项目的颜色变量或语言文案。
-- 验证必须 `grep .next/static/` 全目录（别搜 SSR HTML 误判"没上线"）；`grep ... | head && echo ✓` 会假阳性（head 退出码恒 0），`&&` 别接在管道后判成功。
+- 验证必须 grep 构建产物全目录（Next.js 是 `.next/static/`，其它框架按实际产物目录；别搜 SSR HTML 误判"没上线"）；`grep ... | head && echo ✓` 会假阳性（head 退出码恒 0），`&&` 别接在管道后判成功。
 - 真机/微信实测为最终裁决：点下载应弹浮层而非死链接。

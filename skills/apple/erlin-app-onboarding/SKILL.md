@@ -9,6 +9,7 @@ keywords:
   - onboarding
   - first-run
   - welcome screen
+requires: []
 ---
 
 # 目标

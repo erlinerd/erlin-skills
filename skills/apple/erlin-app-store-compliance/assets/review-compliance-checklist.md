@@ -7,9 +7,9 @@
 
 - [ ] App 本地化字符串（`Localizable.xcstrings` / `*.strings`）——已抽键值过滤 sync/iCloud/Pro/同步/订阅/解锁
 - [ ] SwiftUI 文案（设置页 Pro 卡、同步入口行、Onboarding、订阅状态页）
-- [ ] 官方 Paywall = RevenueCat Dashboard（服务端配置，仓库改它无效）
+- [ ] 官方 Paywall（按实际项目填写配置端；服务端/后台配置的仓库改它无效。示例：RevenueCat Dashboard、ASC 内购配置、自建 StoreKit Paywall）
 - [ ] App Store Connect：描述 / 截图 caption / 促销文本 / **IAP 商品名与描述** / App Review 备注
-- [ ] 营销素材：remotion `copy.ts` / `shotData.ts`、社媒文案、官网（privacy 页披露保留）
+- [ ] 营销素材（按实际项目填写文案数据源。示例：remotion 工程的 `copy.ts` / `shotData.ts`）、社媒文案、官网（privacy 页披露保留）
 - [ ] 已提交的渲染产物（`screenshots/*.png`、视频）——文案源改了要重渲
 
 ## B. 售卖 vs 披露 分类
@@ -43,9 +43,9 @@
 
 ## F. 仓库外手动清单（交用户勾）
 
-- [ ] RevenueCat Dashboard：Paywall 标题/权益/无 iCloud 卖点
+- [ ] Paywall 配置端（示例：RevenueCat Dashboard）：Paywall 标题/权益/无 iCloud 卖点
 - [ ] ASC：IAP 商品显示名/描述中性（不带 iCloud）
-- [ ] 重渲截图/视频（Node + remotion，改 `copy.ts`/`shotData.ts` 后跑 render）
+- [ ] 重渲截图/视频（按实际项目填写渲染管线。示例：remotion 工程改 `copy.ts`/`shotData.ts` 后跑 render）
 - [ ] ASC 版本页填入新描述/截图 caption 并提交审核
 - [ ] IAP 在 ASC 处于"可供审核"状态（防 2.1(b)）
 - [ ] entitlement / bundle id / 收费逻辑未动

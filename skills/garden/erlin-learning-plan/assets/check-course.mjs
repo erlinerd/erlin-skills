@@ -48,9 +48,33 @@ if (!existsSync(root)) {
       }
     }
   }
-  const placeholder = /<项目名>|<标题>|<slug>|<看板链接>|YYYY-MM-DD|第 XX 篇|<N\+2>|<N>|<路径>|<commit>|<版本>/;
+  // 占位符扫描跳过结构性模板段：SKILL.md 要求交付的记录页保留「篇章记录模板」、
+  // 「横向对照记录（适用时）」和一条标注「示范格式」的日志，这些段按设计含占位符，
+  // 无差别扫描会把合法交付判死。豁免从命中标题起，到同级或更高级标题为止（含其子标题）。
+  const exemptHeading = /模板|示范格式|横向对照记录/;
+  const stripExemptSections = (content) => {
+    const kept = [];
+    let skipLevel = 0;
+    for (const line of content.split("\n")) {
+      const heading = /^(#{1,6}) (.*)$/.exec(line);
+      if (heading) {
+        const level = heading[1].length;
+        if (skipLevel && level <= skipLevel) skipLevel = 0;
+        if (!skipLevel && exemptHeading.test(heading[2])) skipLevel = level;
+      }
+      if (!skipLevel) kept.push(line);
+    }
+    return kept.join("\n");
+  };
+  // 末尾的 <中文…> 通配项兜住清单没枚举到的槽位（<可验证能力>/<关键词>/<分钟>/<时长> 等）
+  const placeholder = /<项目名>|<标题>|<slug>|<看板链接>|YYYY-MM-DD|第 XX 篇|<N\+2>|<N>|<路径>|<commit>|<版本>|<[一-龥][^<>\n]*>/;
   for (const [file, content] of contents) {
-    if (placeholder.test(content)) errors.push(`${file}: unresolved placeholder`);
+    if (placeholder.test(stripExemptSections(content))) errors.push(`${file}: unresolved placeholder`);
+    // 看板占位行位于示范日志段之后、无标题分隔，会被豁免误跳过；SKILL.md 要求
+    // 「未创建看板时先删除看板链接占位行」，故对它单独做全量扫描。
+    if (/<看板链接>|<若已创建看板>/.test(content)) {
+      errors.push(`${file}: unresolved kanban placeholder（未创建看板应删除该行）`);
+    }
   }
 
   for (const [file, content] of contents) {

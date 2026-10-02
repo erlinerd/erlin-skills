@@ -113,3 +113,37 @@ test("真实 P-256 签名经 fix 后恒为 64 字节 raw", () => {
     rmSync(dir, { recursive: true, force: true });
   }
 });
+
+// 配置路径三级回退：ASC_CONFIG > $XDG_CONFIG_HOME/asc > ~/.config/asc
+// 借 setupGuide 的报错回显（配置不存在: <cfgPath>）做黑盒断言，无需真实密钥/网络。
+// HOME 指向临时目录，保证「无覆盖」用例不会撞上开发机上的真实配置而发起 API 调用。
+const fakeHome = mkdtempSync(join(tmpdir(), "asc-home-"));
+function cfgPathWith(env) {
+  const out = (() => {
+    try {
+      return execFileSync(process.execPath, [script, "check"], {
+        encoding: "utf8",
+        stdio: ["ignore", "pipe", "pipe"],
+        env: { PATH: process.env.PATH, HOME: fakeHome, ...env },
+      });
+    } catch (e) {
+      return (e.stdout ?? "") + (e.stderr ?? "");
+    }
+  })();
+  return /配置不存在: (.+)/.exec(out)?.[1].trim();
+}
+
+test("ASC_CONFIG 环境变量优先于一切", () => {
+  const p = cfgPathWith({ ASC_CONFIG: "/tmp/custom-asc.json" });
+  assert.equal(p, "/tmp/custom-asc.json");
+});
+
+test("XDG_CONFIG_HOME 生效（SKILL.md 承诺的 XDG 语义）", () => {
+  const p = cfgPathWith({ XDG_CONFIG_HOME: "/tmp/xdg-root" });
+  assert.equal(p, join("/tmp/xdg-root", "asc", "config.json"));
+});
+
+test("无覆盖时回退 ~/.config/asc/config.json", () => {
+  const p = cfgPathWith({});
+  assert.equal(p, join(fakeHome, ".config", "asc", "config.json"));
+});

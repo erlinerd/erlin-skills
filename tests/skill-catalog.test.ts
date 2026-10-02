@@ -170,7 +170,11 @@ describe("skill catalog contract", () => {
     }
   });
 
-  it("keeps core skills bilingual (description starts with English)", () => {
+  // description 呈现给模型时约 250 字符截断（宿主注入行为）：中文触发词若落在
+  // 截断线之后，中文请求就触发不到本技能。契约 = 双语齐备 + 截断窗口内有中文。
+  // （旧契约「英文开头」恰是触发词被截断的病根，2026-10-02 对抗审计后反转。）
+  it("keeps core skills bilingual with Chinese triggers inside the 250-char window", () => {
+    const TRUNCATION_WINDOW = 250;
     const core = [
       "erlin-dev-standards",
       "erlin-bdd",
@@ -190,9 +194,54 @@ describe("skill catalog contract", () => {
         `${s.name} description empty`,
       ).toBeTruthy();
       expect(
-        /^[A-Za-z]/.test(desc),
-        `${s.name} description must start with English trigger sentence`,
+        /[A-Za-z]{4}/.test(desc),
+        `${s.name} description must keep its English sentence (bilingual contract)`,
       ).toBe(true);
+      expect(
+        /[一-鿿]/.test(desc.slice(0, TRUNCATION_WINDOW)),
+        `${s.name} description has no Chinese trigger within the first ${TRUNCATION_WINDOW} chars — Chinese requests won't route to it after truncation`,
+      ).toBe(true);
+    }
+  });
+
+  // 全目录兜底：任何技能（不止 core）的 description 前 250 字符都必须含中文——
+  // 本仓库用户是中文用户，触发词可见性对每个技能都成立。
+  it("keeps Chinese triggers reachable within the truncation window for every skill", () => {
+    const TRUNCATION_WINDOW = 250;
+    for (const s of skills) {
+      const desc =
+        s.frontmatter
+          .match(/^description:\s*(?:[>|][-+]*)?\s*\n?([\s\S]*?)(?=\n[a-z_]+:|$)/m)?.[1]
+          ?.replace(/\n\s+/g, " ")
+          .trim() ?? "";
+      expect(
+        /[一-鿿]/.test(desc.slice(0, TRUNCATION_WINDOW)),
+        `${s.name}: description's first ${TRUNCATION_WINDOW} chars contain no Chinese — front-load Chinese trigger words`,
+      ).toBe(true);
+    }
+  });
+
+  // requires 语义 = 正文委托权威/门禁/强制叠加/调用其脚本的技能（边界转交不算）。
+  // 契约：① 每个技能必须显式声明（可为空 `[]`，沉默省略视为漏声明）
+  //      ② 每个条目必须解析到目录内真实技能。
+  it("requires every skill to explicitly declare resolvable requires", () => {
+    for (const s of skills) {
+      const decl = s.frontmatter.match(
+        /^requires:([ \t]*\[\]|[ \t]*\n(?:[ \t]*-[ \t]*\S+.*\n?)+)?/m,
+      );
+      expect(
+        decl,
+        `${s.name} missing explicit 'requires:' declaration (use 'requires: []' when there are no cross-skill dependencies)`,
+      ).toBeTruthy();
+      const items = [
+        ...(decl?.[0] ?? "").matchAll(/^[ \t]*-[ \t]*(\S+)[ \t]*$/gm),
+      ].map((m) => m[1]);
+      for (const item of items) {
+        expect(
+          names,
+          `${s.name} requires unknown skill '${item}'`,
+        ).toContain(item);
+      }
     }
   });
 

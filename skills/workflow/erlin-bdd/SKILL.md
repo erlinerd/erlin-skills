@@ -2,7 +2,7 @@
 name: erlin-bdd
 maturity: engineering
 description: >-
-  Behavior-driven testing for web and Apple: scenario specs in Markdown, Vitest + Playwright E2E on web, Swift Testing + XCUITest/Maestro on Apple. Use when the user asks for BDD or behavioral specs, or when a change crosses the threshold (3+ public interfaces, 3+ file modules, new screens, cross-screen flows, behavior needing product/design sign-off); plain unit tests follow erlin-dev-standards. BDD 测试规范（Web + Apple 双平台）：场景规格统一 Markdown（docs/bdd/*.md）；Web 用 Vitest 单元 + Playwright E2E；Apple 用 Swift Testing 单元 + XCUITest/Maestro E2E。用户要求 BDD/行为场景规格，或命中触发线（≥3 公共接口 / ≥3 文件模块改动 / 新页面 / 跨屏流程 / 行为需产品或设计确认）的测试安排时使用；日常单测按 erlin-dev-standards 验证门走，不触发本技能。
+  BDD 测试规范（Web + Apple 双平台）：场景规格统一 Markdown（docs/bdd/*.md）；Web 用 Vitest 单元 + Playwright E2E；Apple 用 Swift Testing 单元 + XCUITest/Maestro E2E。用户要求 BDD/行为场景规格，或命中触发线（≥3 公共接口 / ≥3 文件模块改动 / 新页面 / 跨屏流程 / 行为需产品或设计确认）的测试安排时使用；日常单测按 erlin-dev-standards 验证门走，不触发本技能。Behavior-driven testing for web and Apple: scenario specs in Markdown, Vitest + Playwright E2E on web, Swift Testing + XCUITest/Maestro on Apple. Use when the user asks for BDD or behavioral specs, or when a change crosses the threshold (3+ public interfaces, 3+ file modules, new screens, cross-screen flows, behavior needing product/design sign-off); plain unit tests follow erlin-dev-standards.
 when_to_use: 用户要求 BDD/行为场景规格，或命中触发线（≥3 公共接口 / ≥3 文件模块改动 / 新页面 / 跨屏流程 / 行为需产品或设计确认）的测试安排时使用；日常单测按 erlin-dev-standards 验证门走，不触发本技能。
 keywords:
   - BDD
@@ -17,6 +17,7 @@ keywords:
   - 防回归
 requires:
   - erlin-dev-standards
+  - erlin-app-coding-standards
 ---
 
 # 目标

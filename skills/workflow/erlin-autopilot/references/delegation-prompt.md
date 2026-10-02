@@ -1,6 +1,6 @@
 # 子代理派发提示词模板
 
-填占位符后经 Agent 工具（general-purpose）整块发出。一个隔离环境一个子代理，并发上限 3。主会话不得在隔离环境里干活——隔离是全部意义所在。
+填占位符后经宿主的子代理派发机制整块发出（各宿主入口不同：Claude Code 的 Agent/Task 工具、ZCode 的 Agent 工具等，用当前宿主可用的那个；无子代理能力时由主会话串行执行，但隔离纪律不变）。一个隔离环境一个子代理，并发上限 3。主会话不得在隔离环境里干活——隔离是全部意义所在。
 
 `<WORKTREE_PATH>` 必须是隔离环境的**绝对路径**（原生回退时为 `<仓库根>/../<repo>-worktree/<slug>`）；相对路径会按子代理自己的 cwd 解析而落错地方。任务的 Branch / Base Branch 字段来自 Spec（标准见 erlin-dev-standards 的 spec-contract）。
 

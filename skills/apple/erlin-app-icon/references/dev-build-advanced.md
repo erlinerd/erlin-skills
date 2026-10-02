@@ -14,6 +14,8 @@
    ```bash
    # Run Script phase；输入: $SRCROOT/.../AppIcon.appiconset/AppIcon.png
    # 输出: $SRCROOT/.../AppIcon-Dev.appiconset/AppIcon-Dev.png
+   # 前提: 把技能 scripts/ 下的 make_dev_icon.mjs 和 dev_icon.swift 一起拷到
+   #       $SRCROOT/scripts/（mjs 按同目录 sibling 找 swift 内核，只拷 mjs 会挂）
    if [ "$CONFIGURATION" != "Debug" ]; then exit 0; fi
    SRC="$SRCROOT/.../AppIcon.png"
    DST="$SRCROOT/.../AppIcon-Dev.png"

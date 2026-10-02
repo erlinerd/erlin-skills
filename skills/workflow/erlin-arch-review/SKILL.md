@@ -2,7 +2,7 @@
 name: erlin-arch-review
 maturity: engineering
 description: >-
-  Architecture review across seven design principles (single responsibility, open-closed, low coupling, component reuse, ...): per-principle scored cards with file:line evidence, plus a remediation list ranked by impact x cost. Use for "architecture review", "code quality", "refactoring advice", "too much coupling" — even if not named. 架构评审：从单一职责、开闭原则、低耦合、组件复用等七原则评估代码的架构质量，输出逐原则评估卡 + 按影响×成本排序的整改清单。当用户说"架构评估""代码质量怎么样""重构建议""单一职责""耦合太高""组件复用"时使用——即使没提 skill 名；也适用于 erlin-autopilot 跑完后想要架构视角的审查。
+  架构评审：从单一职责、开闭原则、低耦合、组件复用等七原则评估代码的架构质量，输出逐原则评估卡 + 按影响×成本排序的整改清单。当用户说"架构评估""代码质量怎么样""重构建议""单一职责""耦合太高""组件复用"时使用——即使没提 skill 名；也适用于 erlin-autopilot 跑完后想要架构视角的审查。Architecture review across seven design principles (single responsibility, open-closed, low coupling, component reuse, ...): per-principle scored cards with file:line evidence, plus a remediation list ranked by impact x cost. Use for "architecture review", "code quality", "refactoring advice", "too much coupling" — even if not named.
 when_to_use: 从单一职责、开闭、低耦合、组件复用等七原则评估仓库/模块/组件/diff 的架构质量，输出评估卡与整改清单时使用；用户说"架构评估/代码质量怎么样/重构建议"即触发。分支/PR 的 diff 合规评审（守约+实现规格两轴）由模型按 erlin-dev-standards 直接执行。
 keywords:
   - 代码架构
@@ -12,6 +12,7 @@ keywords:
   - 重构建议
   - 单一职责
   - 耦合
+requires: []
 ---
 
 erlin-arch-review — 架构与设计原则审查

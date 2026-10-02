@@ -9,6 +9,7 @@ keywords:
 argument-hint: "消息里的任务列表，或 ticket 列表路径，或留空从仓库 issue tracker 拉"
 requires:
   - erlin-dev-standards
+  - erlin-meta
 ---
 
 # 目标

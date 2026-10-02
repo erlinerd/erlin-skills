@@ -4,6 +4,10 @@
    Pair with references/page-skeleton.tsx, which uses exactly these class names. */
 
 /* Prerequisites outside this file:
+   - A global reset must already exist on the host (Tailwind preflight, normalize.css,
+     or an equivalent `*, *::before, *::after { box-sizing: border-box; }` + zeroed
+     default margins). This stylesheet does not ship its own reset; pasting it into
+     a bare page will show default margins/border-box drift.
    - html { scroll-behavior: smooth; }  (anchor nav relies on it)
    - Load fonts: Space Grotesk (display) + JetBrains Mono (metadata),
      e.g. next/font/google exposing --font-space-grotesk / --font-jetbrains-mono,
@@ -846,6 +850,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  /* html 上的 scroll-behavior: smooth（前置条件）不在 .dcc 子树里，必须单独压制 */
+  html {
+    scroll-behavior: auto !important;
+  }
   .dcc * {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;

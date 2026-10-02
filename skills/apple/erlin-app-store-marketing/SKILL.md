@@ -2,7 +2,7 @@
 name: erlin-app-store-marketing
 maturity: engineering
 description: >-
-  End-to-end App Store screenshot production: Part A submission-accurate captures (simulator shots, status bar override, OCR verification) and Part B high-conversion ASO marketing compositions (feature extraction, device frames, precise crops). Use for "ASO screenshots", "store screenshots", "marketing images" — even if not named. Social-media promo assets belong to erlin-social-assets. 生成 App Store 截图物料全流程——提审规格截图（模拟器拍摄、状态栏 override、OCR 逐项核验）与高转化 ASO 营销构图图（卖点提炼、配对、AI 增强、精确裁剪）。用户提到"ASO 截图""商店营销图""提审截图""App Store 截图""store screenshots""黄金时刻 10:08"时使用——即使没提 skill 名。
+  生成 App Store 截图物料全流程——提审规格截图（模拟器拍摄、状态栏 override、OCR 逐项核验）与高转化 ASO 营销构图图（卖点提炼、配对、AI 增强、精确裁剪）。用户提到"ASO 截图""商店营销图""提审截图""App Store 截图""store screenshots""黄金时刻 10:08"时使用——即使没提 skill 名。End-to-end App Store screenshot production: Part A submission-accurate captures (simulator shots, status bar override, OCR verification) and Part B high-conversion ASO marketing compositions (feature extraction, device frames, precise crops). Use for "ASO screenshots", "store screenshots", "marketing images" — even if not named. Social-media promo assets belong to erlin-social-assets.
 when_to_use: 用户提到"ASO 截图""商店营销图""营销版截图""应用商店截图设计""aso screenshots""提审截图""App Store 截图""截图审核物料""store screenshots""截图素材""黄金时刻 10:08"时使用；相关截图/物料任务即触发，无需点名本技能。
 keywords:
   - ASO 截图
@@ -15,6 +15,8 @@ keywords:
   - App Store 截图
   - store screenshots
   - 黄金时刻 10:08
+requires:
+  - erlin-social-assets
 ---
 
 erlin-app-store-marketing — App Store 截图物料全流程

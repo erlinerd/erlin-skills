@@ -2,7 +2,7 @@
 name: erlin-product-review
 maturity: engineering
 description: >-
-  Evidence-driven product assessment from four views: product, UX, growth, business — scored cards plus a ranked action list. Use for "product review", "UX review", "growth", "business model", "is this feature worth it", "pre-launch check", or retrospectives; code structure review belongs to erlin-arch-review. 从产品、UX、增长、商业四视角对产品/功能/版本/落地页做证据驱动的系统评估，输出评估卡 + 按影响×成本排序的行动清单。当用户说"产品评估""UX 评估""增长怎么做""商业模式""这个功能值得做吗""上线前评估""复盘"或"产品 review"时使用；代码结构审查请用 erlin-arch-review。
+  从产品、UX、增长、商业四视角对产品/功能/版本/落地页做证据驱动的系统评估，输出评估卡 + 按影响×成本排序的行动清单。当用户说"产品评估""UX 评估""增长怎么做""商业模式""这个功能值得做吗""上线前评估""复盘"或"产品 review"时使用；代码结构审查请用 erlin-arch-review。Evidence-driven product assessment from four views: product, UX, growth, business — scored cards plus a ranked action list. Use for "product review", "UX review", "growth", "business model", "is this feature worth it", "pre-launch check", or retrospectives; code structure review belongs to erlin-arch-review.
 when_to_use: 从产品、UX、增长、商业四视角对产品/功能/版本/落地页做证据驱动评估，输出评估卡与行动清单时使用；用户说"产品评估/UX 评估/这个功能值得做吗/上线前评估/复盘"即触发。
 keywords:
   - 产品评估
@@ -14,6 +14,7 @@ keywords:
   - 功能值得做吗
   - 上线前评估
   - 产品 review
+requires: []
 ---
 
 # 目标
@@ -69,7 +70,7 @@ keywords:
 
 ## 与 erlin-autopilot 的配合
 
-erlin-autopilot 跑完后默认只做标准/规格审查（code-review）。想要产品层视角时，对合并结果再跑一次 `erlin-product-review` 技能——erlin-autopilot 回答"做对了没"，erlin-product-review 回答"值得做吗、做得好吗、怎么更好"。
+erlin-autopilot 跑完后默认只做标准/规格审查（按 erlin-dev-standards）。想要产品层视角时，对合并结果再跑一次 `erlin-product-review` 技能——erlin-autopilot 回答"做对了没"，erlin-product-review 回答"值得做吗、做得好吗、怎么更好"。
 
 # 输出格式
 

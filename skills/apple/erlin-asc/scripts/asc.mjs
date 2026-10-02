@@ -17,7 +17,9 @@ import { join } from 'node:path';
 import crypto from 'node:crypto';
 
 const API = 'https://api.appstoreconnect.apple.com';
-const cfgPath = process.env.ASC_CONFIG ?? join(homedir(), '.config', 'asc', 'config.json');
+const cfgPath =
+  process.env.ASC_CONFIG ??
+  join(process.env.XDG_CONFIG_HOME || join(homedir(), '.config'), 'asc', 'config.json');
 
 function setupGuide() {
   console.error(`配置不存在: ${cfgPath}

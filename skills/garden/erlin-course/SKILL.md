@@ -1,7 +1,7 @@
 ---
 name: erlin-course
 maturity: in-progress
-description: Course creation and review in one skill — creation follows backward design (UbD): learner profile, Bloom observable verbs, assessment before content, Gagné skeleton; review issues a three-tier verdict with P0/P1/P2 findings against QM/OSCQR/Bloom/Gagné/Mayer rubrics. Use when asked to "做一门课/写一节课/设计课时/写课件/润色课件" (create mode) or "评课/审课/课件验收/上线前把关/课件自审" (review mode). 课程制作与评审合一：制作走逆向设计（画像→Bloom 目标→评估先于正文→Gagné 骨架→正文→必过评审）；评审按通用课程标准给三档判决与 P0/P1/P2 分级清单。
+description: 课程制作与评审合一：制作走逆向设计（画像→Bloom 目标→评估先于正文→Gagné 骨架→正文→必过评审）；评审按通用课程标准给三档判决与 P0/P1/P2 分级清单。用户要求"做一门课/写一节课/设计课时/写课件/润色课件"（制作模式）或"评课/审课/课件验收/上线前把关/课件自审"（评审模式）时使用。Course creation and review in one skill — creation follows backward design (UbD): learner profile, Bloom observable verbs, assessment before content, Gagné skeleton; review issues a three-tier verdict with P0/P1/P2 findings against QM/OSCQR/Bloom/Gagné/Mayer rubrics.
 when_to_use: 从零设计课程、写单节课时、搭课时结构、润色课件（制作模式），或评课/审稿/验收/检查课程质量/上线前把关/写完自审（评审模式）时使用。只管课件承载代码的实现时用 erlin-dev-standards；把项目/代码库排成个人系统学习计划用 erlin-learning-plan。
 keywords:
   - 做课
@@ -20,7 +20,8 @@ keywords:
   - 课件自审
   - 课程质量
   - 目标对齐
-requires: []
+requires:
+  - erlin-dev-standards
 ---
 
 # 目标

@@ -11,6 +11,7 @@ keywords:
   - 滚动揭示
   - 页面过渡
   - 卡片动画
+requires: []
 ---
 
 # 目标
@@ -22,7 +23,7 @@ Erlin 的个人站动效方法论：给 Next.js/React 站点引入 motion 动效
 1. **先判断项目环境**（动手前花 30 秒确认，避免套错模板）：
    - **包管理器**：只认一个 lockfile：`pnpm-lock.yaml` → pnpm，`package-lock.json` → npm，`yarn.lock` → yarn，`bun.lock` 或 `bun.lockb` → bun。多个 lockfile 时停止并询问用户；没有 lockfile 时读取 `package.json` 的 `packageManager`，仍无法判断就停止，不猜包管理器。后续安装、迁移、lint、build 命令都跟随已确认的管理器。
    - **Next/React 版本**：检查实际 Next/React 与动画库版本、peer dependencies 和官方兼容说明，不硬编码版本或宣称跨版本 API 完全兼容。
-   - **路由结构**：有 locale-prefixed 路由（`app/[locale]/` 目录）时，template 放 `app/[locale]/template.tsx`；**无 locale 路由**（如用 client 端语言切换）放 `app/template.tsx`，Next 同样每次导航重挂载，淡入照常生效。
+   - **路由结构**（选模板落位前先探测，不默认 App Router）：有 `app/` 目录 → App Router，按下述规则选 template；只有 `pages/` → Pages Router，无 `template.tsx` 机制，改在 `pages/_app.tsx` 或目标页面组件层做过渡并向用户说明差异；两者皆无 → 非 Next 项目，按框架自身挂载点等价实现。App Router：有 locale-prefixed 路由（`app/[locale]/` 目录）时，template 放 `app/[locale]/template.tsx`；**无 locale 路由**（如用 client 端语言切换）放 `app/template.tsx`，Next 同样每次导航重挂载，淡入照常生效。
    - **组件当前是否是 server 组件**：需要交互的 motion 元素隔离到最小 client 组件；不要直接把含服务器逻辑的整个组件改为 client。
 2. **沿用现有依赖**：已有 `framer-motion` 且满足需求时继续使用，不因新增动效默认迁移。仅用户要求迁移或当前能力/兼容性确有必要时，检查版本差异后按项目包管理器安装 `motion`，逐处核实 `motion/react` 导入与 API；确认无残留依赖后再移除旧包。不顺手改无关注释或文档。
 
@@ -47,7 +48,7 @@ Erlin 的个人站动效方法论：给 Next.js/React 站点引入 motion 动效
 5. **验证与交付**：按第 1 步确认的包管理器：
 
    ```sh
-   pnpm lint && pnpm build      # pnpm 项目；全站 SSG 应保持成功
+   pnpm lint && pnpm build      # pnpm 项目；build 必须成功（全站 SSG 项目含 SSG 导出）
    npm run lint && npm run build  # npm 项目
    ```
 
@@ -99,6 +100,6 @@ Erlin 的个人站动效方法论：给 Next.js/React 站点引入 motion 动效
 
 - **内容红线**：绝不让动效把内容搞丢——验证 SSR、reduced-motion、observer/脚本异常时内容可访问；Reveal 与超时参数是参考实现，不机械禁用 API。
 - **可及性红线**：所有动效尊重 `prefers-reduced-motion`；LCP 元素（H1、hero）不加入场动画。
-- **验证**：按确认的包管理器跑 `lint && build`，全站 SSG 必须保持成功。
+- **验证**：按确认的包管理器跑 `lint && build`，`build` 必须保持成功（项目是全站 SSG 时，SSG 导出同样不得被破坏；SSR/ISR 项目以 build 通过为准，不虚构 SSG 要求）。
 - **提交纪律**：只 add 本次任务相关文件，仓库里无关的未提交改动不顺手带进提交。
 - **渐进增强**：不要动已经能工作的动效组件来"统一风格"，依据需求和可访问性证据判断。

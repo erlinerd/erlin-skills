@@ -9,6 +9,8 @@ keywords:
   - karpathy
   - 收进 wiki
   - wiki
+requires:
+  - erlin-safe-delete
 ---
 
 # 目标

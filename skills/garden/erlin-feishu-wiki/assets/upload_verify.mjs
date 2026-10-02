@@ -13,8 +13,16 @@
  */
 import { existsSync, readFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
+import { isAbsolute, join } from "node:path";
 
 const DRAFT_DIR = process.env.DRAFT_DIR || ".erlin/course";
+
+// --content @<path> 的路径：绝对 DRAFT_DIR 直接用，相对路径补 ./ 前缀。
+// 无条件拼 `@./${DRAFT_DIR}` 会把绝对路径坍缩成 `.//tmp/...` 这种坏值。
+function draftPath(name) {
+  const file = `${name}.md`;
+  return isAbsolute(DRAFT_DIR) ? join(DRAFT_DIR, file) : `./${join(DRAFT_DIR, file)}`;
+}
 
 // 文件名 -> doc token。不要把真实 token 提交到公共仓库。
 let T = {
@@ -83,7 +91,7 @@ function validateConfig(entries, mode) {
   if (mode === "upload" || mode === "both") {
     for (const [name, token] of entries) {
       if (!token || token.includes("<")) throw new Error(`missing document token for ${name}`);
-      const path = `${DRAFT_DIR}/${name}.md`;
+      const path = draftPath(name);
       if (!existsSync(path)) throw new Error(`draft file not found: ${path}`);
     }
   }
@@ -110,10 +118,12 @@ function upload(entries, confirmed, dryRun = false) {
       const args = [
         "docs", "+update", "--doc", token,
         "--command", "overwrite", "--doc-format", "markdown",
-        "--content", `@./${DRAFT_DIR}/${name}.md`, "--as", "user",
+        "--content", `@${draftPath(name)}`, "--as", "user",
       ];
       if (dryRun) {
-        runLark([...args, "--dry-run"]);
+        // dry-run 同样要检查返回体：CLI 可能正常退出但 ok=false（如 token 无效）。
+        const obj = runLark([...args, "--dry-run"]);
+        if (obj.ok !== true) throw new Error(redact(obj.error?.message || "dry-run returned ok=false"));
         console.log(`${name}: dry-run passed (remote unchanged)`);
         continue;
       }
@@ -141,6 +151,7 @@ function verify(entries) {
       if (obj.ok !== true) throw new Error(redact(obj.error?.message || "API returned ok=false"));
       const content = obj.data?.document?.content;
       if (typeof content !== "string") throw new Error("response has no document.content");
+      const rev = obj.data?.document?.revision_id;
       const wrong = Object.entries(KEYS[name])
         .filter(([keyword, expected]) => {
           const actual = content.split(keyword).length - 1;
@@ -155,7 +166,7 @@ function verify(entries) {
         failed = true;
         console.error(`✗ ${name}: ${wrong.join("; ")}`);
       } else {
-        console.log(`✓ ${name}: all assertions passed`);
+        console.log(`✓ ${name}: all assertions passed${rev ? ` rev=${rev}` : ""}`);
       }
     } catch (error) {
       ok = false;

@@ -11,6 +11,8 @@ keywords:
   - 哪些适合提炼成 skill
   - 技能规范
   - skill 规范
+requires:
+  - erlin-meta
 ---
 
 # 目标

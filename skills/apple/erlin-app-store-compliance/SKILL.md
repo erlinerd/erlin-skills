@@ -20,6 +20,7 @@ keywords:
   - 商店元数据
   - App Store Connect 文案
   - 翻译 App Store 文案
+requires: []
 ---
 
 erlin-app-store-compliance — 拒审整改 + 商店文案多语言

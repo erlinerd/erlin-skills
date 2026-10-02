@@ -2,7 +2,7 @@
 name: erlin-social-assets
 maturity: productivity
 description: >-
-  Social media promo assets from app screenshots and brand material: Instagram, X, Xiaohongshu, YouTube, Facebook sizes, with optional Remotion video, plus a built-in LAN preview server for reviewing assets on a phone. App Store marketing compositions belong to erlin-app-store-marketing. 根据 app 截图与品牌资产生成社交平台宣传物料——Instagram、X、小红书、YouTube、Facebook 等规格的宣传图与可选 Remotion 视频；内置局域网预览服务（局域网看图/手机看图/LAN 预览/物料预览）。不负责 App Store 营销构图图；该任务使用 erlin-app-store-marketing。
+  根据 app 截图与品牌资产生成社交平台宣传物料——Instagram、X、小红书、YouTube、Facebook 等规格的宣传图与可选 Remotion 视频；内置局域网预览服务（局域网看图/手机看图/LAN 预览/物料预览）。不负责 App Store 营销构图图；该任务使用 erlin-app-store-marketing。Social media promo assets from app screenshots and brand material: Instagram, X, Xiaohongshu, YouTube, Facebook sizes, with optional Remotion video, plus a built-in LAN preview server for reviewing assets on a phone. App Store marketing compositions belong to erlin-app-store-marketing.
 when_to_use: 生成社媒宣传物料（宣传图/promo/营销素材/推广图），或要把图片/物料目录变成局域网可看的预览画廊（局域网看图/手机看图/LAN 预览/物料预览/二维码看图）时使用；用户说“社媒宣传/宣传物料/宣传图/宣传视频/promo/social media/营销素材/推广图”即触发，无需点名本技能。宣传视频默认不生成：只有用户指明要视频或直接要求时才生成，生成前确认竖/横与时长。
 keywords:
   - 社媒宣传
@@ -17,6 +17,7 @@ keywords:
   - 物料预览
   - 预览服务
   - 二维码看图
+requires: []
 ---
 
 # 目标
@@ -32,10 +33,10 @@ keywords:
 2. **定平台与规格（每次调用都先问）**：先问一句要哪些平台，给主流组合作推荐（小红书 3:4 + Instagram 4:5 + X 16:9），用户确认后再开工；不要默认跳过这步。规格表见 `references/platform-specs.md`。
 3. **设计静态宣传图（渲染路径按机器条件选）**：
    - 首选：HTML/CSS 设计稿 + Playwright 无头浏览器截图（文本排版精准、易迭代）；已有 Remotion 工程可用 `remotion still` 同栈导出单帧。
-   - **零依赖固定脚本**：先设 `SKILL_DIR="<本技能目录>"`（宿主注入的技能实际路径），再跑 `node "$SKILL_DIR/scripts/make_social.mjs" <config.json>`——配置驱动（品牌色板/文案/截图/平台规格全在 JSON）、macOS swift kernel 渲染（系统自带，无需装依赖）、中文字体自动探测（PingFang → Hiragino → STHeiti，回退字形与 PingFang 有细微差异，介意可换字体文件）、排版尺寸按画布比例缩放（同一配置可出任意平台规格）；输出 PNG 直出精确尺寸。截图纵横比过陡会打警告（竖版布局可能溢出，换 wide 布局）。示例配置位于本技能目录 `scripts/config.example.json`。Playwright/Chrome 不可用或要确定性复现时用这条（需 macOS + node）。
+   - **零 npm 依赖固定脚本**：先设 `SKILL_DIR="<本技能目录>"`（宿主注入的技能实际路径），运行前探测 `command -v swift`（swift CLI 来自 Xcode Command Line Tools，纯净 macOS 未装；缺失时提示用户 `xcode-select --install`，或改用 Playwright 路径），再跑 `node "$SKILL_DIR/scripts/make_social.mjs" <config.json>`——配置驱动（品牌色板/文案/截图/平台规格全在 JSON）、macOS swift kernel 渲染、中文字体自动探测（PingFang → Hiragino → STHeiti，回退字形与 PingFang 有细微差异，介意可换字体文件）、排版尺寸按画布比例缩放（同一配置可出任意平台规格）；输出 PNG 直出精确尺寸。截图纵横比过陡会打警告（竖版布局可能溢出，换 wide 布局）。示例配置位于本技能目录 `scripts/config.example.json`。Playwright/Chrome 不可用或要确定性复现时用这条（需 macOS + node + swift CLI；swift 缺失时 `make_social.mjs` 会直接报错，先跑 `command -v swift` 探测）。
    - 构图要素：品牌 logo、一句核心卖点（大标题 ≤8 字 + 一行副文案）、1-2 张 app 截图（设备/圆角卡框）、品牌色背景或暗底、可选的下载提示。
    - **品牌一致**：色板/字体/间距对齐品牌文档；暗底类产品保持暗底（品牌唯一红线）。
-4. **逐规格输出**：每平台一张，按 `<platform>-<width>x<height>.png` 组织到 `out/social/`；尺寸用 sips 逐张核对。
+4. **逐规格输出**：每平台一张，按 `<platform>-<width>x<height>.png` 组织到 `out/social/`；尺寸逐张核对（macOS 用 sips；无 sips 时用 `node -e` 读 PNG 头 IHDR 或 Playwright/OCR 任一可用手段，不得跳过验收）。
 5. **自检**：尺寸精确；文字无溢出/截断（OCR 核验文案齐全）；logo 清晰；截图内容无状态栏敏感信息——沿用 `erlin-app-store-marketing`（Part A）的审核思路：信 OCR/像素，视觉只做粗评。
 6. **宣传视频（用户明确要求才做）**：
    - 生成前确认（规格不明时）：竖 9:16（Reels / TikTok / 小红书 / Shorts）还是横 16:9（YouTube）；时长（默认 15-30s）；素材编排（截图切换 / logo 动画 / 文案逐句）。
@@ -56,7 +57,7 @@ keywords:
 
 - **App Store 营销构图图**：不归本技能，一律转交 `erlin-app-store-marketing`。
 - **宣传视频（硬性）**：用户没提视频 → 完全不产出视频；交付说明里可带一句"如需宣传视频可再让我做"。用户说"要视频""加视频""做成动画视频"等 → 才生成。
-- **渲染路径分支**：Playwright/Chrome 可用 → HTML/CSS + 截图；不可用或要确定性复现 → 零依赖脚本 `make_social.mjs`（需 macOS + node）。
+- **渲染路径分支**：Playwright/Chrome 可用 → HTML/CSS + 截图；不可用或要确定性复现 → 零 npm 依赖脚本 `make_social.mjs`（需 macOS + node + swift CLI，运行前 `command -v swift` 探测，缺失提示装 Xcode Command Line Tools）。
 - **品牌信息分支**：有品牌文档 → 直接读；无文档 → 问用户；仍无 → 「暗底 + 暖白 + 琥珀」器物风默认。
 - **交付预览分支**：用户要局域网预览 → 起 `scripts/serve_lan.mjs` 报 URL；不要 → 只报本地路径。图片改了不生效按 Cmd/Ctrl+R 强刷即可（画廊每次刷新重扫）；手机超时但本机 `curl 127.0.0.1:<port>` 正常 = 防火墙拦了，去 系统设置 → 网络 → 防火墙 放行 node。
 
