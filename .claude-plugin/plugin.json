@@ -1,7 +1,7 @@
 {
   "name": "erlin-skills",
   "description": "Erlin personal AI coding workflow: 27 skills covering engineering flow, App Store shipping, web motion, and personal knowledge (workflow/apple/web/garden buckets).",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "skills": [
     "./skills/apple/erlin-app-coding-standards",
     "./skills/apple/erlin-app-dev-build",
