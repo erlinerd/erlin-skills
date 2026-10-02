@@ -12,14 +12,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm install
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
       - name: Validate skill metadata + plugin manifest
         run: |
-          npx vitest run
-          npm run check-plugin-version
+          pnpm test
+          pnpm run check-plugin-version
       - name: GitHub Release
         uses: softprops/action-gh-release@v2
         with:

@@ -2,6 +2,7 @@
   "name": "erlin-skills",
   "version": "0.0.1",
   "private": true,
+  "packageManager": "pnpm@12.6.0",
   "description": "Erlin personal AI coding workflow skills — engineering flow, App Store shipping, web motion, personal knowledge",
   "license": "MIT",
   "repository": {
